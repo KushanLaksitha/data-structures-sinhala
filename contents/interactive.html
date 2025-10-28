@@ -361,6 +361,127 @@
                     <div class="step"><strong>Total time:</strong> 8 + 7 = 15 seconds</div>
                 </div>
             </div>
+            <div class="example-card">
+                <h4>Example 5: Printer Queue Calculation</h4>
+                <p><strong>Scenario:</strong> 5 Documents in print queue</p>
+                
+                <div class="calculation-box">
+                    <div class="step"><strong>Documents:</strong> Doc1(2 pages), Doc2(5 pages), Doc3(1 page), Doc4(3 pages), Doc5(4 pages)</div>
+                    <div class="step"><strong>Print speed:</strong> 1 page/second</div>
+                    <div class="step"><strong>Enqueue all:</strong> [Doc1] ← [Doc2] ← [Doc3] ← [Doc4] ← [Doc5]</div>
+                    <div class="step"><strong>Dequeue Doc1:</strong> Time = 2s, Queue: [Doc2, Doc3, Doc4, Doc5]</div>
+                    <div class="step"><strong>Dequeue Doc2:</strong> Time = 5s, Queue: [Doc3, Doc4, Doc5]</div>
+                    <div class="step"><strong>Dequeue Doc3:</strong> Time = 1s, Queue: [Doc4, Doc5]</div>
+                    <div class="step"><strong>Total time so far:</strong> 2 + 5 + 1 = 8 seconds</div>
+                    <div class="step"><strong>Remaining documents:</strong> Doc4(3s) + Doc5(4s) = 7s</div>
+                    <div class="step"><strong>Total time:</strong> 8 + 7 = 15 seconds</div>
+                </div>
+            </div>
+            
+            <div class="example-card">
+                <h4>Example 6: Balanced Parentheses Check using Stack</h4>
+                <p><strong>Problem:</strong> Check if "{[()]}" is balanced</p>
+                
+                <div class="calculation-box">
+                    <div class="step"><strong>Input:</strong> { [ ( ) ] }</div>
+                    <div class="step"><strong>Process each character:</strong></div>
+                    <div class="step">Read '{' → Opening bracket, Push('{') → Stack: ['{']</div>
+                    <div class="step">Read '[' → Opening bracket, Push('[') → Stack: ['{', '[']</div>
+                    <div class="step">Read '(' → Opening bracket, Push('(') → Stack: ['{', '[', '(']</div>
+                    <div class="step">Read ')' → Closing bracket, Pop() = '(' ✓ Match!</div>
+                    <div class="step">Stack: ['{', '[']</div>
+                    <div class="step">Read ']' → Closing bracket, Pop() = '[' ✓ Match!</div>
+                    <div class="step">Stack: ['{']</div>
+                    <div class="step">Read '}' → Closing bracket, Pop() = '{' ✓ Match!</div>
+                    <div class="step">Stack: [] (Empty)</div>
+                    <div class="step"><strong>Result:</strong> ✅ BALANCED (Stack is empty)</div>
+                </div>
+            </div>
+            
+            <div class="example-card">
+                <h4>Example 7: Bank Queue Average Wait Time</h4>
+                <p><strong>Scenario:</strong> 6 customers at bank counter</p>
+                
+                <div class="calculation-box">
+                    <div class="step"><strong>Customers:</strong> C1(5min), C2(3min), C3(7min), C4(2min), C5(4min), C6(6min)</div>
+                    <div class="step"><strong>Queue:</strong> [C1] ← [C2] ← [C3] ← [C4] ← [C5] ← [C6]</div>
+                    <div class="step"><strong>C1 wait time:</strong> 0 min (served immediately)</div>
+                    <div class="step"><strong>C2 wait time:</strong> 5 min (waits for C1)</div>
+                    <div class="step"><strong>C3 wait time:</strong> 5 + 3 = 8 min</div>
+                    <div class="step"><strong>C4 wait time:</strong> 8 + 7 = 15 min</div>
+                    <div class="step"><strong>C5 wait time:</strong> 15 + 2 = 17 min</div>
+                    <div class="step"><strong>C6 wait time:</strong> 17 + 4 = 21 min</div>
+                    <div class="step"><strong>Total wait:</strong> 0 + 5 + 8 + 15 + 17 + 21 = 66 min</div>
+                    <div class="step"><strong>Average wait time:</strong> 66 ÷ 6 = 11 minutes</div>
+                </div>
+            </div>
+            
+            <div class="example-card">
+                <h4>Example 8: Function Call Stack Memory</h4>
+                <p><strong>Problem:</strong> Calculate factorial(4) recursively</p>
+                
+                <div class="calculation-box">
+                    <div class="step"><strong>Call:</strong> factorial(4)</div>
+                    <div class="step">Push(factorial(4)) → Stack: [f(4)]</div>
+                    <div class="step">f(4) calls f(3) → Push(factorial(3)) → Stack: [f(4), f(3)]</div>
+                    <div class="step">f(3) calls f(2) → Push(factorial(2)) → Stack: [f(4), f(3), f(2)]</div>
+                    <div class="step">f(2) calls f(1) → Push(factorial(1)) → Stack: [f(4), f(3), f(2), f(1)]</div>
+                    <div class="step">f(1) = 1 (base case) → Pop() → Stack: [f(4), f(3), f(2)]</div>
+                    <div class="step">f(2) = 2 × 1 = 2 → Pop() → Stack: [f(4), f(3)]</div>
+                    <div class="step">f(3) = 3 × 2 = 6 → Pop() → Stack: [f(4)]</div>
+                    <div class="step">f(4) = 4 × 6 = 24 → Pop() → Stack: []</div>
+                    <div class="step"><strong>Result:</strong> factorial(4) = 24</div>
+                    <div class="step"><strong>Max Stack Depth:</strong> 4 function calls</div>
+                </div>
+            </div>
+            
+            <div class="example-card">
+                <h4>Example 9: Round Robin CPU Scheduling</h4>
+                <p><strong>Scenario:</strong> 4 processes with time quantum = 3ms</p>
+                
+                <div class="calculation-box">
+                    <div class="step"><strong>Processes:</strong> P1(9ms), P2(5ms), P3(7ms), P4(4ms)</div>
+                    <div class="step"><strong>Time Quantum:</strong> 3ms per process</div>
+                    <div class="step"><strong>Initial Queue:</strong> [P1(9)] ← [P2(5)] ← [P3(7)] ← [P4(4)]</div>
+                    <div class="step"><strong>Round 1:</strong></div>
+                    <div class="step">Dequeue P1, execute 3ms → Remaining: 6ms → Enqueue P1(6)</div>
+                    <div class="step">Queue: [P2(5)] ← [P3(7)] ← [P4(4)] ← [P1(6)]</div>
+                    <div class="step">Dequeue P2, execute 3ms → Remaining: 2ms → Enqueue P2(2)</div>
+                    <div class="step">Queue: [P3(7)] ← [P4(4)] ← [P1(6)] ← [P2(2)]</div>
+                    <div class="step"><strong>Round 2:</strong></div>
+                    <div class="step">Dequeue P3, execute 3ms → Remaining: 4ms → Enqueue P3(4)</div>
+                    <div class="step">Dequeue P4, execute 3ms → Remaining: 1ms → Enqueue P4(1)</div>
+                    <div class="step"><strong>Continue until all complete...</strong></div>
+                    <div class="step"><strong>Total time:</strong> 9 + 5 + 7 + 4 = 25ms</div>
+                </div>
+            </div>
+            
+            <div class="example-card">
+                <h4>Example 10: Browser History using Two Stacks</h4>
+                <p><strong>Scenario:</strong> Navigate web pages with Back/Forward buttons</p>
+                
+                <div class="calculation-box">
+                    <div class="step"><strong>Visit pages:</strong> Home → Search → Results → Article</div>
+                    <div class="step"><strong>Back Stack:</strong> [Home, Search, Results, Article]</div>
+                    <div class="step"><strong>Forward Stack:</strong> []</div>
+                    <div class="step"><strong>Click Back:</strong> Pop from Back → Push to Forward</div>
+                    <div class="step">Pop(Article) from Back → Push(Article) to Forward</div>
+                    <div class="step">Back Stack: [Home, Search, Results] | Forward: [Article]</div>
+                    <div class="step"><strong>Click Back again:</strong></div>
+                    <div class="step">Pop(Results) from Back → Push(Results) to Forward</div>
+                    <div class="step">Back Stack: [Home, Search] | Forward: [Article, Results]</div>
+                    <div class="step"><strong>Click Forward:</strong> Pop from Forward → Push to Back</div>
+                    <div class="step">Pop(Results) from Forward → Push(Results) to Back</div>
+                    <div class="step">Back Stack: [Home, Search, Results] | Forward: [Article]</div>
+                    <div class="step"><strong>Visit new page (News):</strong> Clear Forward Stack</div>
+                    <div class="step">Back Stack: [Home, Search, Results, News] | Forward: []</div>
+                    <div class="step"><strong>Result:</strong> Can't go forward anymore! ✅</div>
+                </div>
+                
+                <button class="btn btn-info btn-sm" onclick="animateBrowserHistory()">🎬 Animate</button>
+            </div>
+        </div>
+    </div>
         </div>
     </div>
 
