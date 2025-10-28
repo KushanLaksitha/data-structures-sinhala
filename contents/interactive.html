@@ -344,23 +344,6 @@
                     <div class="step"><strong>Result:</strong> OLLEH</div>
                 </div>
             </div>
-            
-            <div class="example-card">
-                <h4>Example 5: Printer Queue Calculation</h4>
-                <p><strong>Scenario:</strong> 5 Documents in print queue</p>
-                
-                <div class="calculation-box">
-                    <div class="step"><strong>Documents:</strong> Doc1(2 pages), Doc2(5 pages), Doc3(1 page), Doc4(3 pages), Doc5(4 pages)</div>
-                    <div class="step"><strong>Print speed:</strong> 1 page/second</div>
-                    <div class="step"><strong>Enqueue all:</strong> [Doc1] ← [Doc2] ← [Doc3] ← [Doc4] ← [Doc5]</div>
-                    <div class="step"><strong>Dequeue Doc1:</strong> Time = 2s, Queue: [Doc2, Doc3, Doc4, Doc5]</div>
-                    <div class="step"><strong>Dequeue Doc2:</strong> Time = 5s, Queue: [Doc3, Doc4, Doc5]</div>
-                    <div class="step"><strong>Dequeue Doc3:</strong> Time = 1s, Queue: [Doc4, Doc5]</div>
-                    <div class="step"><strong>Total time so far:</strong> 2 + 5 + 1 = 8 seconds</div>
-                    <div class="step"><strong>Remaining documents:</strong> Doc4(3s) + Doc5(4s) = 7s</div>
-                    <div class="step"><strong>Total time:</strong> 8 + 7 = 15 seconds</div>
-                </div>
-            </div>
             <div class="example-card">
                 <h4>Example 5: Printer Queue Calculation</h4>
                 <p><strong>Scenario:</strong> 5 Documents in print queue</p>
