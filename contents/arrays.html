@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arrays (අරා) | DSA සිංහලෙන්</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans Sinhala', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .navbar {
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+        
+        .content-section {
+            background: white;
+            margin: 80px auto 30px;
+            padding: 50px;
+            border-radius: 15px;
+            max-width: 1200px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #667eea;
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            color: #764ba2;
+            font-weight: 700;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+        
+        .code-block {
+            background: #1e1e1e;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        
+        .code-line {
+            display: block;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            color: #d4d4d4;
+        }
+        
+        .comment {
+            color: #6a9955;
+        }
+        
+        .keyword {
+            color: #569cd6;
+        }
+        
+        .function {
+            color: #dcdcaa;
+        }
+        
+        .string {
+            color: #ce9178;
+        }
+        
+        .number {
+            color: #b5cea8;
+        }
+        
+        .info-box {
+            background: #e8f4f8;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .example-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .btn-back {
+            background: #667eea;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        
+        .btn-back:hover {
+            background: #764ba2;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html" style="color: #667eea; font-weight: 700;">📘 DSA සිංහලෙන්</a>
+        </div>
+    </nav>
+
+    <div class="content-section">
+        <a href="../index.html" class="btn-back">← මුල් පිටුවට</a>
+        
+        <h1>📊 Arrays (අරා)</h1>
+        
+        <p><strong>Array</strong> යනු සමාන වර්ගයේ (same data type) දත්ත එකට, අනුක්‍රමිකව (sequentially) ගබඩා කරන දත්ත ව්‍යුහයකි. මෙය මතකයේ අඛණ්ඩ ස්ථාන (contiguous memory locations) තුළ දත්ත ගබඩා කරයි.</p>
+
+        <h2>🔑 ප්‍රධාන ලක්ෂණ</h2>
+        <ul>
+            <li><strong>Fixed Size:</strong> Array එකක් නිර්මාණය කරන විට එහි ප්‍රමාණය නියම වේ</li>
+            <li><strong>Index Based:</strong> සෑම element එකක්ම index number එකකින් හඳුනා ගත හැක (0 සිට ආරම්භ වේ)</li>
+            <li><strong>Random Access:</strong> Index භාවිතයෙන් ඕනෑම element එකකට වහාම ප්‍රවේශ විය හැක</li>
+            <li><strong>Same Data Type:</strong> සියලුම elements එකම data type එකක විය යුතුය</li>
+        </ul>
+
+        <div class="info-box">
+            <strong>💡 උදාහරණය:</strong> int marks[5] = {85, 90, 78, 92, 88};<br>
+            මෙහිදී marks[0]=85, marks[1]=90, marks[2]=78, marks[3]=92, marks[4]=88
+        </div>
+
+        <h2>⏱️ Time Complexity</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Operation</th>
+                    <th>Time Complexity</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Access (Index භාවිතයෙන්)</td>
+                    <td>O(1)</td>
+                </tr>
+                <tr>
+                    <td>Search (සෙවීම)</td>
+                    <td>O(n)</td>
+                </tr>
+                <tr>
+                    <td>Insert (ආරම්භයේ/අතරේ)</td>
+                    <td>O(n)</td>
+                </tr>
+                <tr>
+                    <td>Delete (ඉවත් කිරීම)</td>
+                    <td>O(n)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>💻 C Code Examples</h2>
+
+        <h3>1. Basic Array Declaration and Initialization</h3>
+        <div class="code-block">
+<span class="code-line"><span class="comment">// Array සෑදීම සහ අගයන් ඇතුළත් කිරීම</span></span>
+<span class="code-line"><span class="keyword">#include</span> <span class="string">&lt;stdio.h&gt;</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="keyword">int</span> <span class="function">main</span>() {</span>
+<span class="code-line">    <span class="comment">// Method 1: සෘජුව අගයන් සමඟ array සෑදීම</span></span>
+<span class="code-line">    <span class="keyword">int</span> numbers[<span class="number">5</span>] = {<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>};</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// Method 2: හිස් array එකක් සෑදීම</span></span>
+<span class="code-line">    <span class="keyword">int</span> marks[<span class="number">5</span>];</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// Array elements එකින් එක ඇතුළත් කිරීම</span></span>
+<span class="code-line">    marks[<span class="number">0</span>] = <span class="number">85</span>;  <span class="comment">// පළමු element එක</span></span>
+<span class="code-line">    marks[<span class="number">1</span>] = <span class="number">90</span>;  <span class="comment">// දෙවන element එක</span></span>
+<span class="code-line">    marks[<span class="number">2</span>] = <span class="number">78</span>;  <span class="comment">// තෙවන element එක</span></span>
+<span class="code-line">    marks[<span class="number">3</span>] = <span class="number">92</span>;  <span class="comment">// සිව්වන element එක</span></span>
+<span class="code-line">    marks[<span class="number">4</span>] = <span class="number">88</span>;  <span class="comment">// පස්වන element එක</span></span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// Array elements print කිරීම</span></span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"Numbers array: "</span>);</span>
+<span class="code-line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) {  <span class="comment">// 0 සිට 4 දක්වා loop එක</span></span>
+<span class="code-line">        <span class="function">printf</span>(<span class="string">"%d "</span>, numbers[i]);  <span class="comment">// සෑම element එකක්ම print කරන්න</span></span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="keyword">return</span> <span class="number">0</span>;</span>
+<span class="code-line">}</span>
+        </div>
+
+        <h3>2. Array Sum and Average (එකතුව සහ සාමාන්‍යය)</h3>
+        <div class="code-block">
+<span class="code-line"><span class="comment">// Array එකක සියලු අංක එකතු කර සාමාන්‍යය ගණනය කිරීම</span></span>
+<span class="code-line"><span class="keyword">#include</span> <span class="string">&lt;stdio.h&gt;</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="keyword">int</span> <span class="function">main</span>() {</span>
+<span class="code-line">    <span class="keyword">int</span> marks[<span class="number">5</span>] = {<span class="number">85</span>, <span class="number">90</span>, <span class="number">78</span>, <span class="number">92</span>, <span class="number">88</span>};</span>
+<span class="code-line">    <span class="keyword">int</span> sum = <span class="number">0</span>;  <span class="comment">// එකතුව ගබඩා කිරීමට variable එකක්</span></span>
+<span class="code-line">    <span class="keyword">float</span> average;  <span class="comment">// සාමාන්‍යය ගබඩා කිරීමට</span></span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// සියලු elements එකතු කිරීම</span></span>
+<span class="code-line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) {</span>
+<span class="code-line">        sum = sum + marks[i];  <span class="comment">// සෑම අංකයක්ම sum එකට එකතු කරන්න</span></span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// සාමාන්‍යය ගණනය කිරීම (එකතුව / elements ගණන)</span></span>
+<span class="code-line">    average = (<span class="keyword">float</span>)sum / <span class="number">5</span>;</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// ප්‍රතිඵල print කිරීම</span></span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"සම්පූර්ණ එකතුව: %d\n"</span>, sum);</span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"සාමාන්‍යය: %.2f\n"</span>, average);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="keyword">return</span> <span class="number">0</span>;</span>
+<span class="code-line">}</span>
+        </div>
+
+        <h3>3. Finding Maximum and Minimum (උපරිම සහ අවම අගයන්)</h3>
+        <div class="code-block">
+<span class="code-line"><span class="comment">// Array එකක ඇති උපරිම සහ අවම අගයන් සොයා ගැනීම</span></span>
+<span class="code-line"><span class="keyword">#include</span> <span class="string">&lt;stdio.h&gt;</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="keyword">int</span> <span class="function">main</span>() {</span>
+<span class="code-line">    <span class="keyword">int</span> numbers[<span class="number">8</span>] = {<span class="number">45</span>, <span class="number">23</span>, <span class="number">78</span>, <span class="number">12</span>, <span class="number">90</span>, <span class="number">34</span>, <span class="number">56</span>, <span class="number">67</span>};</span>
+<span class="code-line">    <span class="keyword">int</span> max, min;  <span class="comment">// උපරිම සහ අවම අගයන් ගබඩා කිරීමට</span></span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// පළමු element එක max සහ min ලෙස සකසන්න</span></span>
+<span class="code-line">    max = numbers[<span class="number">0</span>];</span>
+<span class="code-line">    min = numbers[<span class="number">0</span>];</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// සෑම element එකක්ම පරීක්ෂා කරන්න</span></span>
+<span class="code-line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; <span class="number">8</span>; i++) {  <span class="comment">// 1 සිට ආරම්භ වන්නේ 0 දැනටමත් සකසා ඇති නිසා</span></span>
+<span class="code-line">        <span class="keyword">if</span>(numbers[i] &gt; max) {  <span class="comment">// වත්මන් අගය max ට වඩා විශාල නම්</span></span>
+<span class="code-line">            max = numbers[i];  <span class="comment">// එය නව max ලෙස සකසන්න</span></span>
+<span class="code-line">        }</span>
+<span class="code-line">        <span class="keyword">if</span>(numbers[i] &lt; min) {  <span class="comment">// වත්මන් අගය min ට වඩා කුඩා නම්</span></span>
+<span class="code-line">            min = numbers[i];  <span class="comment">// එය නව min ලෙස සකසන්න</span></span>
+<span class="code-line">        }</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// ප්‍රතිඵල print කිරීම</span></span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"උපරිම අගය: %d\n"</span>, max);</span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"අවම අගය: %d\n"</span>, min);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="keyword">return</span> <span class="number">0</span>;</span>
+<span class="code-line">}</span>
+        </div>
+
+        <h3>4. Linear Search in Array (රේඛීය සෙවුම)</h3>
+        <div class="code-block">
+<span class="code-line"><span class="comment">// Array එකක නිශ්චිත අංකයක් සොයා ගැනීම</span></span>
+<span class="code-line"><span class="keyword">#include</span> <span class="string">&lt;stdio.h&gt;</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="keyword">int</span> <span class="function">main</span>() {</span>
+<span class="code-line">    <span class="keyword">int</span> arr[<span class="number">7</span>] = {<span class="number">15</span>, <span class="number">28</span>, <span class="number">42</span>, <span class="number">33</span>, <span class="number">19</span>, <span class="number">51</span>, <span class="number">37</span>};</span>
+<span class="code-line">    <span class="keyword">int</span> search_value = <span class="number">33</span>;  <span class="comment">// සොයන අගය</span></span>
+<span class="code-line">    <span class="keyword">int</span> found = <span class="number">-1</span>;  <span class="comment">// -1 යන්නෙන් "සොයා නොගත්තේ" යන්න දැක්වේ</span></span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// Array එක හරහා සෙවීම</span></span>
+<span class="code-line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">7</span>; i++) {</span>
+<span class="code-line">        <span class="keyword">if</span>(arr[i] == search_value) {  <span class="comment">// අගය හමු වුවා නම්</span></span>
+<span class="code-line">            found = i;  <span class="comment">// index එක ගබඩා කරන්න</span></span>
+<span class="code-line">            <span class="keyword">break</span>;  <span class="comment">// සොයා ගත් පසු loop එක නවත්වන්න</span></span>
+<span class="code-line">        }</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// ප්‍රතිඵලය print කිරීම</span></span>
+<span class="code-line">    <span class="keyword">if</span>(found != <span class="number">-1</span>) {</span>
+<span class="code-line">        <span class="function">printf</span>(<span class="string">"අගය %d හමු විය. Index: %d\n"</span>, search_value, found);</span>
+<span class="code-line">    } <span class="keyword">else</span> {</span>
+<span class="code-line">        <span class="function">printf</span>(<span class="string">"අගය %d හමු නොවීය.\n"</span>, search_value);</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="keyword">return</span> <span class="number">0</span>;</span>
+<span class="code-line">}</span>
+        </div>
+
+        <h3>5. Reversing an Array (ප්‍රතිලෝම කිරීම)</h3>
+        <div class="code-block">
+<span class="code-line"><span class="comment">// Array එකක elements අනුපිළිවෙල ප්‍රතිලෝම කිරීම</span></span>
+<span class="code-line"><span class="keyword">#include</span> <span class="string">&lt;stdio.h&gt;</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="keyword">int</span> <span class="function">main</span>() {</span>
+<span class="code-line">    <span class="keyword">int</span> arr[<span class="number">6</span>] = {<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>, <span class="number">60</span>};</span>
+<span class="code-line">    <span class="keyword">int</span> temp;  <span class="comment">// අගයන් swap කිරීමට තාවකාලික variable එකක්</span></span>
+<span class="code-line">    <span class="keyword">int</span> n = <span class="number">6</span>;  <span class="comment">// array size</span></span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// මුල් array එක print කිරීම</span></span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"මුල් Array: "</span>);</span>
+<span class="code-line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {</span>
+<span class="code-line">        <span class="function">printf</span>(<span class="string">"%d "</span>, arr[i]);</span>
+<span class="code-line">    }</span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"\n"</span>);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// Array එක ප්‍රතිලෝම කිරීම</span></span>
+<span class="code-line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n/<span class="number">2</span>; i++) {  <span class="comment">// array එකෙහි මැද දක්වා පමණක් යන්න</span></span>
+<span class="code-line">        <span class="comment">// පළමු සහ අවසාන elements swap කිරීම</span></span>
+<span class="code-line">        temp = arr[i];  <span class="comment">// පළමු element එක තාවකාලිකව save කරන්න</span></span>
+<span class="code-line">        arr[i] = arr[n - <span class="number">1</span> - i];  <span class="comment">// අවසාන element එක පළමු ස්ථානයට</span></span>
+<span class="code-line">        arr[n - <span class="number">1</span> - i] = temp;  <span class="comment">// temp හි තිබූ පළමු element එක අවසාන ස්ථානයට</span></span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// ප්‍රතිලෝම කළ array එක print කිරීම</span></span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"ප්‍රතිලෝම Array: "</span>);</span>
+<span class="code-line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {</span>
+<span class="code-line">        <span class="function">printf</span>(<span class="string">"%d "</span>, arr[i]);</span>
+<span class="code-line">    }</span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"\n"</span>);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="keyword">return</span> <span class="number">0</span>;</span>
+<span class="code-line">}</span>
+        </div>
+
+        <h2>✅ වාසි (Advantages)</h2>
+        <ul>
+            <li>Index භාවිතයෙන් වේගවත් ප්‍රවේශය (O(1) time)</li>
+            <li>සරල හා භාවිතයට පහසු</li>
+            <li>මතකයේ කාර්යක්ෂමව ගබඩා වේ (cache-friendly)</li>
+            <li>Elements අනුපිළිවෙලින් ගබඩා වේ</li>
+        </ul>
+
+        <h2>❌ අවාසි (Disadvantages)</h2>
+        <ul>
+            <li>ප්‍රමාණය fixed වේ, වෙනස් කළ නොහැක</li>
+            <li>මැද insert/delete කිරීම මන්දගාමී (O(n))</li>
+            <li>මතකය අපතේ යා හැක (unused spaces)</li>
+            <li>විවිධ data types එකට ගබඩා කළ නොහැක</li>
+        </ul>
+
+        <div class="example-box">
+            <h3>🎯 Arrays භාවිත කරන තැන්</h3>
+            <ul>
+                <li>Student marks system</li>
+                <li>Temperature records</li>
+                <li>Image pixels (2D arrays)</li>
+                <li>Sorting සහ searching algorithms</li>
+                <li>Buffer management</li>
+            </ul>
+        </div>
+
+        <a href="../index.html" class="btn-back">← මුල් පිටුවට</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

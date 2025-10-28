@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ව්‍යාපෘතිය ගැන | DSA in Sinhala</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;700&family=Fira+Code:wght@400;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans Sinhala', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        
+        .navbar {
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: #667eea !important;
+        }
+        
+        .nav-link {
+            color: #555 !important;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-link:hover {
+            color: #667eea !important;
+        }
+        
+        .content-section {
+            padding: 100px 0 60px;
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            margin-bottom: 60px;
+            border-radius: 0 0 50px 50px;
+        }
+        
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            animation: fadeInDown 0.8s ease;
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            animation: fadeInDown 1s ease;
+        }
+        
+        .content-card {
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .content-card h2 {
+            color: #667eea;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            border-left: 5px solid #667eea;
+            padding-left: 20px;
+        }
+        
+        .content-card h3 {
+            color: #333;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        
+        .content-card p {
+            color: #555;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        
+        .content-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .content-card ul li {
+            color: #555;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            padding-left: 35px;
+            position: relative;
+        }
+        
+        .content-card ul li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+        
+        .tech-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            margin: 5px;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            border-left: 5px solid #fdcb6e;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+        
+        .highlight-box p {
+            margin: 0;
+            color: #2d3436;
+            font-weight: 600;
+        }
+        
+        .mission-box {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .mission-box h3 {
+            color: white;
+            margin-bottom: 20px;
+        }
+        
+        footer {
+            background: #2d3748;
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            margin-top: 60px;
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            .content-card {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">📘 DSA සිංහලෙන්</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">මුල් පිටුව</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="about.html">ව්‍යාපෘතිය ගැන</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="outcomes.html">ඉගෙනුම් ප්‍රතිඵල</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <h1>ව්‍යාපෘතිය ගැන</h1>
+            <p>සිංහල භාෂාවෙන් දත්ත ව්‍යුහ සහ අල්ගොරිතම් ඉගෙන ගන්න</p>
+        </div>
+    </div>
+
+    <!-- Content Section -->
+    <div class="content-section">
+        <div class="container">
+            <div class="content-card">
+                <h2>📘 ව්‍යාපෘති විස්තරය</h2>
+                <p>
+                    මෙම වෙබ් අඩවිය තුළ දත්ත ව්‍යුහ (Data Structures) සහ අල්ගොරිතම් (Algorithms) පිළිබඳ මූලික සංකල්ප 
+                    සිංහල භාෂාවෙන් පැහැදිලි කර ඇත. C ක්‍රමලේඛන භාෂාව භාවිතයෙන් සියලු සංකල්ප ප්‍රායෝගිකව විස්තර කර ඇති අතර, 
+                    සරල උදාහරණ සහ ක්‍රියාත්මක කේත සමඟ ඉදිරිපත් කර ඇත.
+                </p>
+                
+                <div class="highlight-box">
+                    <p>
+                        🎯 මෙම ව්‍යාපෘතිය නිර්මාණය කර ඇත්තේ ශ්‍රී ලාංකික සිසුන්ට සහ නව ඉගෙන ගන්නන්ට තමන්ගේ 
+                        මව් බාෂාවෙන් දත්ත ව්‍යුහ පිළිබඳ දැනුම ලබා ගැනීමේ අවස්ථාව සැලසීම සඳහාය.
+                    </p>
+                </div>
+
+                <h3>📚 ආවරණය වන මාතෘකා</h3>
+                <ul>
+                    <li>Arrays (අරා) - ස්ථාවර ප්‍රමාණයේ දත්ත එකතුව</li>
+                    <li>Linked Lists (සබැඳි ලැයිස්තු) - ගතික දත්ත ව්‍යුහය</li>
+                    <li>Stacks (තොග) - LIFO මූලධර්මය</li>
+                    <li>Queues (පෝලිම්) - FIFO මූලධර්මය</li>
+                    <li>Hash Tables (හැෂ් වගු) - වේගවත් දත්ත ප්‍රවේශය</li>
+                    <li>Trees (ගස්) - ධූරාවලිවන්ත දත්ත ව්‍යුහය</li>
+                    <li>Graphs (ග්‍රැෆ්) - සංකීර්ණ සම්බන්ධතා</li>
+                    <li>Sorting Algorithms (වර්ග කිරීමේ අල්ගොරිතම්)</li>
+                    <li>Searching Algorithms (සෙවුම් අල්ගොරිතම්)</li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h2>🎯 අරමුණු සහ ඉලක්ක</h2>
+                <p>
+                    මෙම ව්‍යාපෘතියේ ප්‍රධාන අරමුණු වන්නේ:
+                </p>
+                <ul>
+                    <li>දත්ත ව්‍යුහ සහ අල්ගොරිතම් සිංහල මාධ්‍යයෙන් ලබා දීම</li>
+                    <li>සිසුන්ට ප්‍රායෝගික උදාහරණ සමඟ ඉගෙන ගැනීමේ අවස්ථාව සැලසීම</li>
+                    <li>C භාෂාවේ ක්‍රියාත්මක කේත සමඟ සංකල්ප පැහැදිලි කිරීම</li>
+                    <li>නොමිලේ, ඕනෑම කෙනෙකුට ප්‍රවේශ විය හැකි අධ්‍යාපනික සම්පතක් නිර්මාණය කිරීම</li>
+                    <li>ශ්‍රී ලාංකික තාක්ෂණික අධ්‍යාපනය ප්‍රවර්ධනය කිරීම</li>
+                </ul>
+
+                <div class="mission-box">
+                    <h3>අපගේ දැක්ම</h3>
+                    <p>
+                        සිංහල මාධ්‍යයෙන් ගුණාත්මක තාක්ෂණික අධ්‍යාපනය ලබා දෙමින්, ශ්‍රී ලාංකික තරුණ තරුණියන් 
+                        ලෝක මට්ටමේ ක්‍රමලේඛකයින් බවට පත් කිරීම
+                    </p>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2>💻 භාවිත කරන තාක්ෂණයන්</h2>
+                <p>මෙම වෙබ් අඩවිය නිර්මාණය කිරීම සඳහා භාවිත කර ඇති තාක්ෂණයන්:</p>
+                <div style="margin-top: 20px;">
+                    <span class="tech-badge">HTML5</span>
+                    <span class="tech-badge">CSS3</span>
+                    <span class="tech-badge">JavaScript</span>
+                    <span class="tech-badge">Bootstrap 5</span>
+                    <span class="tech-badge">C Programming</span>
+                    <span class="tech-badge">GitHub Pages</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2>🌟 විශේෂ ලක්ෂණ</h2>
+                <ul>
+                    <li><strong>සිංහල මාධ්‍යය:</strong> සියලු සංකල්ප සිංහලෙන් පැහැදිලිව විස්තර කර ඇත</li>
+                    <li><strong>ප්‍රායෝගික උදාහරණ:</strong> සෑම සංකල්පයක්ම C කේත සමඟ පැහැදිලි කර ඇත</li>
+                    <li><strong>අන්තර්ක්‍රියාකාරී ඉගෙනීම:</strong> පරිශීලක හිතකාමී අතුරුමුහුණත</li>
+                    <li><strong>නොමිලේ ප්‍රවේශය:</strong> ඕනෑම කෙනෙකුට නොමිලේ ප්‍රවේශ විය හැක</li>
+                    <li><strong>Responsive Design:</strong> සියලු උපාංගවල හොඳින් ක්‍රියාත්මක වේ</li>
+                    <li><strong>විවෘත මූලාශ්‍ර:</strong> GitHub හරහා කේත ලබා ගත හැක</li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h2>🤝 දායකත්වය සහ සහයෝගය</h2>
+                <p>
+                    මෙම ව්‍යාපෘතිය විවෘත මූලාශ්‍ර ව්‍යාපෘතියක් වන අතර, ඕනෑම කෙනෙකුට දායක විය හැකිය. 
+                    ඔබට මෙම අඩවියට දායක වීමට, වැරදි නිවැරදි කිරීමට හෝ නව අන්තර්ගත එක් කිරීමට අවශ්‍ය නම්:
+                </p>
+                <ul>
+                    <li>GitHub repository එක fork කරන්න</li>
+                    <li>ඔබේ වෙනස්කම් කරන්න</li>
+                    <li>Pull request එකක් submit කරන්න</li>
+                </ul>
+                <p style="margin-top: 20px;">
+                    ඔබේ අදහස්, යෝජනා හෝ ගැටළු issues section එකේ share කරන්න.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h2>📧 සම්බන්ධ වන්න</h2>
+                <p>
+                    ප්‍රශ්න, යෝජනා හෝ ප්‍රතිපෝෂණ සඳහා GitHub Issues හරහා අප සම්බන්ධ කර ගන්න.
+                </p>
+                <p style="margin-top: 20px;">
+                    <strong>ව්‍යාපෘති වෙබ් අඩවිය:</strong> https://yourusername.github.io/data-structures-sinhala/<br>
+                    <strong>GitHub Repository:</strong> https://github.com/yourusername/data-structures-sinhala
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Data Structures and Algorithms in Sinhala | සියලු හිමිකම් ඇවිරිණි</p>
+            <p>GitHub Pages මගින් නොමිලේ සත්කාරකත්වය සපයා ඇත</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

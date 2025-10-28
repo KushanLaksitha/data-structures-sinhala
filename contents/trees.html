@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trees - DSA සිංහලෙන්</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans Sinhala', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .navbar {
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+        
+        .content-wrapper {
+            background: white;
+            margin: 100px auto 50px;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.2);
+            max-width: 1200px;
+        }
+        
+        h1 {
+            color: #667eea;
+            font-weight: 700;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            color: #333;
+            font-weight: 700;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        h3 {
+            color: #555;
+            font-weight: 600;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+        
+        p, li {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #444;
+        }
+        
+        .code-block {
+            background: #1e1e1e;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 25px 0;
+            overflow-x: auto;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .code-line {
+            display: block;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #d4d4d4;
+            padding: 2px 0;
+        }
+        
+        .code-comment {
+            color: #6a9955;
+        }
+        
+        .code-keyword {
+            color: #569cd6;
+        }
+        
+        .code-function {
+            color: #dcdcaa;
+        }
+        
+        .code-string {
+            color: #ce9178;
+        }
+        
+        .code-number {
+            color: #b5cea8;
+        }
+        
+        .explanation-box {
+            background: #f8f9fa;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .key-points {
+            background: #e7f3ff;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 25px 0;
+        }
+        
+        .key-points ul {
+            margin-bottom: 0;
+        }
+        
+        .visualization {
+            background: #fff;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .tree-visual {
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            line-height: 2;
+            color: #333;
+            font-size: 1.1rem;
+        }
+        
+        .back-btn {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 30px;
+            transition: transform 0.3s;
+        }
+        
+        .back-btn:hover {
+            transform: translateY(-3px);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">📘 DSA සිංහලෙන්</a>
+        </div>
+    </nav>
+
+    <div class="content-wrapper">
+        <h1>🌳 Trees (ගස්)</h1>
+        
+        <div class="explanation-box">
+            <p><strong>Tree යනු කුමක්ද?</strong></p>
+            <p>Tree එකක් යනු hierarchical (ධූරාවලිගත) දත්ත ව්‍යුහයකි. මෙහි nodes (නෝඩ්) සහ edges (දාර) භාවිතයෙන් parent-child සම්බන්ධතා නිරූපණය කරනු ලැබේ. Tree එකක root node එකක් ඇති අතර එක් node එකකට children කීපයක් තිබිය හැක.</p>
+        </div>
+
+        <h2>📊 Binary Tree Visualization</h2>
+        <div class="visualization">
+            <h4>Binary Tree Structure</h4>
+            <div class="tree-visual">
+                <pre>
+                    50
+                   /  \
+                  /    \
+                 30     70
+                / \    /  \
+               20 40  60  80
+              /
+             10
+                </pre>
+            </div>
+            <p><em>Root: 50 | Leaves: 10, 40, 60, 80 | Height: 3</em></p>
+        </div>
+
+        <h2>🔑 වැදගත් පාරිභාෂික වචන</h2>
+        <div class="key-points">
+            <ul>
+                <li><strong>Root:</strong> Tree එකේ ඉහළම node එක (මූලය)</li>
+                <li><strong>Parent:</strong> කිසියම් node එකකට ඉහළින් සෘජුවම සම්බන්ධ node එක</li>
+                <li><strong>Child:</strong> කිසියම් node එකකට යටින් සෘජුවම සම්බන්ධ node එක</li>
+                <li><strong>Leaf:</strong> Children නැති node එක (පත්‍රය)</li>
+                <li><strong>Height:</strong> Root එකේ සිට leaf එකක් දක්වා වැඩිම path එකේ edges ගණන</li>
+                <li><strong>Depth:</strong> Root එකේ සිට විශේෂිත node එකක් දක්වා edges ගණන</li>
+            </ul>
+        </div>
+
+        <h2>💻 Binary Search Tree (BST) Implementation</h2>
+        
+        <h3>1. Node Structure (නෝඩ් ව්‍යුහය)</h3>
+        <div class="code-block">
+<span class="code-line"><span class="code-keyword">#include</span> <span class="code-string">&lt;stdio.h&gt;</span>      <span class="code-comment">// Standard input/output functions</span></span>
+<span class="code-line"><span class="code-keyword">#include</span> <span class="code-string">&lt;stdlib.h&gt;</span>     <span class="code-comment">// Memory allocation functions</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-comment">// Binary tree node එකක structure එක</span></span>
+<span class="code-line"><span class="code-keyword">typedef struct</span> Node {</span>
+<span class="code-line">    <span class="code-keyword">int</span> data;               <span class="code-comment">// Node එකේ value එක store කරනවා</span></span>
+<span class="code-line">    <span class="code-keyword">struct</span> Node* left;     <span class="code-comment">// වම් child එකට pointer එක</span></span>
+<span class="code-line">    <span class="code-keyword">struct</span> Node* right;    <span class="code-comment">// දකුණු child එකට pointer එක</span></span>
+<span class="code-line">} Node;</span>
+        </div>
+
+        <div class="explanation-box">
+            <h4>BST Property (ද්විමය සෙවුම් ගස ගුණාංගය):</h4>
+            <p>Binary Search Tree එකක් හි:</p>
+            <ul>
+                <li>වම් subtree එකේ සියලුම values root වලට වඩා කුඩා වේ</li>
+                <li>දකුණු subtree එකේ සියලුම values root වලට වඩා විශාල වේ</li>
+                <li>මෙය හැම subtree එකකටම apply වේ</li>
+            </ul>
+        </div>
+
+        <h3>2. Create New Node (නව නෝඩ් එකක් සෑදීම)</h3>
+        <div class="code-block">
+<span class="code-line"><span class="code-comment">// නව node එකක් create කර return කරන function එක</span></span>
+<span class="code-line">Node* <span class="code-function">createNode</span>(<span class="code-keyword">int</span> data) {</span>
+<span class="code-line">    <span class="code-comment">// නව node එකක් සඳහා memory allocate කරනවා</span></span>
+<span class="code-line">    Node* newNode = (Node*)<span class="code-function">malloc</span>(<span class="code-keyword">sizeof</span>(Node));</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// Memory allocation එක successful වුණාද check කරනවා</span></span>
+<span class="code-line">    <span class="code-keyword">if</span> (newNode == NULL) {</span>
+<span class="code-line">        <span class="code-function">printf</span>(<span class="code-string">"Memory allocation failed!\n"</span>);</span>
+<span class="code-line">        <span class="code-function">exit</span>(<span class="code-number">1</span>);</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    newNode-&gt;data = data;       <span class="code-comment">// Data value එක set කරනවා</span></span>
+<span class="code-line">    newNode-&gt;left = NULL;       <span class="code-comment">// වම් child එක මුලින් NULL</span></span>
+<span class="code-line">    newNode-&gt;right = NULL;      <span class="code-comment">// දකුණු child එක මුලින් NULL</span></span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-keyword">return</span> newNode;  <span class="code-comment">// නව node එක return කරනවා</span></span>
+<span class="code-line">}</span>
+        </div>
+
+        <h3>3. Insert Operation (ඇතුළත් කිරීමේ ක්‍රියාවලිය)</h3>
+        <div class="code-block">
+<span class="code-line"><span class="code-comment">// BST එකට නව value එකක් insert කරන recursive function එක</span></span>
+<span class="code-line">Node* <span class="code-function">insert</span>(Node* root, <span class="code-keyword">int</span> data) {</span>
+<span class="code-line">    <span class="code-comment">// Base case: tree එක empty නම් නව node එක return කරනවා</span></span>
+<span class="code-line">    <span class="code-keyword">if</span> (root == NULL) {</span>
+<span class="code-line">        <span class="code-keyword">return</span> <span class="code-function">createNode</span>(data);</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// Insert කරන value එක root වලට වඩා කුඩා නම්</span></span>
+<span class="code-line">    <span class="code-keyword">if</span> (data &lt; root-&gt;data) {</span>
+<span class="code-line">        <span class="code-comment">// වම් subtree එකට recursively insert කරනවා</span></span>
+<span class="code-line">        root-&gt;left = <span class="code-function">insert</span>(root-&gt;left, data);</span>
+<span class="code-line">    }</span>
+<span class="code-line">    <span class="code-comment">// Insert කරන value එක root වලට වඩා විශාල නම්</span></span>
+<span class="code-line">    <span class="code-keyword">else if</span> (data &gt; root-&gt;data) {</span>
+<span class="code-line">        <span class="code-comment">// දකුණු subtree එකට recursively insert කරනවා</span></span>
+<span class="code-line">        root-&gt;right = <span class="code-function">insert</span>(root-&gt;right, data);</span>
+<span class="code-line">    }</span>
+<span class="code-line">    <span class="code-comment">// Same value එකක් තිබුණොත් ignore කරනවා (duplicates allow නැහැ)</span></span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-keyword">return</span> root;  <span class="code-comment">// Modified root එක return කරනවා</span></span>
+<span class="code-line">}</span>
+        </div>
+
+        <div class="explanation-box">
+            <h4>Insert Operation විස්තරය:</h4>
+            <p>උදාහරණයක් ලෙස 35 insert කිරීම tree එකේ 50, 30, 40 ඇති විට:</p>
+            <ul>
+                <li>35 < 50 → වම් subtree එකට යනවා</li>
+                <li>35 > 30 → දකුණු subtree එකට යනවා</li>
+                <li>35 < 40 → වම් child එක ලෙස insert වෙනවා</li>
+            </ul>
+        </div>
+
+        <h3>4. Search Operation (සෙවුම් ක්‍රියාවලිය)</h3>
+        <div class="code-block">
+<span class="code-line"><span class="code-comment">// BST එකෙන් value එකක් search කරන function එක</span></span>
+<span class="code-line">Node* <span class="code-function">search</span>(Node* root, <span class="code-keyword">int</span> data) {</span>
+<span class="code-line">    <span class="code-comment">// Base cases: root එක NULL නම් හෝ data හමු වුණොත්</span></span>
+<span class="code-line">    <span class="code-keyword">if</span> (root == NULL || root-&gt;data == data) {</span>
+<span class="code-line">        <span class="code-keyword">return</span> root;</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// Search කරන value එක root වලට වඩා කුඩා නම්</span></span>
+<span class="code-line">    <span class="code-keyword">if</span> (data &lt; root-&gt;data) {</span>
+<span class="code-line">        <span class="code-comment">// වම් subtree එකෙන් search කරනවා</span></span>
+<span class="code-line">        <span class="code-keyword">return</span> <span class="code-function">search</span>(root-&gt;left, data);</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// Search කරන value එක root වලට වඩා විශාල නම්</span></span>
+<span class="code-line">    <span class="code-comment">// දකුණු subtree එකෙන් search කරනවා</span></span>
+<span class="code-line">    <span class="code-keyword">return</span> <span class="code-function">search</span>(root-&gt;right, data);</span>
+<span class="code-line">}</span>
+        </div>
+
+        <h3>5. Inorder Traversal (අභ්‍යන්තර සංචරණය)</h3>
+        <div class="code-block">
+<span class="code-line"><span class="code-comment">// Tree එක inorder method එකෙන් traverse කරනවා (වම, root, දකුණ)</span></span>
+<span class="code-line"><span class="code-keyword">void</span> <span class="code-function">inorderTraversal</span>(Node* root) {</span>
+<span class="code-line">    <span class="code-comment">// Base case: node එක NULL නම් return වෙනවා</span></span>
+<span class="code-line">    <span class="code-keyword">if</span> (root == NULL) {</span>
+<span class="code-line">        <span class="code-keyword">return</span>;</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// වම් subtree එක recursively traverse කරනවා</span></span>
+<span class="code-line">    <span class="code-function">inorderTraversal</span>(root-&gt;left);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// Current node එකේ data එක print කරනවා</span></span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"%d "</span>, root-&gt;data);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// දකුණු subtree එක recursively traverse කරනවා</span></span>
+<span class="code-line">    <span class="code-function">inorderTraversal</span>(root-&gt;right);</span>
+<span class="code-line">}</span>
+        </div>
+
+        <div class="explanation-box">
+            <h4>Inorder Traversal ප්‍රතිඵලය:</h4>
+            <p>BST එකක් inorder traverse කළ විට sorted order එකෙන් values ලැබේ!</p>
+            <p>උදාහරණ: Tree එකේ 50, 30, 70, 20, 40 තිබුණොත් → Output: 20 30 40 50 70</p>
+        </div>
+
+        <h3>6. Preorder Traversal (පූර්ව සංචරණය)</h3>
+        <div class="code-block">
+<span class="code-line"><span class="code-comment">// Tree එක preorder method එකෙන් traverse කරනවා (root, වම, දකුණ)</span></span>
+<span class="code-line"><span class="code-keyword">void</span> <span class="code-function">preorderTraversal</span>(Node* root) {</span>
+<span class="code-line">    <span class="code-comment">// Base case: node එක NULL නම් return වෙනවා</span></span>
+<span class="code-line">    <span class="code-keyword">if</span> (root == NULL) {</span>
+<span class="code-line">        <span class="code-keyword">return</span>;</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// මුලින්ම current node එකේ data එක print කරනවා</span></span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"%d "</span>, root-&gt;data);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// වම් subtree එක recursively traverse කරනවා</span></span>
+<span class="code-line">    <span class="code-function">preorderTraversal</span>(root-&gt;left);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// දකුණු subtree එක recursively traverse කරනවා</span></span>
+<span class="code-line">    <span class="code-function">preorderTraversal</span>(root-&gt;right);</span>
+<span class="code-line">}</span>
+        </div>
+
+        <h3>7. Postorder Traversal (පශ්චාත් සංචරණය)</h3>
+        <div class="code-block">
+<span class="code-line"><span class="code-comment">// Tree එක postorder method එකෙන් traverse කරනවා (වම, දකුණ, root)</span></span>
+<span class="code-line"><span class="code-keyword">void</span> <span class="code-function">postorderTraversal</span>(Node* root) {</span>
+<span class="code-line">    <span class="code-comment">// Base case: node එක NULL නම් return වෙනවා</span></span>
+<span class="code-line">    <span class="code-keyword">if</span> (root == NULL) {</span>
+<span class="code-line">        <span class="code-keyword">return</span>;</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// වම් subtree එක recursively traverse කරනවා</span></span>
+<span class="code-line">    <span class="code-function">postorderTraversal</span>(root-&gt;left);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// දකුණු subtree එක recursively traverse කරනවා</span></span>
+<span class="code-line">    <span class="code-function">postorderTraversal</span>(root-&gt;right);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// අන්තිමට current node එකේ data එක print කරනවා</span></span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"%d "</span>, root-&gt;data);</span>
+<span class="code-line">}</span>
+        </div>
+
+        <h3>8. Find Minimum Value (අවම අගය සොයන්න)</h3>
+        <div class="code-block">
+<span class="code-line"><span class="code-comment">// BST එකෙන් අවම value එක සොයන function එක</span></span>
+<span class="code-line">Node* <span class="code-function">findMin</span>(Node* root) {</span>
+<span class="code-line">    <span class="code-comment">// Tree එක empty නම් NULL return කරනවා</span></span>
+<span class="code-line">    <span class="code-keyword">if</span> (root == NULL) {</span>
+<span class="code-line">        <span class="code-keyword">return</span> NULL;</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// වම් child එක NULL වෙනකම් වම්පසට යනවා</span></span>
+<span class="code-line">    <span class="code-comment">// BST හි අවම value එක වම්ම node එකේ තිබෙනවා</span></span>
+<span class="code-line">    <span class="code-keyword">while</span> (root-&gt;left != NULL) {</span>
+<span class="code-line">        root = root-&gt;left;</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-keyword">return</span> root;  <span class="code-comment">// වම්ම node එක return කරනවා</span></span>
+<span class="code-line">}</span>
+        </div>
+
+        <h3>9. Find Maximum Value (උපරිම අගය සොයන්න)</h3>
+        <div class="code-block">
+<span class="code-line"><span class="code-comment">// BST එකෙන් උපරිම value එක සොයන function එක</span></span>
+<span class="code-line">Node* <span class="code-function">findMax</span>(Node* root) {</span>
+<span class="code-line">    <span class="code-comment">// Tree එක empty නම් NULL return කරනවා</span></span>
+<span class="code-line">    <span class="code-keyword">if</span> (root == NULL) {</span>
+<span class="code-line">        <span class="code-keyword">return</span> NULL;</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// දකුණු child එක NULL වෙනකම් දකුණට යනවා</span></span>
+<span class="code-line">    <span class="code-comment">// BST හි උපරිම value එක දකුණුම node එකේ තිබෙනවා</span></span>
+<span class="code-line">    <span class="code-keyword">while</span> (root-&gt;right != NULL) {</span>
+<span class="code-line">        root = root-&gt;right;</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-keyword">return</span> root;  <span class="code-comment">// දකුණුම node එක return කරනවා</span></span>
+<span class="code-line">}</span>
+        </div>
+
+        <h3>10. Delete Node (නෝඩ් එකක් මකා දැමීම)</h3>
+        <div class="code-block">
+<span class="code-line"><span class="code-comment">// BST එකෙන් node එකක් delete කරන function එක</span></span>
+<span class="code-line">Node* <span class="code-function">deleteNode</span>(Node* root, <span class="code-keyword">int</span> data) {</span>
+<span class="code-line">    <span class="code-comment">// Base case: tree එක empty නම්</span></span>
+<span class="code-line">    <span class="code-keyword">if</span> (root == NULL) {</span>
+<span class="code-line">        <span class="code-keyword">return</span> root;</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// Delete කරන value එක root වලට වඩා කුඩා නම්</span></span>
+<span class="code-line">    <span class="code-keyword">if</span> (data &lt; root-&gt;data) {</span>
+<span class="code-line">        <span class="code-comment">// වම් subtree එකෙන් recursively delete කරනවා</span></span>
+<span class="code-line">        root-&gt;left = <span class="code-function">deleteNode</span>(root-&gt;left, data);</span>
+<span class="code-line">    }</span>
+<span class="code-line">    <span class="code-comment">// Delete කරන value එක root වලට වඩා විශාල නම්</span></span>
+<span class="code-line">    <span class="code-keyword">else if</span> (data &gt; root-&gt;data) {</span>
+<span class="code-line">        <span class="code-comment">// දකුණු subtree එකෙන් recursively delete කරනවා</span></span>
+<span class="code-line">        root-&gt;right = <span class="code-function">deleteNode</span>(root-&gt;right, data);</span>
+<span class="code-line">    }</span>
+<span class="code-line">    <span class="code-comment">// Delete කරන node එක හමු වුණා</span></span>
+<span class="code-line">    <span class="code-keyword">else</span> {</span>
+<span class="code-line">        <span class="code-comment">// Case 1: Node එකට children නැහැ හෝ එක් child එකක් පමණයි</span></span>
+<span class="code-line">        <span class="code-keyword">if</span> (root-&gt;left == NULL) {</span>
+<span class="code-line">            Node* temp = root-&gt;right;  <span class="code-comment">// දකුණු child එක save කරනවා</span></span>
+<span class="code-line">            <span class="code-function">free</span>(root);                   <span class="code-comment">// Current node එක free කරනවා</span></span>
+<span class="code-line">            <span class="code-keyword">return</span> temp;                 <span class="code-comment">// දකුණු child එක return කරනවා</span></span>
+<span class="code-line">        }</span>
+<span class="code-line">        <span class="code-keyword">else if</span> (root-&gt;right == NULL) {</span>
+<span class="code-line">            Node* temp = root-&gt;left;   <span class="code-comment">// වම් child එක save කරනවා</span></span>
+<span class="code-line">            <span class="code-function">free</span>(root);                   <span class="code-comment">// Current node එක free කරනවා</span></span>
+<span class="code-line">            <span class="code-keyword">return</span> temp;                 <span class="code-comment">// වම් child එක return කරනවා</span></span>
+<span class="code-line">        }</span>
+<span class="code-line">        </span>
+<span class="code-line">        <span class="code-comment">// Case 2: Node එකට children දෙකම තිබෙනවා</span></span>
+<span class="code-line">        <span class="code-comment">// දකුණු subtree එකේ අවම value එක හොයනවා (inorder successor)</span></span>
+<span class="code-line">        Node* temp = <span class="code-function">findMin</span>(root-&gt;right);</span>
+<span class="code-line">        </span>
+<span class="code-line">        <span class="code-comment">// Inorder successor එකේ value එක current node එකට copy කරනවා</span></span>
+<span class="code-line">        root-&gt;data = temp-&gt;data;</span>
+<span class="code-line">        </span>
+<span class="code-line">        <span class="code-comment">// දකුණු subtree එකෙන් inorder successor එක delete කරනවා</span></span>
+<span class="code-line">        root-&gt;right = <span class="code-function">deleteNode</span>(root-&gt;right, temp-&gt;data);</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-keyword">return</span> root;  <span class="code-comment">// Modified root එක return කරනවා</span></span>
+<span class="code-line">}</span>
+        </div>
+
+        <div class="explanation-box">
+            <h4>Delete Operation හි විශේෂ අවස්ථා:</h4>
+            <ul>
+                <li><strong>Leaf node:</strong> සරලවම delete කරන්න පුළුවන්</li>
+                <li><strong>එක් child එකක්:</strong> Child එක parent එකට සෘජුවම සම්බන්ධ කරනවා</li>
+                <li><strong>Children දෙකම:</strong> Inorder successor (දකුණු subtree එකේ අවම value) හෝ predecessor භාවිතා කරනවා</li>
+            </ul>
+        </div>
+
+        <h3>11. Calculate Height (උස ගණනය කිරීම)</h3>
+        <div class="code-block">
+<span class="code-line"><span class="code-comment">// Tree එකේ height එක calculate කරන function එක</span></span>
+<span class="code-line"><span class="code-keyword">int</span> <span class="code-function">height</span>(Node* root) {</span>
+<span class="code-line">    <span class="code-comment">// Base case: empty tree එකක් නම් height එක -1</span></span>
+<span class="code-line">    <span class="code-keyword">if</span> (root == NULL) {</span>
+<span class="code-line">        <span class="code-keyword">return</span> -<span class="code-number">1</span>;</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// වම් subtree එකේ height එක recursively calculate කරනවා</span></span>
+<span class="code-line">    <span class="code-keyword">int</span> leftHeight = <span class="code-function">height</span>(root-&gt;left);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// දකුණු subtree එකේ height එක recursively calculate කරනවා</span></span>
+<span class="code-line">    <span class="code-keyword">int</span> rightHeight = <span class="code-function">height</span>(root-&gt;right);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// වැඩි height එක තෝරාගෙන 1 එකතු කරනවා (current edge එක සඳහා)</span></span>
+<span class="code-line">    <span class="code-keyword">return</span> (leftHeight &gt; rightHeight ? leftHeight : rightHeight) + <span class="code-number">1</span>;</span>
+<span class="code-line">}</span>
+        </div>
+
+        <h3>12. Main Function (ප්‍රධාන ශ්‍රිතය)</h3>
+        <div class="code-block">
+<span class="code-line"><span class="code-comment">// Main function - program එක execute වෙන තැන</span></span>
+<span class="code-line"><span class="code-keyword">int</span> <span class="code-function">main</span>() {</span>
+<span class="code-line">    <span class="code-comment">// Tree එක NULL ලෙස initialize කරනවා</span></span>
+<span class="code-line">    Node* root = NULL;</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// කීපයක් values insert කරනවා</span></span>
+<span class="code-line">    root = <span class="code-function">insert</span>(root, <span class="code-number">50</span>);</span>
+<span class="code-line">    root = <span class="code-function">insert</span>(root, <span class="code-number">30</span>);</span>
+<span class="code-line">    root = <span class="code-function">insert</span>(root, <span class="code-number">70</span>);</span>
+<span class="code-line">    root = <span class="code-function">insert</span>(root, <span class="code-number">20</span>);</span>
+<span class="code-line">    root = <span class="code-function">insert</span>(root, <span class="code-number">40</span>);</span>
+<span class="code-line">    root = <span class="code-function">insert</span>(root, <span class="code-number">60</span>);</span>
+<span class="code-line">    root = <span class="code-function">insert</span>(root, <span class="code-number">80</span>);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// විවිධ traversal methods භාවිතයෙන් tree එක print කරනවා</span></span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"Inorder Traversal: "</span>);</span>
+<span class="code-line">    <span class="code-function">inorderTraversal</span>(root);</span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"\n"</span>);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"Preorder Traversal: "</span>);</span>
+<span class="code-line">    <span class="code-function">preorderTraversal</span>(root);</span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"\n"</span>);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"Postorder Traversal: "</span>);</span>
+<span class="code-line">    <span class="code-function">postorderTraversal</span>(root);</span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"\n\n"</span>);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// Tree එකේ height එක calculate කරනවා</span></span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"Tree Height: %d\n"</span>, <span class="code-function">height</span>(root));</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// අවම සහ උපරිම values සොයනවා</span></span>
+<span class="code-line">    Node* minNode = <span class="code-function">findMin</span>(root);</span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"Minimum value: %d\n"</span>, minNode-&gt;data);</span>
+<span class="code-line">    </span>
+<span class="code-line">    Node* maxNode = <span class="code-function">findMax</span>(root);</span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"Maximum value: %d\n\n"</span>, maxNode-&gt;data);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// Value එකක් search කරනවා</span></span>
+<span class="code-line">    Node* found = <span class="code-function">search</span>(root, <span class="code-number">40</span>);</span>
+<span class="code-line">    <span class="code-keyword">if</span> (found != NULL) {</span>
+<span class="code-line">        <span class="code-function">printf</span>(<span class="code-string">"Found: %d\n"</span>, found-&gt;data);</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// Node එකක් delete කරනවා</span></span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"Deleting 30...\n"</span>);</span>
+<span class="code-line">    root = <span class="code-function">deleteNode</span>(root, <span class="code-number">30</span>);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"Inorder after deletion: "</span>);</span>
+<span class="code-line">    <span class="code-function">inorderTraversal</span>(root);</span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"\n"</span>);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-keyword">return</span> <span class="code-number">0</span>;</span>
+<span class="code-line">}</span>
+        </div>
+
+        <h2>⚡ Time Complexity (කාල සංකීර්ණතාව)</h2>
+        <div class="key-points">
+            <h4>Balanced BST (සමබර ගස):</h4>
+            <ul>
+                <li><strong>Insert:</strong> O(log n) - Tree එකේ height එක අනුව</li>
+                <li><strong>Search:</strong> O(log n) - හැම level එකකදී විකල්ප අඩකට අඩු වෙනවා</li>
+                <li><strong>Delete:</strong> O(log n) - Search + Rearrange operations</li>
+            </ul>
+            
+            <h4>Unbalanced BST (අසමබර ගස):</h4>
+            <ul>
+                <li><strong>Worst Case:</strong> O(n) - Tree එක linked list එකක් වගේ වුණොත්</li>
+                <li>උදාහරණ: Sorted order එකෙන් insert කළොත් (1, 2, 3, 4, 5...)</li>
+            </ul>
+        </div>
+
+        <h2>🌲 Tree Types (ගස් වර්ග)</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="key-points">
+                    <h4>1. Binary Tree:</h4>
+                    <p>හැම node එකකටම උපරිම children 2ක් විතරයි</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="key-points">
+                    <h4>2. Binary Search Tree (BST):</h4>
+                    <p>වම < root < දකුණ යන property එක තියෙනවා</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="key-points">
+                    <h4>3. AVL Tree:</h4>
+                    <p>Self-balancing BST එකක්</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="key-points">
+                    <h4>4. Red-Black Tree:</h4>
+                    <p>Color property සහිත balanced tree එකක්</p>
+                </div>
+            </div>
+        </div>
+
+        <h2>💡 Real-World Applications (භාවිත කරන තැන්)</h2>
+        <div class="key-points">
+            <ul>
+                <li><strong>File Systems:</strong> Directory structure represent කිරීම</li>
+                <li><strong>Databases:</strong> Indexing සහ fast search operations</li>
+                <li><strong>Compilers:</strong> Expression evaluation (expression trees)</li>
+                <li><strong>Network Routing:</strong> Routing tables maintain කිරීම</li>
+                <li><strong>AI/ML:</strong> Decision trees සහ game trees</li>
+                <li><strong>XML/HTML Parsing:</strong> DOM tree structure</li>
+            </ul>
+        </div>
+
+        <a href="../index.html" class="back-btn">← මුල් පිටුවට යන්න</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stacks (තොග) | DSA සිංහලෙන්</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans Sinhala', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .navbar {
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+        
+        .content-section {
+            background: white;
+            margin: 80px auto 30px;
+            padding: 50px;
+            border-radius: 15px;
+            max-width: 1200px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #667eea;
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            color: #764ba2;
+            font-weight: 700;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+        
+        .code-block {
+            background: #1e1e1e;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        
+        .code-line {
+            display: block;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            color: #d4d4d4;
+        }
+        
+        .comment {
+            color: #6a9955;
+        }
+        
+        .keyword {
+            color: #569cd6;
+        }
+        
+        .function {
+            color: #dcdcaa;
+        }
+        
+        .string {
+            color: #ce9178;
+        }
+        
+        .number {
+            color: #b5cea8;
+        }
+        
+        .info-box {
+            background: #e8f4f8;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .example-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .btn-back {
+            background: #667eea;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        
+        .btn-back:hover {
+            background: #764ba2;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html" style="color: #667eea; font-weight: 700;">📘 DSA සිංහලෙන්</a>
+        </div>
+    </nav>
+
+    <div class="content-section">
+        <a href="../index.html" class="btn-back">← මුල් පිටුවට</a>
+        
+        <h1>📚 Stacks (තොග)</h1>
+        
+        <p><strong>Stack</strong> යනු LIFO (Last In First Out) මූලධර්මය අනුව ක්‍රියා කරන රේඛීය දත්ත ව්‍යුහයකි. අවසානයේ එකතු කළ element එක ප්‍රථමයෙන්ම ඉවත් වේ. පොත් ගොඩක් මෙන් - ඉහළින්ම තිබෙන පොත පළමුවෙන්ම ගත හැක.</p>
+
+        <h2>🔑 ප්‍රධාන ලක්ෂණ</h2>
+        <ul>
+            <li><strong>LIFO Principle:</strong> Last In, First Out - අවසානයේ ඇතුළත් කළ අගය පළමුව පිටතට</li>
+            <li><strong>Top Pointer:</strong> Stack එකේ ඉහළම element එක track කරයි</li>
+            <li><strong>Limited Access:</strong> Top element එකට පමණක් ප්‍රවේශ විය හැක</li>
+            <li><strong>Two Main Operations:</strong> Push (ඇතුළත් කිරීම) සහ Pop (ඉවත් කිරීම)</li>
+        </ul>
+
+        <div class="info-box">
+            <strong>💡 Stack Operations:</strong><br>
+            <strong>Push:</strong> Stack එකේ top එකට element එකක් එකතු කිරීම<br>
+            <strong>Pop:</strong> Stack එකේ top element එක ඉවත් කිරීම<br>
+            <strong>Peek/Top:</strong> Top element එක බැලීම (ඉවත් නොකර)<br>
+            <strong>isEmpty:</strong> Stack එක හිස්ද යන්න පරීක්ෂා කිරීම
+        </div>
+
+        <h2>⏱️ Time Complexity</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Operation</th>
+                    <th>Time Complexity</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Push (එකතු කිරීම)</td>
+                    <td>O(1)</td>
+                </tr>
+                <tr>
+                    <td>Pop (ඉවත් කිරීම)</td>
+                    <td>O(1)</td>
+                </tr>
+                <tr>
+                    <td>Peek (බැලීම)</td>
+                    <td>O(1)</td>
+                </tr>
+                <tr>
+                    <td>Search</td>
+                    <td>O(n)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>💻 C Code Examples</h2>
+
+        <h3>1. Stack Implementation using Array</h3>
+        <div class="code-block">
+<span class="code-line"><span class="comment">// Array භාවිතයෙන් Stack implementation</span></span>
+<span class="code-line"><span class="keyword">#include</span> <span class="string">&lt;stdio.h&gt;</span></span>
+<span class="code-line"><span class="keyword">#include</span> <span class="string">&lt;stdlib.h&gt;</span></span>
+<span class="code-line"><span class="keyword">#include</span> <span class="string">&lt;stdbool.h&gt;</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="keyword">#define</span> MAX <span class="number">100</span>  <span class="comment">// Stack එකේ උපරිම ප්‍රමාණය</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="comment">// Stack structure</span></span>
+<span class="code-line"><span class="keyword">struct</span> Stack {</span>
+<span class="code-line">    <span class="keyword">int</span> items[MAX];  <span class="comment">// Elements ගබඩා කරන array එක</span></span>
+<span class="code-line">    <span class="keyword">int</span> top;  <span class="comment">// Top element එකේ index එක</span></span>
+<span class="code-line">};</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="comment">// Stack එක initialize කිරීම</span></span>
+<span class="code-line"><span class="keyword">void</span> <span class="function">initialize</span>(<span class="keyword">struct</span> Stack* s) {</span>
+<span class="code-line">    s-&gt;top = <span class="number">-1</span>;  <span class="comment">// -1 යනු stack එක හිස් බව පෙන්වයි</span></span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="comment">// Stack එක හිස්ද යන්න පරීක්ෂා කිරීම</span></span>
+<span class="code-line"><span class="keyword">bool</span> <span class="function">isEmpty</span>(<span class="keyword">struct</span> Stack* s) {</span>
+<span class="code-line">    <span class="keyword">return</span> s-&gt;top == <span class="number">-1</span>;  <span class="comment">// top -1 නම් හිස්</span></span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="comment">// Stack එක පිරී ඇත්ද යන්න පරීක්ෂා කිරීම</span></span>
+<span class="code-line"><span class="keyword">bool</span> <span class="function">isFull</span>(<span class="keyword">struct</span> Stack* s) {</span>
+<span class="code-line">    <span class="keyword">return</span> s-&gt;top == MAX - <span class="number">1</span>;  <span class="comment">// top MAX-1 නම් පිරී ඇත</span></span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="comment">// Push operation - stack එකට element එකක් එකතු කිරීම</span></span>
+<span class="code-line"><span class="keyword">void</span> <span class="function">push</span>(<span class="keyword">struct</span> Stack* s, <span class="keyword">int</span> value) {</span>
+<span class="code-line">    <span class="keyword">if</span>(<span class="function">isFull</span>(s)) {  <span class="comment">// stack පිරී ඇත්නම්</span></span>
+<span class="code-line">        <span class="function">printf</span>(<span class="string">"Stack Overflow! එකතු කළ නොහැක.\n"</span>);</span>
+<span class="code-line">        <span class="keyword">return</span>;</span>
+<span class="code-line">    }</span>
+<span class="code-line">    s-&gt;top++;  <span class="comment">// top එක වැඩි කරන්න</span></span>
+<span class="code-line">    s-&gt;items[s-&gt;top] = value;  <span class="comment">// අලුත් top position එකේ value එක ගබඩා කරන්න</span></span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"%d stack එකට push කරන ලදී.\n"</span>, value);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="comment">// Pop operation - stack එකෙන් top element එක ඉවත් කිරීම</span></span>
+<span class="code-line"><span class="keyword">int</span> <span class="function">pop</span>(<span class="keyword">struct</span> Stack* s) {</span>
+<span class="code-line">    <span class="keyword">if</span>(<span class="function">isEmpty</span>(s)) {  <span class="comment">// stack හිස් නම්</span></span>
+<span class="code-line">        <span class="function">printf</span>(<span class="string">"Stack Underflow! ඉවත් කළ නොහැක.\n"</span>);</span>
+<span class="code-line">        <span class="keyword">return</span> <span class="number">-1</span>;</span>
+<span class="code-line">    }</span>
+<span class="code-line">    <span class="keyword">int</span> value = s-&gt;items[s-&gt;top];  <span class="comment">// top element එක ගන්න</span></span>
+<span class="code-line">    s-&gt;top--;  <span class="comment">// top එක අඩු කරන්න</span></span>
+<span class="code-line">    <span class="keyword">return</span> value;  <span class="comment">// ඉවත් කළ value එක return කරන්න</span></span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="comment">// Peek operation - top element එක බලන්න (ඉවත් නොකර)</span></span>
+<span class="code-line"><span class="keyword">int</span> <span class="function">peek</span>(<span class="keyword">struct</span> Stack* s) {</span>
+<span class="code-line">    <span class="keyword">if</span>(<span class="function">isEmpty</span>(s)) {  <span class="comment">// stack හිස් නම්</span></span>
+<span class="code-line">        <span class="function">printf</span>(<span class="string">"Stack හිස්!\n"</span>);</span>
+<span class="code-line">        <span class="keyword">return</span> <span class="number">-1</span>;</span>
+<span class="code-line">    }</span>
+<span class="code-line">    <span class="keyword">return</span> s-&gt;items[s-&gt;top];  <span class="comment">// top element එක return කරන්න</span></span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="comment">// Stack එක display කිරීම</span></span>
+<span class="code-line"><span class="keyword">void</span> <span class="function">display</span>(<span class="keyword">struct</span> Stack* s) {</span>
+<span class="code-line">    <span class="keyword">if</span>(<span class="function">isEmpty</span>(s)) {</span>
+<span class="code-line">        <span class="function">printf</span>(<span class="string">"Stack හිස්!\n"</span>);</span>
+<span class="code-line">        <span class="keyword">return</span>;</span>
+<span class="code-line">    }</span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"Stack elements: "</span>);</span>
+<span class="code-line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = s-&gt;top; i &gt;= <span class="number">0</span>; i--) {  <span class="comment">// top සිට bottom දක්වා</span></span>
+<span class="code-line">        <span class="function">printf</span>(<span class="string">"%d "</span>, s-&gt;items[i]);</span>
+<span class="code-line">    }</span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"\n"</span>);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="keyword">int</span> <span class="function">main</span>() {</span>
+<span class="code-line">    <span class="keyword">struct</span> Stack stack;  <span class="comment">// Stack එකක් declare කරන්න</span></span>
+<span class="code-line">    <span class="function">initialize</span>(&amp;stack);  <span class="comment">// Initialize කරන්න</span></span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// Push operations</span></span>
+<span class="code-line">    <span class="function">push</span>(&amp;stack, <span class="number">10</span>);</span>
+<span class="code-line">    <span class="function">push</span>(&amp;stack, <span class="number">20</span>);</span>
+<span class="code-line">    <span class="function">push</span>(&amp;stack, <span class="number">30</span>);</span>
+<span class="code-line">    <span class="function">push</span>(&amp;stack, <span class="number">40</span>);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// Stack එක display කරන්න</span></span>
+<span class="code-line">    <span class="function">display</span>(&amp;stack);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// Peek operation</span></span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"Top element: %d\n"</span>, <span class="function">peek</span>(&amp;stack));</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// Pop operations</span></span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"Pop කළ element: %d\n"</span>, <span class="function">pop</span>(&amp;stack));</span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"Pop කළ element: %d\n"</span>, <span class="function">pop</span>(&amp;stack));</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// Display after popping</span></span>
+<span class="code-line">    <span class="function">display</span>(&amp;stack);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="keyword">return</span> <span class="number">0</span>;</span>
+<span class="code-line">}</span>
+        </div>
+
+        <h3>2. Parentheses Checking using Stack</h3>
+        <div class="code-block">
+<span class="code-line"><span class="comment">// Stack භාවිතයෙන් brackets balance වී ඇත්ද යන්න පරීක්ෂා කිරීම</span></span>
+<span class="code-line"><span class="keyword">#include</span> <span class="string">&lt;stdio.h&gt;</span></span>
+<span class="code-line"><span class="keyword">#include</span> <span class="string">&lt;stdlib.h&gt;</span></span>
+<span class="code-line"><span class="keyword">#include</span> <span class="string">&lt;string.h&gt;</span></span>
+<span class="code-line"><span class="keyword">#include</span> <span class="string">&lt;stdbool.h&gt;</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="keyword">#define</span> MAX <span class="number">100</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="comment">// Stack structure</span></span>
+<span class="code-line"><span class="keyword">struct</span> Stack {</span>
+<span class="code-line">    <span class="keyword">char</span> items[MAX];</span>
+<span class="code-line">    <span class="keyword">int</span> top;</span>
+<span class="code-line">};</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="keyword">void</span> <span class="function">initialize</span>(<span class="keyword">struct</span> Stack* s) {</span>
+<span class="code-line">    s-&gt;top = <span class="number">-1</span>;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="keyword">bool</span> <span class="function">isEmpty</span>(<span class="keyword">struct</span> Stack* s) {</span>
+<span class="code-line">    <span class="keyword">return</span> s-&gt;top == <span class="number">-1</span>;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="keyword">void</span> <span class="function">push</span>(<span class="keyword">struct</span> Stack* s, <span class="keyword">char</span> c) {</span>
+<span class="code-line">    <span class="keyword">if</span>(s-&gt;top &lt; MAX - <span class="number">1</span>) {  <span class="comment">// overflow check</span></span>
+<span class="code-line">        s-&gt;top++;</span>
+<span class="code-line">        s-&gt;items[s-&gt;top] = c;</span>
+<span class="code-line">    }</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="keyword">char</span> <span class="function">pop</span>(<span class="keyword">struct</span> Stack* s) {</span>
+<span class="code-line">    <span class="keyword">if</span>(<span class="function">isEmpty</span>(s)) {</span>
+<span class="code-line">        <span class="keyword">return</span> <span class="string">'\0'</span>;</span>
+<span class="code-line">    }</span>
+<span class="code-line">    <span class="keyword">char</span> c = s-&gt;items[s-&gt;top];</span>
+<span class="code-line">    s-&gt;top--;</span>
+<span class="code-line">    <span class="keyword">return</span> c;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="comment">// Opening bracket එකක්ද යන්න check කිරීම</span></span>
+<span class="code-line"><span class="keyword">bool</span> <span class="function">isOpening</span>(<span class="keyword">char</span> c) {</span>
+<span class="code-line">    <span class="keyword">return</span> (c == <span class="string">'('</span> || c == <span class="string">'{'</span> || c == <span class="string">'['</span>);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="comment">// Closing bracket එකක්ද යන්න check කිරීම</span></span>
+<span class="code-line"><span class="keyword">bool</span> <span class="function">isClosing</span>(<span class="keyword">char</span> c) {</span>
+<span class="code-line">    <span class="keyword">return</span> (c == <span class="string">')'</span> || c == <span class="string">'}'</span> || c == <span class="string">']'</span>);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="comment">// Opening සහ closing brackets match වනවාද යන්න පරීක්ෂා කිරීම</span></span>
+<span class="code-line"><span class="keyword">bool</span> <span class="function">isMatching</span>(<span class="keyword">char</span> opening, <span class="keyword">char</span> closing) {</span>
+<span class="code-line">    <span class="keyword">return</span> (opening == <span class="string">'('</span> &amp;&amp; closing == <span class="string">')'</span>) ||</span>
+<span class="code-line">           (opening == <span class="string">'{'</span> &amp;&amp; closing == <span class="string">'}'</span>) ||</span>
+<span class="code-line">           (opening == <span class="string">'['</span> &amp;&amp; closing == <span class="string">']'</span>);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="comment">// Parentheses balanced ද යන්න පරීක්ෂා කිරීම</span></span>
+<span class="code-line"><span class="keyword">bool</span> <span class="function">checkBalanced</span>(<span class="keyword">char</span>* expression) {</span>
+<span class="code-line">    <span class="keyword">struct</span> Stack stack;</span>
+<span class="code-line">    <span class="function">initialize</span>(&amp;stack);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// Expression එක හරහා යන්න</span></span>
+<span class="code-line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="function">strlen</span>(expression); i++) {</span>
+<span class="code-line">        <span class="keyword">char</span> current = expression[i];</span>
+<span class="code-line">        </span>
+<span class="code-line">        <span class="keyword">if</span>(<span class="function">isOpening</span>(current)) {  <span class="comment">// Opening bracket නම්</span></span>
+<span class="code-line">            <span class="function">push</span>(&amp;stack, current);  <span class="comment">// Stack එකට push කරන්න</span></span>
+<span class="code-line">        }</span>
+<span class="code-line">        <span class="keyword">else</span> <span class="keyword">if</span>(<span class="function">isClosing</span>(current)) {  <span class="comment">// Closing bracket නම්</span></span>
+<span class="code-line">            <span class="keyword">if</span>(<span class="function">isEmpty</span>(&amp;stack)) {  <span class="comment">// Stack හිස් නම් unbalanced</span></span>
+<span class="code-line">                <span class="keyword">return</span> <span class="keyword">false</span>;</span>
+<span class="code-line">            }</span>
+<span class="code-line">            <span class="keyword">char</span> top = <span class="function">pop</span>(&amp;stack);  <span class="comment">// Top element එක pop කරන්න</span></span>
+<span class="code-line">            <span class="keyword">if</span>(!<span class="function">isMatching</span>(top, current)) {  <span class="comment">// Match නොවන්නේ නම්</span></span>
+<span class="code-line">                <span class="keyword">return</span> <span class="keyword">false</span>;</span>
+<span class="code-line">            }</span>
+<span class="code-line">        }</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// අවසානයේ stack හිස් නම් balanced</span></span>
+<span class="code-line">    <span class="keyword">return</span> <span class="function">isEmpty</span>(&amp;stack);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="keyword">int</span> <span class="function">main</span>() {</span>
+<span class="code-line">    <span class="keyword">char</span> exp1[] = <span class="string">"{[()()]}"</span>;</span>
+<span class="code-line">    <span class="keyword">char</span> exp2[] = <span class="string">"{[(])}"</span>;</span>
+<span class="code-line">    <span class="keyword">char</span> exp3[] = <span class="string">"((a+b)*c)"</span>;</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// විවිධ expressions පරීක්ෂා කිරීම</span></span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"%s : %s\n"</span>, exp1, <span class="function">checkBalanced</span>(exp1) ? <span class="string">"Balanced"</span> : <span class="string">"Not Balanced"</span>);</span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"%s : %s\n"</span>, exp2, <span class="function">checkBalanced</span>(exp2) ? <span class="string">"Balanced"</span> : <span class="string">"Not Balanced"</span>);</span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"%s : %s\n"</span>, exp3, <span class="function">checkBalanced</span>(exp3) ? <span class="string">"Balanced"</span> : <span class="string">"Not Balanced"</span>);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="keyword">return</span> <span class="number">0</span>;</span>
+<span class="code-line">}</span>
+        </div>
+
+        <h3>3. Reverse a String using Stack</h3>
+        <div class="code-block">
+<span class="code-line"><span class="comment">// Stack භාවිතයෙන් string එකක් ප්‍රතිලෝම කිරීම</span></span>
+<span class="code-line"><span class="keyword">#include</span> <span class="string">&lt;stdio.h&gt;</span></span>
+<span class="code-line"><span class="keyword">#include</span> <span class="string">&lt;string.h&gt;</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="keyword">#define</span> MAX <span class="number">100</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="keyword">struct</span> Stack {</span>
+<span class="code-line">    <span class="keyword">char</span> items[MAX];</span>
+<span class="code-line">    <span class="keyword">int</span> top;</span>
+<span class="code-line">};</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="keyword">void</span> <span class="function">initialize</span>(<span class="keyword">struct</span> Stack* s) {</span>
+<span class="code-line">    s-&gt;top = <span class="number">-1</span>;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="keyword">void</span> <span class="function">push</span>(<span class="keyword">struct</span> Stack* s, <span class="keyword">char</span> c) {</span>
+<span class="code-line">    <span class="keyword">if</span>(s-&gt;top &lt; MAX - <span class="number">1</span>) {</span>
+<span class="code-line">        s-&gt;top++;</span>
+<span class="code-line">        s-&gt;items[s-&gt;top] = c;</span>
+<span class="code-line">    }</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="keyword">char</span> <span class="function">pop</span>(<span class="keyword">struct</span> Stack* s) {</span>
+<span class="code-line">    <span class="keyword">if</span>(s-&gt;top &gt;= <span class="number">0</span>) {</span>
+<span class="code-line">        <span class="keyword">char</span> c = s-&gt;items[s-&gt;top];</span>
+<span class="code-line">        s-&gt;top--;</span>
+<span class="code-line">        <span class="keyword">return</span> c;</span>
+<span class="code-line">    }</span>
+<span class="code-line">    <span class="keyword">return</span> <span class="string">'\0'</span>;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="comment">// String එක reverse කිරීම</span></span>
+<span class="code-line"><span class="keyword">void</span> <span class="function">reverseString</span>(<span class="keyword">char</span>* str) {</span>
+<span class="code-line">    <span class="keyword">struct</span> Stack stack;</span>
+<span class="code-line">    <span class="function">initialize</span>(&amp;stack);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// String එකේ සියලු characters stack එකට push කරන්න</span></span>
+<span class="code-line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="function">strlen</span>(str); i++) {</span>
+<span class="code-line">        <span class="function">push</span>(&amp;stack, str[i]);</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// Stack එකෙන් pop කර string එක ආපසු write කරන්න</span></span>
+<span class="code-line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="function">strlen</span>(str); i++) {</span>
+<span class="code-line">        str[i] = <span class="function">pop</span>(&amp;stack);  <span class="comment">// Pop කරන විට reverse order එකෙන් එනවා</span></span>
+<span class="code-line">    }</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="keyword">int</span> <span class="function">main</span>() {</span>
+<span class="code-line">    <span class="keyword">char</span> str[] = <span class="string">"Hello World"</span>;</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"මුල් string: %s\n"</span>, str);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// String එක reverse කරන්න</span></span>
+<span class="code-line">    <span class="function">reverseString</span>(str);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"Reverse කළ string: %s\n"</span>, str);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="keyword">return</span> <span class="number">0</span>;</span>
+<span class="code-line">}</span>
+        </div>
+
+        <h2>✅ වාසි (Advantages)</h2>
+        <ul>
+            <li>සරල හා කාර්යක්ෂම operations (O(1) time)</li>
+            <li>Implement කිරීමට පහසුය</li>
+            <li>Function calls සහ recursion manage කිරීමට භාවිතා වේ</li>
+            <li>Memory management කාර්යක්ෂමය</li>
+        </ul>
+
+        <h2>❌ අවාසි (Disadvantages)</h2>
+        <ul>
+            <li>Array implementation එකේ fixed size limitation</li>
+            <li>Random access නැත - top element එකට පමණක්</li>
+            <li>Stack overflow/underflow සිදු විය හැක</li>
+            <li>Middle elements වෙත access කළ නොහැක</li>
+        </ul>
+
+        <div class="example-box">
+            <h3>🎯 Stacks භාවිත කරන තැන්</h3>
+            <ul>
+                <li><strong>Function Calls:</strong> Program execution එකේ function calls track කිරීම</li>
+                <li><strong>Expression Evaluation:</strong> Mathematical expressions evaluate කිරීම</li>
+                <li><strong>Undo/Redo:</strong> Text editors හි undo/redo functionality</li>
+                <li><strong>Browser History:</strong> Back button functionality</li>
+                <li><strong>Parentheses Matching:</strong> Compilers හි syntax checking</li>
+                <li><strong>Recursion:</strong> Recursive function calls manage කිරීම</li>
+            </ul>
+        </div>
+
+        <div class="info-box">
+            <strong>💡 Stack Overflow සහ Underflow:</strong><br>
+            <strong>Stack Overflow:</strong> Stack එක පිරී ඇති විට තවත් push කිරීමට උත්සාහ කිරීම<br>
+            <strong>Stack Underflow:</strong> Stack එක හිස් විට pop කිරීමට උත්සාහ කිරීම
+        </div>
+
+        <a href="../index.html" class="btn-back">← මුල් පිටුවට</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

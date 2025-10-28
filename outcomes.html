@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ඉගෙනුම් ප්‍රතිඵල | DSA in Sinhala</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;700&family=Fira+Code:wght@400;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans Sinhala', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .navbar {
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: #667eea !important;
+        }
+        
+        .nav-link {
+            color: #555 !important;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-link:hover {
+            color: #667eea !important;
+        }
+        
+        .hero-section {
+            padding: 120px 0 80px;
+            text-align: center;
+            color: white;
+        }
+        
+        .hero-section h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            animation: fadeInDown 0.8s ease;
+        }
+        
+        .hero-section p {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            animation: fadeInDown 1s ease;
+        }
+        
+        .content-section {
+            background: white;
+            padding: 80px 0;
+            margin-top: -40px;
+            border-radius: 40px 40px 0 0;
+        }
+        
+        .outcome-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: fadeInUp 0.8s ease;
+            animation-fill-mode: both;
+        }
+        
+        .outcome-card:nth-child(1) { animation-delay: 0.1s; }
+        .outcome-card:nth-child(2) { animation-delay: 0.2s; }
+        .outcome-card:nth-child(3) { animation-delay: 0.3s; }
+        .outcome-card:nth-child(4) { animation-delay: 0.4s; }
+        .outcome-card:nth-child(5) { animation-delay: 0.5s; }
+        
+        .outcome-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        .outcome-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 60px;
+            height: 60px;
+            line-height: 60px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .outcome-card h3 {
+            color: #333;
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        .outcome-card p {
+            color: #555;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        
+        .outcome-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .outcome-card ul li {
+            color: #555;
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 12px;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .outcome-card ul li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .skills-section {
+            background: #f8f9fa;
+            padding: 60px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 50px;
+        }
+        
+        .skill-box {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s;
+        }
+        
+        .skill-box:hover {
+            transform: translateY(-5px);
+        }
+        
+        .skill-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        .skill-box h4 {
+            color: #333;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .skill-box p {
+            color: #666;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+        
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        
+        .btn-start {
+            background: white;
+            color: #667eea;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-start:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            color: #667eea;
+        }
+        
+        footer {
+            background: #2d3748;
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+            .outcome-card {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">📘 DSA සිංහලෙන්</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">මුල් පිටුව</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">ව්‍යාපෘතිය ගැන</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="outcomes.html">ඉගෙනුම් ප්‍රතිඵල</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="container">
+            <h1>අපේක්ෂිත ඉගෙනුම් ප්‍රතිඵල</h1>
+            <p>මෙම පාඨමාලාව අවසන් කිරීමෙන් පසු ඔබට හැකි වනු ඇත්තේ...</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content-section">
+        <div class="container">
+            <div class="outcome-card">
+                <div class="outcome-number">01</div>
+                <h3>විවිධ දත්ත ව්‍යුහවල යෙදුම් හඳුනා ගැනීම</h3>
+                <p>
+                    වෙනස් වෙනස් ගැටළු විසඳීම සඳහා සුදුසු දත්ත ව්‍යුහ තෝරා ගැනීමේ හැකියාව ඔබට ලැබෙනු ඇත. 
+                    දත්ත ව්‍යුහ භාවිතයේ ප්‍රායෝගික අර්ථය තේරුම් ගන්න.
+                </p>
+                <ul>
+                    <li>Arrays භාවිතා කළ යුතු අවස්ථා හඳුනා ගැනීම</li>
+                    <li>Linked Lists වල ප්‍රයෝජනවත්භාවය අවබෝධ කර ගැනීම</li>
+                    <li>Stacks සහ Queues යෙදෙන තැන් හඳුනා ගැනීම</li>
+                    <li>Hash Tables භාවිතයේ වාසි සහ සීමාවන් දැන ගැනීම</li>
+                    <li>Trees සහ Graphs යෙදෙන සැබෑ ලෝක අවස්ථා තේරුම් ගැනීම</li>
+                </ul>
+            </div>
+
+            <div class="outcome-card">
+                <div class="outcome-number">02</div>
+                <h3>දත්ත ව්‍යුහවල වාසි හා දුර්වලතා විශ්ලේෂණය කිරීම</h3>
+                <p>
+                    සෑම දත්ත ව්‍යුහයකම ඇති වාසි සහ අවාසි කාලීන සහ ඉඩ සංකීර්ණත්වය අනුව විශ්ලේෂණය 
+                    කිරීමේ හැකියාව වර්ධනය වනු ඇත.
+                </p>
+                <ul>
+                    <li>Time Complexity (කාලීන සංකීර්ණත්වය) ගණනය කිරීම</li>
+                    <li>Space Complexity (ඉඩ සංකීර්ණත්වය) තක්සේරු කිරීම</li>
+                    <li>Big O Notation භාවිතයෙන් කාර්යක්ෂමතාව ප්‍රකාශ කිරීම</li>
+                    <li>Best, Average, Worst case scenarios විශ්ලේෂණය කිරීම</li>
+                    <li>Trade-offs (වාසි-අවාසි) සංසන්දනය කිරීම</li>
+                </ul>
+            </div>
+
+            <div class="outcome-card">
+                <div class="outcome-number">03</div>
+                <h3>පොදු අල්ගොරිතම්වල ක්‍රියාකාරිත්වය අවබෝධ කර ගැනීම</h3>
+                <p>
+                    Sorting, Searching, Traversal ආදී පොදු අල්ගොරිතම් වල ක්‍රියාකාරී ක්‍රමවේද තේරුම් ගෙන 
+                    ඒවා C භාෂාවෙන් ක්‍රියාත්මක කිරීමේ හැකියාව ලැබෙනු ඇත.
+                </p>
+                <ul>
+                    <li>Bubble Sort, Selection Sort, Insertion Sort තේරුම් ගැනීම</li>
+                    <li>Merge Sort සහ Quick Sort වැනි උසස් sorting algorithms</li>
+                    <li>Linear Search සහ Binary Search අතර වෙනස</li>
+                    <li>Tree Traversal ක්‍රම (Inorder, Preorder, Postorder)</li>
+                    <li>Graph Traversal අල්ගොරිතම් (BFS, DFS)</li>
+                </ul>
+            </div>
+
+            <div class="outcome-card">
+                <div class="outcome-number">04</div>
+                <h3>ගණනයාත්මක ගැටළු විසඳීමේදී සුදුසු දත්ත ව්‍යුහ තෝරා ගැනීම</h3>
+                <p>
+                    සැබෑ ලෝක ක්‍රමලේඛන ගැටළු විසඳීමේදී කාර්යක්ෂම දත්ත ව්‍යුහ සහ අල්ගොරිතම් තෝරා ගැනීමේ 
+                    හැකියාව වර්ධනය වනු ඇත.
+                </p>
+                <ul>
+                    <li>ගැටළු විශ්ලේෂණය කර අවශ්‍යතා හඳුනා ගැනීම</li>
+                    <li>කාර්ය සාධනය සහ මතක භාවිතය තුලනය කිරීම</li>
+                    <li>Scalability (පරිමාණය කළ හැකි බව) සලකා බැලීම</li>
+                    <li>කේත කියවීමේ පහසුව සහ නඩත්තුව සලකා බැලීම</li>
+                    <li>Optimization techniques යෙදීම</li>
+                </ul>
+            </div>
+
+            <div class="outcome-card">
+                <div class="outcome-number">05</div>
+                <h3>C භාෂාවෙන් දත්ත ව්‍යුහ ක්‍රියාත්මක කිරීම</h3>
+                <p>
+                    C ක්‍රමලේඛන භාෂාව භාවිතයෙන් විවිධ දත්ත ව්‍යුහ සහ අල්ගොරිතම් කේතගත කිරීමේ ප්‍රායෝගික 
+                    හැකියාව ලබා ගනු ඇත.
+                </p>
+                <ul>
+                    <li>Pointers සහ Dynamic Memory Allocation භාවිතය</li>
+                    <li>Structures සහ Arrays හැසිරවීම</li>
+                    <li>Functions සහ Recursion භාවිතය</li>
+                    <li>Memory Management සහ debugging</li>
+                    <li>කේත optimization සහ හොඳ coding practices</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Skills Section -->
+    <div class="skills-section">
+        <div class="container">
+            <h2 class="section-title">ඔබට වර්ධනය වන කුසලතා</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="skill-box">
+                        <div class="skill-icon">🧠</div>
+                        <h4>ගැටළු විසඳීමේ හැකියාව</h4>
+                        <p>සංකීර්ණ ගැටළු විශ්ලේෂණය කර කාර්යක්ෂම විසඳුම් නිර්මාණය කිරීම</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="skill-box">
+                        <div class="skill-icon">💻</div>
+                        <h4>ක්‍රමලේඛන කුසලතා</h4>
+                        <p>C භාෂාවෙන් කාර්යක්ෂම සහ නිවැරදි කේත ලිවීමේ හැකියාව</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="skill-box">
+                        <div class="skill-icon">📊</div>
+                        <h4>විශ්ලේෂණාත්මක චින්තනය</h4>
+                        <p>අල්ගොරිතම් කාර්යක්ෂමතාව විශ්ලේෂණය සහ ප්‍රශස්තකරණය</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="skill-box">
+                        <div class="skill-icon">🎯</div>
+                        <h4>තාර්කික චින්තනය</h4>
+                        <p>ක්‍රමානුකූල ප්‍රවේශයකින් සංකීර්ණ ගැටළු විසඳීම</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="skill-box">
+                        <div class="skill-icon">⚡</div>
+                        <h4>කාර්යක්ෂම කේතගතකරණය</h4>
+                        <p>වේගවත් සහ මතක කාර්යක්ෂම කේත ලිවීම</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="skill-box">
+                        <div class="skill-icon">🔧</div>
+                        <h4>Debugging හැකියාව</h4>
+                        <p>වැරදි හඳුනාගෙන නිවැරදි කිරීමේ කුසලතාව</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="cta-section">
+        <div class="container">
+            <h2>ඉගෙනීම ආරම්භ කිරීමට සූදානම්ද?</h2>
+            <p>දැන්ම ඔබේ දත්ත ව්‍යුහ හා අල්ගොරිතම් පාඨමාලාව ආරම්භ කරන්න</p>
+            <a href="index.html#topics" class="btn btn-start">පාඩම් අරඹන්න →</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Data Structures and Algorithms in Sinhala | සියලු හිමිකම් ඇවිරිණි</p>
+            <p>GitHub Pages මගින් නොමිලේ සත්කාරකත්වය සපයා ඇත</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

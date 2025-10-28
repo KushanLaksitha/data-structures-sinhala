@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>දත්ත ව්‍යුහ සහ අල්ගොරිතම් සිංහලෙන් | DSA in Sinhala</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;700&family=Fira+Code:wght@400;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans Sinhala', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .navbar {
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: #667eea !important;
+        }
+        
+        .nav-link {
+            color: #555 !important;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-link:hover {
+            color: #667eea !important;
+        }
+        
+        .hero-section {
+            padding: 100px 0 80px;
+            text-align: center;
+            color: white;
+        }
+        
+        .hero-section h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .hero-section p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+            animation: fadeInUp 1s ease;
+        }
+        
+        .btn-start {
+            background: white;
+            color: #667eea;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: fadeInUp 1.2s ease;
+        }
+        
+        .btn-start:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            color: #667eea;
+        }
+        
+        .topics-section {
+            background: white;
+            padding: 80px 0;
+            margin-top: -50px;
+            border-radius: 30px 30px 0 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 50px;
+        }
+        
+        .topic-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border: none;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            height: 100%;
+        }
+        
+        .topic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        .topic-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        .topic-card h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .topic-card p {
+            color: #666;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        
+        .features-section {
+            background: #f8f9fa;
+            padding: 60px 0;
+        }
+        
+        .feature-box {
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .feature-box i {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+        
+        .feature-box h4 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        footer {
+            background: #2d3748;
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+            .hero-section p {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">📘 DSA සිංහලෙන්</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">මුල් පිටුව</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">ව්‍යාපෘතිය ගැන</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="outcomes.html">ඉගෙනුම් ප්‍රතිඵල</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="container">
+            <h1>දත්ත ව්‍යුහ සහ අල්ගොරිතම් සිංහලෙන්</h1>
+            <p>C භාෂාව භාවිතයෙන් ප්‍රායෝගිකව ඉගෙන ගන්න</p>
+            <button class="btn btn-start" onclick="location.href='#topics'">ඉගෙනීම ආරම්භ කරන්න →</button>
+        </div>
+    </div>
+
+    <!-- Topics Section -->
+    <div class="topics-section" id="topics">
+        <div class="container">
+            <h2 class="section-title">පාඩම් මාලාව</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="topic-card" onclick="location.href='contents/arrays.html'">
+                        <div class="topic-icon">📊</div>
+                        <h3>Arrays (අරා)</h3>
+                        <p>සමාන වර්ගයේ දත්ත එකට ගබඩා කරන ලේඛනගත දත්ත ව්‍යුහය ගැන ඉගෙන ගන්න</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="topic-card" onclick="location.href='contents/linked-lists.html'">
+                        <div class="topic-icon">🔗</div>
+                        <h3>Linked Lists</h3>
+                        <p>සබැඳි ලැයිස්තු - නම්‍යශීලී අනුක්‍රමික දත්ත ව්‍යුහය පිළිබඳව අධ්‍යයනය කරන්න</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="topic-card" onclick="location.href='contents/stacks.html'">
+                        <div class="topic-icon">📚</div>
+                        <h3>Stacks (තොග)</h3>
+                        <p>LIFO මූලධර්මය මත ක්‍රියා කරන තොග දත්ත ව්‍යුහය සහ එහි යෙදුම්</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="topic-card" onclick="location.href='contents/queues.html'">
+                        <div class="topic-icon">🚶</div>
+                        <h3>Queues (පෝලිම්)</h3>
+                        <p>FIFO මූලධර්මය භාවිතා කරන පෝලිම් දත්ත ව්‍යුහය පිළිබඳව දැන ගන්න</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="topic-card" onclick="location.href='contents/hash-tables.html'">
+                        <div class="topic-icon">🔑</div>
+                        <h3>Hash Tables</h3>
+                        <p>වේගවත් දත්ත ප්‍රවේශය සඳහා හැෂ් වගු සහ හැෂින් මූලධර්ම</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="topic-card" onclick="location.href='contents/trees.html'">
+                        <div class="topic-icon">🌳</div>
+                        <h3>Trees (ගස්)</h3>
+                        <p>ධූරාවලිවන්ත දත්ත ව්‍යුහයක් වන ගස් සහ බයිනරි ගස් පිළිබඳව</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="topic-card" onclick="location.href='contents/graphs.html'">
+                        <div class="topic-icon">🕸️</div>
+                        <h3>Graphs (ග්‍රැෆ්)</h3>
+                        <p>සංකීර්ණ සම්බන්ධතා නිරූපණය කරන ග්‍රැෆ් දත්ත ව්‍යුහය</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="topic-card" onclick="location.href='contents/sorting.html'">
+                        <div class="topic-icon">🔄</div>
+                        <h3>Sorting (වර්ග කිරීම)</h3>
+                        <p>Bubble, Selection, Insertion, Merge, Quick Sort ඇතුළු අල්ගොරිතම්</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="topic-card" onclick="location.href='contents/searching.html'">
+                        <div class="topic-icon">🔍</div>
+                        <h3>Searching (සෙවීම)</h3>
+                        <p>Linear සහ Binary සෙවුම් ක්‍රම සහ ඒවායේ කාර්යක්ෂමතාව</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="topic-card" onclick="location.href='contents/performance.html'">
+                        <div class="topic-icon">🔍</div>
+                        <h3>කාර්ය සාධන විශ්ලේෂණය (Performance Analysis)</h3>
+                        <p>ධාවන කාලය (Time Complexity) සහ මතක ප්‍රමාණය (Space Complexity)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="features-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="feature-box">
+                        <div>📖</div>
+                        <h4>සිංහල මාධ්‍යය</h4>
+                        <p>සියලු සංකල්ප සිංහලෙන් පැහැදිලිව විස්තර කර ඇත</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-box">
+                        <div>💻</div>
+                        <h4>ප්‍රායෝගික කේත</h4>
+                        <p>C භාෂාවෙන් ක්‍රියාත්මක උදාහරණ සමඟ</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-box">
+                        <div>🎯</div>
+                        <h4>පහසුවෙන් ඉගෙන ගන්න</h4>
+                        <p>ආරම්භකයින් සඳහා හිතකර විස්තර</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Data Structures and Algorithms in Sinhala | සියලු හිමිකම් ඇවිරිණි</p>
+            <p>GitHub Pages මගින් නොමිලේ සත්කාරකත්වය සපයා ඇත</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorting Algorithms - DSA සිංහලෙන්</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans Sinhala', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .navbar {
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+        
+        .content-wrapper {
+            background: white;
+            margin: 100px auto 50px;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.2);
+            max-width: 1200px;
+        }
+        
+        h1 {
+            color: #667eea;
+            font-weight: 700;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            color: #333;
+            font-weight: 700;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        h3 {
+            color: #555;
+            font-weight: 600;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+        
+        p, li {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #444;
+        }
+        
+        .code-block {
+            background: #1e1e1e;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 25px 0;
+            overflow-x: auto;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .code-line {
+            display: block;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #d4d4d4;
+            padding: 2px 0;
+        }
+        
+        .code-comment {
+            color: #6a9955;
+        }
+        
+        .code-keyword {
+            color: #569cd6;
+        }
+        
+        .code-function {
+            color: #dcdcaa;
+        }
+        
+        .code-string {
+            color: #ce9178;
+        }
+        
+        .code-number {
+            color: #b5cea8;
+        }
+        
+        .explanation-box {
+            background: #f8f9fa;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .key-points {
+            background: #e7f3ff;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 25px 0;
+        }
+        
+        .comparison-table {
+            margin: 25px 0;
+            overflow-x: auto;
+        }
+        
+        .comparison-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .comparison-table th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+        
+        .comparison-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .comparison-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .back-btn {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 30px;
+            transition: transform 0.3s;
+        }
+        
+        .back-btn:hover {
+            transform: translateY(-3px);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">📘 DSA සිංහලෙන්</a>
+        </div>
+    </nav>
+
+    <div class="content-wrapper">
+        <h1>🔄 Sorting Algorithms (වර්ග කිරීමේ අල්ගොරිතම්)</h1>
+        
+        <div class="explanation-box">
+            <p><strong>Sorting යනු කුමක්ද?</strong></p>
+            <p>Sorting යනු දත්ත එකතුවක් නිශ්චිත අනුපිළිවෙලකට (ascending හෝ descending) සකසන ක්‍රියාවලියයි. මෙය searching, data analysis සහ බොහෝ algorithms වල මූලික පියවරක් වේ.</p>
+        </div>
+
+        <h2>📊 Sorting Algorithms Comparison</h2>
+        <div class="comparison-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Algorithm</th>
+                        <th>Best Case</th>
+                        <th>Average Case</th>
+                        <th>Worst Case</th>
+                        <th>Space</th>
+                        <th>Stable?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Bubble Sort</strong></td>
+                        <td>O(n)</td>
+                        <td>O(n²)</td>
+                        <td>O(n²)</td>
+                        <td>O(1)</td>
+                        <td>✅ Yes</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Selection Sort</strong></td>
+                        <td>O(n²)</td>
+                        <td>O(n²)</td>
+                        <td>O(n²)</td>
+                        <td>O(1)</td>
+                        <td>❌ No</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Insertion Sort</strong></td>
+                        <td>O(n)</td>
+                        <td>O(n²)</td>
+                        <td>O(n²)</td>
+                        <td>O(1)</td>
+                        <td>✅ Yes</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Merge Sort</strong></td>
+                        <td>O(n log n)</td>
+                        <td>O(n log n)</td>
+                        <td>O(n log n)</td>
+                        <td>O(n)</td>
+                        <td>✅ Yes</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Quick Sort</strong></td>
+                        <td>O(n log n)</td>
+                        <td>O(n log n)</td>
+                        <td>O(n²)</td>
+                        <td>O(log n)</td>
+                        <td>❌ No</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>1️⃣ Bubble Sort (බුබුලු වර්ග කිරීම)</h2>
+        
+        <div class="explanation-box">
+            <h4>ක්‍රියා කරන ආකාරය:</h4>
+            <p>Adjacent elements compare කරමින් විශාලම element එක අන්තයට "bubble up" කරනවා. හැම pass එකකදීම විශාලම unsorted element එක නිවැරදි ස්ථානයට යනවා.</p>
+        </div>
+
+        <div class="code-block">
+<span class="code-line"><span class="code-keyword">#include</span> <span class="code-string">&lt;stdio.h&gt;</span>  <span class="code-comment">// Standard input/output functions</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-comment">// Bubble sort function එක</span></span>
+<span class="code-line"><span class="code-keyword">void</span> <span class="code-function">bubbleSort</span>(<span class="code-keyword">int</span> arr[], <span class="code-keyword">int</span> n) {</span>
+<span class="code-line">    <span class="code-comment">// Outer loop - n-1 passes සඳහා</span></span>
+<span class="code-line">    <span class="code-keyword">for</span> (<span class="code-keyword">int</span> i = <span class="code-number">0</span>; i &lt; n - <span class="code-number">1</span>; i++) {</span>
+<span class="code-line">        <span class="code-keyword">int</span> swapped = <span class="code-number">0</span>;  <span class="code-comment">// Swap එකක් වුණාද කියලා track කරන flag එක</span></span>
+<span class="code-line">        </span>
+<span class="code-line">        <span class="code-comment">// Inner loop - adjacent elements compare කරන එක</span></span>
+<span class="code-line">        <span class="code-keyword">for</span> (<span class="code-keyword">int</span> j = <span class="code-number">0</span>; j &lt; n - i - <span class="code-number">1</span>; j++) {</span>
+<span class="code-line">            <span class="code-comment">// වම් element එක දකුණු element එකට වඩා විශාල නම්</span></span>
+<span class="code-line">            <span class="code-keyword">if</span> (arr[j] &gt; arr[j + <span class="code-number">1</span>]) {</span>
+<span class="code-line">                <span class="code-comment">// දෙක swap කරනවා</span></span>
+<span class="code-line">                <span class="code-keyword">int</span> temp = arr[j];</span>
+<span class="code-line">                arr[j] = arr[j + <span class="code-number">1</span>];</span>
+<span class="code-line">                arr[j + <span class="code-number">1</span>] = temp;</span>
+<span class="code-line">                swapped = <span class="code-number">1</span>;  <span class="code-comment">// Swap එකක් වුණා කියලා mark කරනවා</span></span>
+<span class="code-line">            }</span>
+<span class="code-line">        }</span>
+<span class="code-line">        </span>
+<span class="code-line">        <span class="code-comment">// Swap එකක් වුණේ නැත්නම් array එක already sorted</span></span>
+<span class="code-line">        <span class="code-keyword">if</span> (swapped == <span class="code-number">0</span>) {</span>
+<span class="code-line">            <span class="code-keyword">break</span>;  <span class="code-comment">// Loop එකෙන් exit වෙනවා (optimization)</span></span>
+<span class="code-line">        }</span>
+<span class="code-line">    }</span>
+<span class="code-line">}</span>
+        </div>
+
+        <div class="key-points">
+            <h4>✅ වාසි:</h4>
+            <ul>
+                <li>සරල algorithm එකක් - තේරුම් ගන්න පහසුයි</li>
+                <li>In-place sorting - extra memory අවශ්‍ය නැහැ</li>
+                <li>Stable sorting - equal elements වල order preserve වෙනවා</li>
+            </ul>
+            <h4>❌ අවාසි:</h4>
+            <ul>
+                <li>ඉතා මන්දගාමී - O(n²) complexity</li>
+                <li>විශාල datasets සඳහා සුදුසු නැහැ</li>
+            </ul>
+        </div>
+
+        <h2>2️⃣ Selection Sort (තෝරා වර්ග කිරීම)</h2>
+        
+        <div class="explanation-box">
+            <h4>ක්‍රියා කරන ආකාරය:</h4>
+            <p>Unsorted part එකෙන් minimum element එක select කරලා sorted part එකේ end එකට දමනවා. හැම iteration එකකදීම sorted part එක එක් element එකකින් වැඩි වෙනවා.</p>
+        </div>
+
+        <div class="code-block">
+<span class="code-line"><span class="code-comment">// Selection sort function එක</span></span>
+<span class="code-line"><span class="code-keyword">void</span> <span class="code-function">selectionSort</span>(<span class="code-keyword">int</span> arr[], <span class="code-keyword">int</span> n) {</span>
+<span class="code-line">    <span class="code-comment">// Outer loop - unsorted part එකේ හැම position එකක්ම iterate කරනවා</span></span>
+<span class="code-line">    <span class="code-keyword">for</span> (<span class="code-keyword">int</span> i = <span class="code-number">0</span>; i &lt; n - <span class="code-number">1</span>; i++) {</span>
+<span class="code-line">        <span class="code-comment">// Minimum element එකේ index එක track කරන variable එක</span></span>
+<span class="code-line">        <span class="code-keyword">int</span> minIndex = i;</span>
+<span class="code-line">        </span>
+<span class="code-line">        <span class="code-comment">// Inner loop - unsorted part එකෙන් minimum හොයනවා</span></span>
+<span class="code-line">        <span class="code-keyword">for</span> (<span class="code-keyword">int</span> j = i + <span class="code-number">1</span>; j &lt; n; j++) {</span>
+<span class="code-line">            <span class="code-comment">// වර්තමාන element එක minimum වලට වඩා කුඩා නම්</span></span>
+<span class="code-line">            <span class="code-keyword">if</span> (arr[j] &lt; arr[minIndex]) {</span>
+<span class="code-line">                minIndex = j;  <span class="code-comment">// නව minimum index එක update කරනවා</span></span>
+<span class="code-line">            }</span>
+<span class="code-line">        }</span>
+<span class="code-line">        </span>
+<span class="code-line">        <span class="code-comment">// Minimum element එක current position එක සමග swap කරනවා</span></span>
+<span class="code-line">        <span class="code-keyword">if</span> (minIndex != i) {  <span class="code-comment">// Unnecessary swap එක avoid කරනවා</span></span>
+<span class="code-line">            <span class="code-keyword">int</span> temp = arr[i];</span>
+<span class="code-line">            arr[i] = arr[minIndex];</span>
+<span class="code-line">            arr[minIndex] = temp;</span>
+<span class="code-line">        }</span>
+<span class="code-line">    }</span>
+<span class="code-line">}</span>
+        </div>
+
+        <div class="key-points">
+            <h4>✅ වාසි:</h4>
+            <ul>
+                <li>Bubble sort වලට වඩා අඩු swaps - O(n) swaps පමණයි</li>
+                <li>In-place sorting algorithm එකක්</li>
+                <li>Small datasets සඳහා හොඳයි</li>
+            </ul>
+            <h4>❌ අවාසි:</h4>
+            <ul>
+                <li>O(n²) complexity - මන්දගාමී</li>
+                <li>Unstable - equal elements වල order change විය හැක</li>
+            </ul>
+        </div>
+
+        <h2>3️⃣ Insertion Sort (ඇතුළත් කිරීමේ වර්ග කිරීම)</h2>
+        
+        <div class="explanation-box">
+            <h4>ක්‍රියා කරන ආකාරය:</h4>
+            <p>Playing cards sort කරනවා වගේ. හැම element එකක්ම sorted part එකේ නිවැරදි position එකට insert කරනවා. වම් පසින් sorted part එක grow වෙනවා.</p>
+        </div>
+
+        <div class="code-block">
+<span class="code-line"><span class="code-comment">// Insertion sort function එක</span></span>
+<span class="code-line"><span class="code-keyword">void</span> <span class="code-function">insertionSort</span>(<span class="code-keyword">int</span> arr[], <span class="code-keyword">int</span> n) {</span>
+<span class="code-line">    <span class="code-comment">// දෙවන element එකේ සිට iterate කරනවා (පළමු එක sorted ලෙස සලකනවා)</span></span>
+<span class="code-line">    <span class="code-keyword">for</span> (<span class="code-keyword">int</span> i = <span class="code-number">1</span>; i &lt; n; i++) {</span>
+<span class="code-line">        <span class="code-comment">// Insert කරන්න යන element එක save කරනවා</span></span>
+<span class="code-line">        <span class="code-keyword">int</span> key = arr[i];</span>
+<span class="code-line">        </span>
+<span class="code-line">        <span class="code-comment">// Sorted part එකේ elements සමග compare කරන්න j pointer එක</span></span>
+<span class="code-line">        <span class="code-keyword">int</span> j = i - <span class="code-number">1</span>;</span>
+<span class="code-line">        </span>
+<span class="code-line">        <span class="code-comment">// Key වලට වඩා විශාල elements දකුණට shift කරනවා</span></span>
+<span class="code-line">        <span class="code-keyword">while</span> (j &gt;= <span class="code-number">0</span> &amp;&amp; arr[j] &gt; key) {</span>
+<span class="code-line">            arr[j + <span class="code-number">1</span>] = arr[j];  <span class="code-comment">// Element එක එක් position එකක් දකුණට shift කරනවා</span></span>
+<span class="code-line">            j--;                    <span class="code-comment">// වම්පසට move වෙනවා</span></span>
+<span class="code-line">        }</span>
+<span class="code-line">        </span>
+<span class="code-line">        <span class="code-comment">// Key එක නිවැරදි position එකට insert කරනවා</span></span>
+<span class="code-line">        arr[j + <span class="code-number">1</span>] = key;</span>
+<span class="code-line">    }</span>
+<span class="code-line">}</span>
+        </div>
+
+        <div class="key-points">
+            <h4>✅ වාසි:</h4>
+            <ul>
+                <li>Nearly sorted arrays සඳහා ඉතා වේගවත් - O(n) best case</li>
+                <li>Stable sorting algorithm එකක්</li>
+                <li>Online algorithm - data එන විට sort කරන්න පුළුවන්</li>
+                <li>Small datasets සඳහා හොඳයි</li>
+            </ul>
+            <h4>❌ අවාසි:</h4>
+            <ul>
+                <li>විශාල arrays සඳහා මන්දගාමී - O(n²) worst case</li>
+            </ul>
+        </div>
+
+        <h2>4️⃣ Merge Sort (ඒකාබද්ධ වර්ග කිරීම)</h2>
+        
+        <div class="explanation-box">
+            <h4>ක්‍රියා කරන ආකාරය:</h4>
+            <p>Divide and Conquer approach එක භාවිතා කරනවා. Array එක කුඩා parts වලට divide කර, sort කර, නැවත merge කරනවා. Recursive algorithm එකක්.</p>
+        </div>
+
+        <div class="code-block">
+<span class="code-line"><span class="code-comment">// දෙක sorted arrays merge කරන helper function එක</span></span>
+<span class="code-line"><span class="code-keyword">void</span> <span class="code-function">merge</span>(<span class="code-keyword">int</span> arr[], <span class="code-keyword">int</span> left, <span class="code-keyword">int</span> mid, <span class="code-keyword">int</span> right) {</span>
+<span class="code-line">    <span class="code-comment">// දෙක sub-arrays වල sizes calculate කරනවා</span></span>
+<span class="code-line">    <span class="code-keyword">int</span> n1 = mid - left + <span class="code-number">1</span>;     <span class="code-comment">// වම් sub-array size එක</span></span>
+<span class="code-line">    <span class="code-keyword">int</span> n2 = right - mid;           <span class="code-comment">// දකුණු sub-array size එක</span></span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// Temporary arrays create කරනවා</span></span>
+<span class="code-line">    <span class="code-keyword">int</span> L[n1], R[n2];</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// Data වම් array එකට copy කරනවා</span></span>
+<span class="code-line">    <span class="code-keyword">for</span> (<span class="code-keyword">int</span> i = <span class="code-number">0</span>; i &lt; n1; i++) {</span>
+<span class="code-line">        L[i] = arr[left + i];</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// Data දකුණු array එකට copy කරනවා</span></span>
+<span class="code-line">    <span class="code-keyword">for</span> (<span class="code-keyword">int</span> j = <span class="code-number">0</span>; j &lt; n2; j++) {</span>
+<span class="code-line">        R[j] = arr[mid + <span class="code-number">1</span> + j];</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// Merge කිරීමේ ක්‍රියාවලිය</span></span>
+<span class="code-line">    <span class="code-keyword">int</span> i = <span class="code-number">0</span>;      <span class="code-comment">// වම් sub-array index එක</span></span>
+<span class="code-line">    <span class="code-keyword">int</span> j = <span class="code-number">0</span>;      <span class="code-comment">// දකුණු sub-array index එක</span></span>
+<span class="code-line">    <span class="code-keyword">int</span> k = left;   <span class="code-comment">// Merged array index එක</span></span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// දෙක arrays වලින් කුඩා element එක select කරමින් merge කරනවා</span></span>
+<span class="code-line">    <span class="code-keyword">while</span> (i &lt; n1 &amp;&amp; j &lt; n2) {</span>
+<span class="code-line">        <span class="code-keyword">if</span> (L[i] &lt;= R[j]) {</span>
+<span class="code-line">            arr[k] = L[i];  <span class="code-comment">// වම් array එකෙන් element එකක් තෝරනවා</span></span>
+<span class="code-line">            i++;</span>
+<span class="code-line">        } <span class="code-keyword">else</span> {</span>
+<span class="code-line">            arr[k] = R[j];  <span class="code-comment">// දකුණු array එකෙන් element එකක් තෝරනවා</span></span>
+<span class="code-line">            j++;</span>
+<span class="code-line">        }</span>
+<span class="code-line">        k++;</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// වම් array එකේ ඉතිරි elements copy කරනවා</span></span>
+<span class="code-line">    <span class="code-keyword">while</span> (i &lt; n1) {</span>
+<span class="code-line">        arr[k] = L[i];</span>
+<span class="code-line">        i++;</span>
+<span class="code-line">        k++;</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// දකුණු array එකේ ඉතිරි elements copy කරනවා</span></span>
+<span class="code-line">    <span class="code-keyword">while</span> (j &lt; n2) {</span>
+<span class="code-line">        arr[k] = R[j];</span>
+<span class="code-line">        j++;</span>
+<span class="code-line">        k++;</span>
+<span class="code-line">    }</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-comment">// Main merge sort function එක - recursive</span></span>
+<span class="code-line"><span class="code-keyword">void</span> <span class="code-function">mergeSort</span>(<span class="code-keyword">int</span> arr[], <span class="code-keyword">int</span> left, <span class="code-keyword">int</span> right) {</span>
+<span class="code-line">    <span class="code-keyword">if</span> (left &lt; right) {  <span class="code-comment">// Base case: එක් element එකක් හෝ එයට අඩු නම් return</span></span>
+<span class="code-line">        <span class="code-comment">// Middle point එක calculate කරනවා</span></span>
+<span class="code-line">        <span class="code-keyword">int</span> mid = left + (right - left) / <span class="code-number">2</span>;</span>
+<span class="code-line">        </span>
+<span class="code-line">        <span class="code-comment">// වම් half එක recursively sort කරනවා</span></span>
+<span class="code-line">        <span class="code-function">mergeSort</span>(arr, left, mid);</span>
+<span class="code-line">        </span>
+<span class="code-line">        <span class="code-comment">// දකුණු half එක recursively sort කරනවා</span></span>
+<span class="code-line">        <span class="code-function">mergeSort</span>(arr, mid + <span class="code-number">1</span>, right);</span>
+<span class="code-line">        </span>
+<span class="code-line">        <span class="code-comment">// දෙක sorted halves merge කරනවා</span></span>
+<span class="code-line">        <span class="code-function">merge</span>(arr, left, mid, right);</span>
+<span class="code-line">    }</span>
+<span class="code-line">}</span>
+        </div>
+
+        <div class="key-points">
+            <h4>✅ වාසි:</h4>
+            <ul>
+                <li>සැමවිටම O(n log n) complexity - predictable performance</li>
+                <li>Stable sorting algorithm එකක්</li>
+                <li>විශාල datasets සඳහා හොඳයි</li>
+                <li>Linked lists sort කරන්නත් හොඳයි</li>
+            </ul>
+            <h4>❌ අවාසි:</h4>
+            <ul>
+                <li>O(n) extra space අවශ්‍ය වේ - temporary arrays සඳහා</li>
+                <li>Small datasets සඳහා overhead වැඩියි</li>
+            </ul>
+        </div>
+
+        <h2>5️⃣ Quick Sort (වේග වර්ග කිරීම)</h2>
+        
+        <div class="explanation-box">
+            <h4>ක්‍රියා කරන ආකාරය:</h4>
+            <p>Pivot element එකක් තෝරාගෙන එයට වඩා කුඩා elements වම්පසටත්, විශාල elements දකුණට ත් arrange කරනවා. Recursively sub-arrays sort කරනවා.</p>
+        </div>
+
+        <div class="code-block">
+<span class="code-line"><span class="code-comment">// Array එක partition කරන function එක</span></span>
+<span class="code-line"><span class="code-keyword">int</span> <span class="code-function">partition</span>(<span class="code-keyword">int</span> arr[], <span class="code-keyword">int</span> low, <span class="code-keyword">int</span> high) {</span>
+<span class="code-line">    <span class="code-comment">// අන්තිම element එක pivot ලෙස තෝරනවා</span></span>
+<span class="code-line">    <span class="code-keyword">int</span> pivot = arr[high];</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// කුඩා elements සඳහා index එක (partition point)</span></span>
+<span class="code-line">    <span class="code-keyword">int</span> i = low - <span class="code-number">1</span>;</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// හැම element එකක්ම pivot එක සමග compare කරනවා</span></span>
+<span class="code-line">    <span class="code-keyword">for</span> (<span class="code-keyword">int</span> j = low; j &lt; high; j++) {</span>
+<span class="code-line">        <span class="code-comment">// Element එක pivot වලට වඩා කුඩා හෝ සමාන නම්</span></span>
+<span class="code-line">        <span class="code-keyword">if</span> (arr[j] &lt;= pivot) {</span>
+<span class="code-line">            i++;  <span class="code-comment">// කුඩා elements වල index එක increment කරනවා</span></span>
+<span class="code-line">            </span>
+<span class="code-line">            <span class="code-comment">// Elements swap කරනවා</span></span>
+<span class="code-line">            <span class="code-keyword">int</span> temp = arr[i];</span>
+<span class="code-line">            arr[i] = arr[j];</span>
+<span class="code-line">            arr[j] = temp;</span>
+<span class="code-line">        }</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// Pivot එක නිවැරදි position එකට දමනවා</span></span>
+<span class="code-line">    <span class="code-keyword">int</span> temp = arr[i + <span class="code-number">1</span>];</span>
+<span class="code-line">    arr[i + <span class="code-number">1</span>] = arr[high];</span>
+<span class="code-line">    arr[high] = temp;</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// Pivot එකේ නව position එක return කරනවා</span></span>
+<span class="code-line">    <span class="code-keyword">return</span> i + <span class="code-number">1</span>;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-comment">// Main quick sort function එක - recursive</span></span>
+<span class="code-line"><span class="code-keyword">void</span> <span class="code-function">quickSort</span>(<span class="code-keyword">int</span> arr[], <span class="code-keyword">int</span> low, <span class="code-keyword">int</span> high) {</span>
+<span class="code-line">    <span class="code-keyword">if</span> (low &lt; high) {  <span class="code-comment">// Base case check</span></span>
+<span class="code-line">        <span class="code-comment">// Partition කර pivot index එක ගන්නවා</span></span>
+<span class="code-line">        <span class="code-keyword">int</span> pi = <span class="code-function">partition</span>(arr, low, high);</span>
+<span class="code-line">        </span>
+<span class="code-line">        <span class="code-comment">// Pivot වලට වම්පස recursively sort කරනවා</span></span>
+<span class="code-line">        <span class="code-function">quickSort</span>(arr, low, pi - <span class="code-number">1</span>);</span>
+<span class="code-line">        </span>
+<span class="code-line">        <span class="code-comment">// Pivot වලට දකුණුපස recursively sort කරනවා</span></span>
+<span class="code-line">        <span class="code-function">quickSort</span>(arr, pi + <span class="code-number">1</span>, high);</span>
+<span class="code-line">    }</span>
+<span class="code-line">}</span>
+        </div>
+
+        <div class="key-points">
+            <h4>✅ වාසි:</h4>
+            <ul>
+                <li>Average case එකේ O(n log n) - ඉතා වේගවත්</li>
+                <li>In-place sorting - අඩු memory භාවිතා වේ</li>
+                <li>Cache-friendly - memory access pattern එක හොඳයි</li>
+                <li>විශාල datasets සඳහා වඩාත් ප්‍රායෝගික</li>
+            </ul>
+            <h4>❌ අවාසි:</h4>
+            <ul>
+                <li>Worst case එකේ O(n²) - already sorted arrays සඳහා</li>
+                <li>Unstable sorting algorithm එකක්</li>
+                <li>Recursive - stack overflow විය හැක</li>
+            </ul>
+        </div>
+
+        <h2>🎯 Helper Functions & Main Program</h2>
+        
+        <div class="code-block">
+<span class="code-line"><span class="code-comment">// Array එකක් print කරන utility function එක</span></span>
+<span class="code-line"><span class="code-keyword">void</span> <span class="code-function">printArray</span>(<span class="code-keyword">int</span> arr[], <span class="code-keyword">int</span> n) {</span>
+<span class="code-line">    <span class="code-keyword">for</span> (<span class="code-keyword">int</span> i = <span class="code-number">0</span>; i &lt; n; i++) {</span>
+<span class="code-line">        <span class="code-function">printf</span>(<span class="code-string">"%d "</span>, arr[i]);</span>
+<span class="code-line">    }</span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"\n"</span>);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-comment">// Main function එක</span></span>
+<span class="code-line"><span class="code-keyword">int</span> <span class="code-function">main</span>() {</span>
+<span class="code-line">    <span class="code-keyword">int</span> arr[] = {<span class="code-number">64</span>, <span class="code-number">34</span>, <span class="code-number">25</span>, <span class="code-number">12</span>, <span class="code-number">22</span>, <span class="code-number">11</span>, <span class="code-number">90</span>};</span>
+<span class="code-line">    <span class="code-keyword">int</span> n = <span class="code-keyword">sizeof</span>(arr) / <span class="code-keyword">sizeof</span>(arr[<span class="code-number">0</span>]);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"Original array: "</span>);</span>
+<span class="code-line">    <span class="code-function">printArray</span>(arr, n);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// එක් sorting method එකක් තෝරාගන්න:</span></span>
+<span class="code-line">    <span class="code-comment">// bubbleSort(arr, n);</span></span>
+<span class="code-line">    <span class="code-comment">// selectionSort(arr, n);</span></span>
+<span class="code-line">    <span class="code-comment">// insertionSort(arr, n);</span></span>
+<span class="code-line">    <span class="code-comment">// mergeSort(arr, 0, n - 1);</span></span>
+<span class="code-line">    <span class="code-function">quickSort</span>(arr, <span class="code-number">0</span>, n - <span class="code-number">1</span>);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"Sorted array: "</span>);</span>
+<span class="code-line">    <span class="code-function">printArray</span>(arr, n);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-keyword">return</span> <span class="code-number">0</span>;</span>
+<span class="code-line">}</span>
+        </div>
+
+        <h2>💡 Which Sorting Algorithm to Use? (කවර අල්ගොරිතම භාවිතා කරන්නද?)</h2>
+        <div class="key-points">
+            <ul>
+                <li><strong>Bubble Sort:</strong> අධ්‍යාපනික අරමුණු සඳහා පමණයි. ප්‍රායෝගිකව භාවිතා නොකරන්න.</li>
+                <li><strong>Selection Sort:</strong> Memory writes අඩු කරන්න අවශ්‍ය නම් (EEPROM වගේ).</li>
+                <li><strong>Insertion Sort:</strong> Small/nearly sorted arrays සඳහා හෝ online sorting සඳහා.</li>
+                <li><strong>Merge Sort:</strong> Stability අවශ්‍ය නම්, linked lists සඳහා, worst case guarantee අවශ්‍ය නම්.</li>
+                <li><strong>Quick Sort:</strong> බොහෝ අවස්ථාවලදී best choice - වේගවත් සහ memory efficient.</li>
+            </ul>
+        </div>
+
+        <h2>📝 වැදගත් සංකල්ප</h2>
+        <div class="explanation-box">
+            <h4>Stable vs Unstable Sorting:</h4>
+            <p><strong>Stable:</strong> Equal elements වල relative order preserve වේ.</p>
+            <p>උදාහරණ: [(5,a), (3,b), (5,c)] → [(3,b), (5,a), (5,c)] - (5,a) still comes before (5,c)</p>
+            <p><strong>Unstable:</strong> Equal elements වල order change විය හැක.</p>
+            
+            <h4>In-place vs Out-of-place:</h4>
+            <p><strong>In-place:</strong> Extra memory අඩුවෙන් භාවිතා කරනවා (O(1) හෝ O(log n))</p>
+            <p><strong>Out-of-place:</strong> වැඩි extra memory අවශ්‍ය වේ (O(n))</p>
+        </div>
+
+        <a href="../index.html" class="back-btn">← මුල් පිටුවට යන්න</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

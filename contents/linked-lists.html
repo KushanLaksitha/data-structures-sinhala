@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linked Lists (සබැඳි ලැයිස්තු) | DSA සිංහලෙන්</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans Sinhala', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .navbar {
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+        
+        .content-section {
+            background: white;
+            margin: 80px auto 30px;
+            padding: 50px;
+            border-radius: 15px;
+            max-width: 1200px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #667eea;
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            color: #764ba2;
+            font-weight: 700;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+        
+        .code-block {
+            background: #1e1e1e;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        
+        .code-line {
+            display: block;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            color: #d4d4d4;
+        }
+        
+        .comment {
+            color: #6a9955;
+        }
+        
+        .keyword {
+            color: #569cd6;
+        }
+        
+        .function {
+            color: #dcdcaa;
+        }
+        
+        .string {
+            color: #ce9178;
+        }
+        
+        .number {
+            color: #b5cea8;
+        }
+        
+        .info-box {
+            background: #e8f4f8;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .example-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .btn-back {
+            background: #667eea;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        
+        .btn-back:hover {
+            background: #764ba2;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html" style="color: #667eea; font-weight: 700;">📘 DSA සිංහලෙන්</a>
+        </div>
+    </nav>
+
+    <div class="content-section">
+        <a href="../index.html" class="btn-back">← මුල් පිටුවට</a>
+        
+        <h1>🔗 Linked Lists (සබැඳි ලැයිස්තු)</h1>
+        
+        <p><strong>Linked List</strong> යනු nodes (නෝඩ්) නම් වන elements වලින් සමන්විත රේඛීය දත්ත ව්‍යුහයකි. සෑම node එකක්ම data සහ ඊළඟ node එක වෙත pointer එකක් (link) ගබඩා කරයි. Arrays මෙන් නොව, Linked Lists හි elements මතකයේ අඛණ්ඩව ගබඩා නොවේ.</p>
+
+        <h2>🔑 ප්‍රධාන ලක්ෂණ</h2>
+        <ul>
+            <li><strong>Dynamic Size:</strong> ප්‍රමාණය වෙනස් කළ හැක (කාලයත් සමඟ වර්ධනය/අඩු වීම)</li>
+            <li><strong>Node Structure:</strong> සෑම node එකක්ම data සහ pointer එකක් අඩංගු වේ</li>
+            <li><strong>Non-contiguous:</strong> මතකයේ විවිධ ස්ථාන වල ගබඩා වේ</li>
+            <li><strong>Easy Insertion/Deletion:</strong> මැද insert/delete කිරීම පහසුය</li>
+        </ul>
+
+        <div class="info-box">
+            <strong>💡 Node Structure:</strong><br>
+            Node = [Data | Next Pointer]<br>
+            උදාහරණයක්: [10 | →] → [20 | →] → [30 | NULL]
+        </div>
+
+        <h2>⏱️ Time Complexity</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Operation</th>
+                    <th>Time Complexity</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Access (n වන element)</td>
+                    <td>O(n)</td>
+                </tr>
+                <tr>
+                    <td>Search (සෙවීම)</td>
+                    <td>O(n)</td>
+                </tr>
+                <tr>
+                    <td>Insert (ආරම්භයේ)</td>
+                    <td>O(1)</td>
+                </tr>
+                <tr>
+                    <td>Insert (අවසානයේ)</td>
+                    <td>O(n)</td>
+                </tr>
+                <tr>
+                    <td>Delete (ආරම්භයේ)</td>
+                    <td>O(1)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>💻 C Code Examples</h2>
+
+        <h3>1. Node Structure සහ Basic Creation</h3>
+        <div class="code-block">
+<span class="code-line"><span class="comment">// Linked List Node structure නිර්වචනය</span></span>
+<span class="code-line"><span class="keyword">#include</span> <span class="string">&lt;stdio.h&gt;</span></span>
+<span class="code-line"><span class="keyword">#include</span> <span class="string">&lt;stdlib.h&gt;</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="comment">// Node structure එක define කිරීම</span></span>
+<span class="code-line"><span class="keyword">struct</span> Node {</span>
+<span class="code-line">    <span class="keyword">int</span> data;  <span class="comment">// දත්තය ගබඩා කරන්න</span></span>
+<span class="code-line">    <span class="keyword">struct</span> Node* next;  <span class="comment">// ඊළඟ node එකට pointer එක</span></span>
+<span class="code-line">};</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="keyword">int</span> <span class="function">main</span>() {</span>
+<span class="code-line">    <span class="comment">// තනි nodes තුනක් සෑදීම</span></span>
+<span class="code-line">    <span class="keyword">struct</span> Node* head = NULL;  <span class="comment">// පළමු node එක (head)</span></span>
+<span class="code-line">    <span class="keyword">struct</span> Node* second = NULL;  <span class="comment">// දෙවන node එක</span></span>
+<span class="code-line">    <span class="keyword">struct</span> Node* third = NULL;  <span class="comment">// තෙවන node එක</span></span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// මතකයේ nodes වෙත ඉඩ වෙන් කිරීම (memory allocation)</span></span>
+<span class="code-line">    head = (<span class="keyword">struct</span> Node*)<span class="function">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> Node));</span>
+<span class="code-line">    second = (<span class="keyword">struct</span> Node*)<span class="function">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> Node));</span>
+<span class="code-line">    third = (<span class="keyword">struct</span> Node*)<span class="function">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> Node));</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// පළමු node එකට data ඇතුළත් කර ඊළඟ node එක සම්බන්ධ කිරීම</span></span>
+<span class="code-line">    head-&gt;data = <span class="number">10</span>;  <span class="comment">// data = 10</span></span>
+<span class="code-line">    head-&gt;next = second;  <span class="comment">// ඊළඟ node එක second එක වෙත point කරන්න</span></span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// දෙවන node එකට data ඇතුළත් කිරීම</span></span>
+<span class="code-line">    second-&gt;data = <span class="number">20</span>;  <span class="comment">// data = 20</span></span>
+<span class="code-line">    second-&gt;next = third;  <span class="comment">// ඊළඟ node එක third එක වෙත point කරන්න</span></span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// තෙවන node එකට data ඇතුළත් කිරීම</span></span>
+<span class="code-line">    third-&gt;data = <span class="number">30</span>;  <span class="comment">// data = 30</span></span>
+<span class="code-line">    third-&gt;next = NULL;  <span class="comment">// අවසාන node එකේ next = NULL</span></span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// Linked List එක print කිරීම</span></span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"Linked List: "</span>);</span>
+<span class="code-line">    <span class="keyword">struct</span> Node* current = head;  <span class="comment">// head එකෙන් ආරම්භ කරන්න</span></span>
+<span class="code-line">    <span class="keyword">while</span>(current != NULL) {  <span class="comment">// අවසානය දක්වා යන්න</span></span>
+<span class="code-line">        <span class="function">printf</span>(<span class="string">"%d -&gt; "</span>, current-&gt;data);  <span class="comment">// data එක print කරන්න</span></span>
+<span class="code-line">        current = current-&gt;next;  <span class="comment">// ඊළඟ node එකට යන්න</span></span>
+<span class="code-line">    }</span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"NULL\n"</span>);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="keyword">return</span> <span class="number">0</span>;</span>
+<span class="code-line">}</span>
+        </div>
+
+        <h3>2. Insert at Beginning (ආරම්භයේ එකතු කිරීම)</h3>
+        <div class="code-block">
+<span class="code-line"><span class="comment">// Linked List එකේ ආරම්භයේ node එකක් එකතු කිරීම</span></span>
+<span class="code-line"><span class="keyword">#include</span> <span class="string">&lt;stdio.h&gt;</span></span>
+<span class="code-line"><span class="keyword">#include</span> <span class="string">&lt;stdlib.h&gt;</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="keyword">struct</span> Node {</span>
+<span class="code-line">    <span class="keyword">int</span> data;</span>
+<span class="code-line">    <span class="keyword">struct</span> Node* next;</span>
+<span class="code-line">};</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="comment">// ආරම්භයේ insert කිරීමේ function එක</span></span>
+<span class="code-line"><span class="keyword">void</span> <span class="function">insertAtBeginning</span>(<span class="keyword">struct</span> Node** head_ref, <span class="keyword">int</span> new_data) {</span>
+<span class="code-line">    <span class="comment">// අලුත් node එකක් සඳහා memory allocate කරන්න</span></span>
+<span class="code-line">    <span class="keyword">struct</span> Node* new_node = (<span class="keyword">struct</span> Node*)<span class="function">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> Node));</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// අලුත් node එකට data ඇතුළත් කරන්න</span></span>
+<span class="code-line">    new_node-&gt;data = new_data;</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// අලුත් node එකේ next පරණ head එක වෙත point කරවන්න</span></span>
+<span class="code-line">    new_node-&gt;next = (*head_ref);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// head එක අලුත් node එක වෙත point කරවන්න</span></span>
+<span class="code-line">    (*head_ref) = new_node;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="comment">// List එක print කරන function එක</span></span>
+<span class="code-line"><span class="keyword">void</span> <span class="function">printList</span>(<span class="keyword">struct</span> Node* node) {</span>
+<span class="code-line">    <span class="keyword">while</span>(node != NULL) {  <span class="comment">// අවසානය දක්වා</span></span>
+<span class="code-line">        <span class="function">printf</span>(<span class="string">"%d -&gt; "</span>, node-&gt;data);  <span class="comment">// data print කරන්න</span></span>
+<span class="code-line">        node = node-&gt;next;  <span class="comment">// ඊළඟ node එකට යන්න</span></span>
+<span class="code-line">    }</span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"NULL\n"</span>);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="keyword">int</span> <span class="function">main</span>() {</span>
+<span class="code-line">    <span class="keyword">struct</span> Node* head = NULL;  <span class="comment">// හිස් list එකක් ආරම්භ කරන්න</span></span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// විවිධ අගයන් ආරම්භයේ insert කිරීම</span></span>
+<span class="code-line">    <span class="function">insertAtBeginning</span>(&amp;head, <span class="number">30</span>);  <span class="comment">// List: 30-&gt;NULL</span></span>
+<span class="code-line">    <span class="function">insertAtBeginning</span>(&amp;head, <span class="number">20</span>);  <span class="comment">// List: 20-&gt;30-&gt;NULL</span></span>
+<span class="code-line">    <span class="function">insertAtBeginning</span>(&amp;head, <span class="number">10</span>);  <span class="comment">// List: 10-&gt;20-&gt;30-&gt;NULL</span></span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"Linked List: "</span>);</span>
+<span class="code-line">    <span class="function">printList</span>(head);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="keyword">return</span> <span class="number">0</span>;</span>
+<span class="code-line">}</span>
+        </div>
+
+        <h3>3. Insert at End (අවසානයේ එකතු කිරීම)</h3>
+        <div class="code-block">
+<span class="code-line"><span class="comment">// Linked List එකේ අවසානයේ node එකක් එකතු කිරීම</span></span>
+<span class="code-line"><span class="keyword">#include</span> <span class="string">&lt;stdio.h&gt;</span></span>
+<span class="code-line"><span class="keyword">#include</span> <span class="string">&lt;stdlib.h&gt;</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="keyword">struct</span> Node {</span>
+<span class="code-line">    <span class="keyword">int</span> data;</span>
+<span class="code-line">    <span class="keyword">struct</span> Node* next;</span>
+<span class="code-line">};</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="comment">// අවසානයේ insert කිරීමේ function එක</span></span>
+<span class="code-line"><span class="keyword">void</span> <span class="function">insertAtEnd</span>(<span class="keyword">struct</span> Node** head_ref, <span class="keyword">int</span> new_data) {</span>
+<span class="code-line">    <span class="comment">// අලුත් node එකක් සාදන්න</span></span>
+<span class="code-line">    <span class="keyword">struct</span> Node* new_node = (<span class="keyword">struct</span> Node*)<span class="function">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> Node));</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// අවසාන node එක සෙවීමට last pointer එකක්</span></span>
+<span class="code-line">    <span class="keyword">struct</span> Node* last = *head_ref;</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// අලුත් node එකට data ඇතුළත් කරන්න</span></span>
+<span class="code-line">    new_node-&gt;data = new_data;</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// අලුත් node එක අවසාන node එක නිසා next = NULL</span></span>
+<span class="code-line">    new_node-&gt;next = NULL;</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// list එක හිස් නම්, අලුත් node එක head කරන්න</span></span>
+<span class="code-line">    <span class="keyword">if</span>(*head_ref == NULL) {</span>
+<span class="code-line">        *head_ref = new_node;</span>
+<span class="code-line">        <span class="keyword">return</span>;</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// අවසාන node එක සොයන්න</span></span>
+<span class="code-line">    <span class="keyword">while</span>(last-&gt;next != NULL) {  <span class="comment">// අවසාන node එකේ next = NULL</span></span>
+<span class="code-line">        last = last-&gt;next;  <span class="comment">// ඊළඟ node එකට යන්න</span></span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// අවසාන node එකේ next අලුත් node එක වෙත point කරවන්න</span></span>
+<span class="code-line">    last-&gt;next = new_node;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="keyword">void</span> <span class="function">printList</span>(<span class="keyword">struct</span> Node* node) {</span>
+<span class="code-line">    <span class="keyword">while</span>(node != NULL) {</span>
+<span class="code-line">        <span class="function">printf</span>(<span class="string">"%d -&gt; "</span>, node-&gt;data);</span>
+<span class="code-line">        node = node-&gt;next;</span>
+<span class="code-line">    }</span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"NULL\n"</span>);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="keyword">int</span> <span class="function">main</span>() {</span>
+<span class="code-line">    <span class="keyword">struct</span> Node* head = NULL;</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// අවසානයේ nodes එකතු කිරීම</span></span>
+<span class="code-line">    <span class="function">insertAtEnd</span>(&amp;head, <span class="number">10</span>);  <span class="comment">// List: 10-&gt;NULL</span></span>
+<span class="code-line">    <span class="function">insertAtEnd</span>(&amp;head, <span class="number">20</span>);  <span class="comment">// List: 10-&gt;20-&gt;NULL</span></span>
+<span class="code-line">    <span class="function">insertAtEnd</span>(&amp;head, <span class="number">30</span>);  <span class="comment">// List: 10-&gt;20-&gt;30-&gt;NULL</span></span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"Linked List: "</span>);</span>
+<span class="code-line">    <span class="function">printList</span>(head);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="keyword">return</span> <span class="number">0</span>;</span>
+<span class="code-line">}</span>
+        </div>
+
+        <h3>4. Delete a Node (Node එකක් ඉවත් කිරීම)</h3>
+        <div class="code-block">
+<span class="code-line"><span class="comment">// Linked List එකෙන් නිශ්චිත අගයක් ඇති node එක delete කිරීම</span></span>
+<span class="code-line"><span class="keyword">#include</span> <span class="string">&lt;stdio.h&gt;</span></span>
+<span class="code-line"><span class="keyword">#include</span> <span class="string">&lt;stdlib.h&gt;</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="keyword">struct</span> Node {</span>
+<span class="code-line">    <span class="keyword">int</span> data;</span>
+<span class="code-line">    <span class="keyword">struct</span> Node* next;</span>
+<span class="code-line">};</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="comment">// Node එකක් delete කිරීමේ function එක</span></span>
+<span class="code-line"><span class="keyword">void</span> <span class="function">deleteNode</span>(<span class="keyword">struct</span> Node** head_ref, <span class="keyword">int</span> key) {</span>
+<span class="code-line">    <span class="comment">// temp pointer එක head එකට point කරවන්න</span></span>
+<span class="code-line">    <span class="keyword">struct</span> Node* temp = *head_ref;</span>
+<span class="code-line">    <span class="keyword">struct</span> Node* prev = NULL;  <span class="comment">// පෙර node එක track කරන්න</span></span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// head node එකම delete කරන්නේ නම්</span></span>
+<span class="code-line">    <span class="keyword">if</span>(temp != NULL &amp;&amp; temp-&gt;data == key) {</span>
+<span class="code-line">        *head_ref = temp-&gt;next;  <span class="comment">// head එක මීළඟ node එක වෙත ගෙනයන්න</span></span>
+<span class="code-line">        <span class="function">free</span>(temp);  <span class="comment">// පරණ head එක මතකයෙන් මකන්න</span></span>
+<span class="code-line">        <span class="keyword">return</span>;</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// key එක සහිත node එක සොයන්න</span></span>
+<span class="code-line">    <span class="keyword">while</span>(temp != NULL &amp;&amp; temp-&gt;data != key) {</span>
+<span class="code-line">        prev = temp;  <span class="comment">// වත්මන් node එක previous ලෙස සුරකින්න</span></span>
+<span class="code-line">        temp = temp-&gt;next;  <span class="comment">// ඊළඟ node එකට යන්න</span></span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// key එක හමු නොවුණා නම්</span></span>
+<span class="code-line">    <span class="keyword">if</span>(temp == NULL) {</span>
+<span class="code-line">        <span class="function">printf</span>(<span class="string">"අගය %d හමු නොවීය.\n"</span>, key);</span>
+<span class="code-line">        <span class="keyword">return</span>;</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// node එක list එකෙන් unlink කරන්න</span></span>
+<span class="code-line">    prev-&gt;next = temp-&gt;next;</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// මතකය free කරන්න</span></span>
+<span class="code-line">    <span class="function">free</span>(temp);</span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"අගය %d delete කරන ලදී.\n"</span>, key);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="keyword">void</span> <span class="function">insertAtEnd</span>(<span class="keyword">struct</span> Node** head_ref, <span class="keyword">int</span> new_data) {</span>
+<span class="code-line">    <span class="keyword">struct</span> Node* new_node = (<span class="keyword">struct</span> Node*)<span class="function">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> Node));</span>
+<span class="code-line">    <span class="keyword">struct</span> Node* last = *head_ref;</span>
+<span class="code-line">    new_node-&gt;data = new_data;</span>
+<span class="code-line">    new_node-&gt;next = NULL;</span>
+<span class="code-line">    <span class="keyword">if</span>(*head_ref == NULL) {</span>
+<span class="code-line">        *head_ref = new_node;</span>
+<span class="code-line">        <span class="keyword">return</span>;</span>
+<span class="code-line">    }</span>
+<span class="code-line">    <span class="keyword">while</span>(last-&gt;next != NULL) last = last-&gt;next;</span>
+<span class="code-line">    last-&gt;next = new_node;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="keyword">void</span> <span class="function">printList</span>(<span class="keyword">struct</span> Node* node) {</span>
+<span class="code-line">    <span class="keyword">while</span>(node != NULL) {</span>
+<span class="code-line">        <span class="function">printf</span>(<span class="string">"%d -&gt; "</span>, node-&gt;data);</span>
+<span class="code-line">        node = node-&gt;next;</span>
+<span class="code-line">    }</span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"NULL\n"</span>);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="keyword">int</span> <span class="function">main</span>() {</span>
+<span class="code-line">    <span class="keyword">struct</span> Node* head = NULL;</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// List සාදන්න</span></span>
+<span class="code-line">    <span class="function">insertAtEnd</span>(&amp;head, <span class="number">10</span>);</span>
+<span class="code-line">    <span class="function">insertAtEnd</span>(&amp;head, <span class="number">20</span>);</span>
+<span class="code-line">    <span class="function">insertAtEnd</span>(&amp;head, <span class="number">30</span>);</span>
+<span class="code-line">    <span class="function">insertAtEnd</span>(&amp;head, <span class="number">40</span>);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"මුල් List: "</span>);</span>
+<span class="code-line">    <span class="function">printList</span>(head);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// 20 delete කරන්න</span></span>
+<span class="code-line">    <span class="function">deleteNode</span>(&amp;head, <span class="number">20</span>);</span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"20 delete කිරීමෙන් පසු: "</span>);</span>
+<span class="code-line">    <span class="function">printList</span>(head);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="keyword">return</span> <span class="number">0</span>;</span>
+<span class="code-line">}</span>
+        </div>
+
+        <h3>5. Search in Linked List (සෙවීම)</h3>
+        <div class="code-block">
+<span class="code-line"><span class="comment">// Linked List එකක නිශ්චිත අගයක් සෙවීම</span></span>
+<span class="code-line"><span class="keyword">#include</span> <span class="string">&lt;stdio.h&gt;</span></span>
+<span class="code-line"><span class="keyword">#include</span> <span class="string">&lt;stdlib.h&gt;</span></span>
+<span class="code-line"><span class="keyword">#include</span> <span class="string">&lt;stdbool.h&gt;</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="keyword">struct</span> Node {</span>
+<span class="code-line">    <span class="keyword">int</span> data;</span>
+<span class="code-line">    <span class="keyword">struct</span> Node* next;</span>
+<span class="code-line">};</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="comment">// සෙවීමේ function එක</span></span>
+<span class="code-line"><span class="keyword">bool</span> <span class="function">search</span>(<span class="keyword">struct</span> Node* head, <span class="keyword">int</span> key) {</span>
+<span class="code-line">    <span class="keyword">struct</span> Node* current = head;  <span class="comment">// head එකෙන් ආරම්භ කරන්න</span></span>
+<span class="code-line">    <span class="keyword">int</span> position = <span class="number">0</span>;  <span class="comment">// position track කිරීමට</span></span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// list එක හරහා සෙවීම</span></span>
+<span class="code-line">    <span class="keyword">while</span>(current != NULL) {</span>
+<span class="code-line">        <span class="keyword">if</span>(current-&gt;data == key) {  <span class="comment">// අගය හමු වුවා නම්</span></span>
+<span class="code-line">            <span class="function">printf</span>(<span class="string">"අගය %d position %d හි හමු විය.\n"</span>, key, position);</span>
+<span class="code-line">            <span class="keyword">return</span> <span class="keyword">true</span>;  <span class="comment">// හමු වුණා</span></span>
+<span class="code-line">        }</span>
+<span class="code-line">        current = current-&gt;next;  <span class="comment">// ඊළඟ node එකට යන්න</span></span>
+<span class="code-line">        position++;  <span class="comment">// position එක වැඩි කරන්න</span></span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// හමු නොවුණා</span></span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"අගය %d list එකේ නැත.\n"</span>, key);</span>
+<span class="code-line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="keyword">void</span> <span class="function">insertAtEnd</span>(<span class="keyword">struct</span> Node** head_ref, <span class="keyword">int</span> new_data) {</span>
+<span class="code-line">    <span class="keyword">struct</span> Node* new_node = (<span class="keyword">struct</span> Node*)<span class="function">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> Node));</span>
+<span class="code-line">    <span class="keyword">struct</span> Node* last = *head_ref;</span>
+<span class="code-line">    new_node-&gt;data = new_data;</span>
+<span class="code-line">    new_node-&gt;next = NULL;</span>
+<span class="code-line">    <span class="keyword">if</span>(*head_ref == NULL) {</span>
+<span class="code-line">        *head_ref = new_node;</span>
+<span class="code-line">        <span class="keyword">return</span>;</span>
+<span class="code-line">    }</span>
+<span class="code-line">    <span class="keyword">while</span>(last-&gt;next != NULL) last = last-&gt;next;</span>
+<span class="code-line">    last-&gt;next = new_node;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="keyword">int</span> <span class="function">main</span>() {</span>
+<span class="code-line">    <span class="keyword">struct</span> Node* head = NULL;</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// List එක සාදන්න</span></span>
+<span class="code-line">    <span class="function">insertAtEnd</span>(&amp;head, <span class="number">15</span>);</span>
+<span class="code-line">    <span class="function">insertAtEnd</span>(&amp;head, <span class="number">28</span>);</span>
+<span class="code-line">    <span class="function">insertAtEnd</span>(&amp;head, <span class="number">42</span>);</span>
+<span class="code-line">    <span class="function">insertAtEnd</span>(&amp;head, <span class="number">33</span>);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// අගයන් සෙවීම</span></span>
+<span class="code-line">    <span class="function">search</span>(head, <span class="number">42</span>);  <span class="comment">// හමු වෙයි</span></span>
+<span class="code-line">    <span class="function">search</span>(head, <span class="number">50</span>);  <span class="comment">// හමු නොවෙයි</span></span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="keyword">return</span> <span class="number">0</span>;</span>
+<span class="code-line">}</span>
+        </div>
+
+        <h2>✅ වාසි (Advantages)</h2>
+        <ul>
+            <li>Dynamic size - runtime එකේ ප්‍රමාණය වෙනස් කළ හැක</li>
+            <li>ආරම්භයේ insertion/deletion කාර්යක්ෂමය (O(1))</li>
+            <li>මතකය කාර්යක්ෂමව භාවිතා වේ - අවශ්‍ය තරම් පමණක්</li>
+            <li>Arrays මෙන් contiguous memory අවශ්‍ය නැත</li>
+        </ul>
+
+        <h2>❌ අවාසි (Disadvantages)</h2>
+        <ul>
+            <li>Random access නැත - sequential access පමණක්</li>
+            <li>Extra memory pointer සඳහා අවශ්‍ය වේ</li>
+            <li>Reverse traversal අපහසුය (singly linked list එකේ)</li>
+            <li>Binary search භාවිත කළ නොහැක</li>
+        </ul>
+
+        <div class="example-box">
+            <h3>🎯 Linked Lists භාවිත කරන තැන්</h3>
+            <ul>
+                <li>Dynamic memory allocation අවශ්‍ය විට</li>
+                <li>Stacks සහ Queues implement කිරීමට</li>
+                <li>Graph adjacency lists</li>
+                <li>Browser history (forward/backward navigation)</li>
+                <li>Music playlists</li>
+                <li>Image viewer (previous/next images)</li>
+            </ul>
+        </div>
+
+        <h2>📝 Linked List වර්ග</h2>
+        <div class="info-box">
+            <strong>1. Singly Linked List:</strong> එක් direction එකට පමණක් යා හැක (→)<br>
+            <strong>2. Doubly Linked List:</strong> දෙපසටම යා හැක (← →)<br>
+            <strong>3. Circular Linked List:</strong> අවසාන node එක head එක වෙත point කරයි (○)
+        </div>
+
+        <a href="../index.html" class="btn-back">← මුල් පිටුවට</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

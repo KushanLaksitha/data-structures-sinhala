@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hash Tables - DSA සිංහලෙන්</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans Sinhala', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .navbar {
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+        
+        .content-wrapper {
+            background: white;
+            margin: 100px auto 50px;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.2);
+            max-width: 1200px;
+        }
+        
+        h1 {
+            color: #667eea;
+            font-weight: 700;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            color: #333;
+            font-weight: 700;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        h3 {
+            color: #555;
+            font-weight: 600;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+        
+        p, li {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #444;
+        }
+        
+        .code-block {
+            background: #1e1e1e;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 25px 0;
+            overflow-x: auto;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .code-line {
+            display: block;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #d4d4d4;
+            padding: 2px 0;
+        }
+        
+        .code-comment {
+            color: #6a9955;
+        }
+        
+        .code-keyword {
+            color: #569cd6;
+        }
+        
+        .code-function {
+            color: #dcdcaa;
+        }
+        
+        .code-string {
+            color: #ce9178;
+        }
+        
+        .code-number {
+            color: #b5cea8;
+        }
+        
+        .explanation-box {
+            background: #f8f9fa;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .key-points {
+            background: #e7f3ff;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 25px 0;
+        }
+        
+        .key-points ul {
+            margin-bottom: 0;
+        }
+        
+        .visualization {
+            background: #fff;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .hash-table-visual {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 500px;
+            margin: 20px auto;
+        }
+        
+        .bucket {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+        }
+        
+        .bucket-index {
+            font-weight: 700;
+            color: #667eea;
+            min-width: 50px;
+        }
+        
+        .bucket-content {
+            flex: 1;
+            font-family: 'Fira Code', monospace;
+            color: #333;
+        }
+        
+        .back-btn {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 30px;
+            transition: transform 0.3s;
+        }
+        
+        .back-btn:hover {
+            transform: translateY(-3px);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">📘 DSA සිංහලෙන්</a>
+        </div>
+    </nav>
+
+    <div class="content-wrapper">
+        <h1>🔑 Hash Tables (හැෂ් වගු)</h1>
+        
+        <div class="explanation-box">
+            <p><strong>Hash Table යනු කුමක්ද?</strong></p>
+            <p>Hash Table එකක් යනු key-value යුගල (pairs) ගබඩා කරන දත්ත ව්‍යුහයකි. මෙහිදී hash function එකක් භාවිතයෙන් key එක array index එකකට පරිවර්තනය කරනු ලැබේ. මෙය දත්ත ප්‍රවේශය, ඇතුළත් කිරීම සහ මකා දැමීම සඳහා O(1) සාමාන්‍ය කාල සංකීර්ණතාවක් ලබා දෙයි.</p>
+        </div>
+
+        <h2>📊 Hash Table Visualization</h2>
+        <div class="visualization">
+            <h4>Hash Table Structure (Size: 7)</h4>
+            <div class="hash-table-visual">
+                <div class="bucket">
+                    <div class="bucket-index">[0]</div>
+                    <div class="bucket-content">→ NULL</div>
+                </div>
+                <div class="bucket">
+                    <div class="bucket-index">[1]</div>
+                    <div class="bucket-content">→ ("apple", 10)</div>
+                </div>
+                <div class="bucket">
+                    <div class="bucket-index">[2]</div>
+                    <div class="bucket-content">→ NULL</div>
+                </div>
+                <div class="bucket">
+                    <div class="bucket-index">[3]</div>
+                    <div class="bucket-content">→ ("banana", 20) → ("grape", 15)</div>
+                </div>
+                <div class="bucket">
+                    <div class="bucket-index">[4]</div>
+                    <div class="bucket-content">→ NULL</div>
+                </div>
+                <div class="bucket">
+                    <div class="bucket-index">[5]</div>
+                    <div class="bucket-content">→ ("orange", 30)</div>
+                </div>
+                <div class="bucket">
+                    <div class="bucket-index">[6]</div>
+                    <div class="bucket-content">→ NULL</div>
+                </div>
+            </div>
+            <p><em>Index [3] හි collision එකක් සිදුවී ඇත - එකම index එකේ items දෙකක් ඇත</em></p>
+        </div>
+
+        <h2>💻 C Implementation - Basic Hash Table</h2>
+        
+        <h3>1. Structure Definitions (ව්‍යුහ නිර්වචන)</h3>
+        <div class="code-block">
+<span class="code-line"><span class="code-keyword">#include</span> <span class="code-string">&lt;stdio.h&gt;</span>     <span class="code-comment">// Standard input/output functions සඳහා</span></span>
+<span class="code-line"><span class="code-keyword">#include</span> <span class="code-string">&lt;stdlib.h&gt;</span>    <span class="code-comment">// Memory allocation functions සඳහා</span></span>
+<span class="code-line"><span class="code-keyword">#include</span> <span class="code-string">&lt;string.h&gt;</span>    <span class="code-comment">// String manipulation functions සඳහා</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">#define</span> TABLE_SIZE <span class="code-number">10</span>   <span class="code-comment">// Hash table size එක define කරනවා</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-comment">// Hash table entry එකක structure එක</span></span>
+<span class="code-line"><span class="code-keyword">typedef struct</span> Entry {</span>
+<span class="code-line">    <span class="code-keyword">char</span>* key;              <span class="code-comment">// Key එක store කරන pointer එක</span></span>
+<span class="code-line">    <span class="code-keyword">int</span> value;              <span class="code-comment">// Value එක store කරන integer එක</span></span>
+<span class="code-line">    <span class="code-keyword">struct</span> Entry* next;   <span class="code-comment">// Collision handle කරන්න linked list සඳහා</span></span>
+<span class="code-line">} Entry;</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-comment">// Hash table structure එක</span></span>
+<span class="code-line"><span class="code-keyword">typedef struct</span> {</span>
+<span class="code-line">    Entry* buckets[TABLE_SIZE];  <span class="code-comment">// Entry pointers array එකක්</span></span>
+<span class="code-line">} HashTable;</span>
+        </div>
+
+        <div class="explanation-box">
+            <h4>ව්‍යුහ විස්තරය:</h4>
+            <ul>
+                <li><strong>Entry:</strong> Hash table එකේ එක් item එකක් represent කරනවා. Key, value සහ next pointer එක ඇතුළත් වේ.</li>
+                <li><strong>next pointer:</strong> Collision සිදු වූ විට එකම index එකේ multiple entries store කරන්න chaining technique එක භාවිතා කරනවා.</li>
+                <li><strong>HashTable:</strong> TABLE_SIZE bucket array එකක් අඩංගු වේ. එක් එක් bucket එකක් linked list එකක් විය හැක.</li>
+            </ul>
+        </div>
+
+        <h3>2. Hash Function (හැෂ් ශ්‍රිතය)</h3>
+        <div class="code-block">
+<span class="code-line"><span class="code-comment">// Simple hash function - key එකේ characters වල ASCII values එකතු කරනවා</span></span>
+<span class="code-line"><span class="code-keyword">unsigned int</span> <span class="code-function">hash</span>(<span class="code-keyword">char</span>* key) {</span>
+<span class="code-line">    <span class="code-keyword">unsigned int</span> hash_value = <span class="code-number">0</span>;  <span class="code-comment">// Hash value එක initialize කරනවා</span></span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// Key එකේ හැම character එකක් loop එකකින් iterate කරනවා</span></span>
+<span class="code-line">    <span class="code-keyword">while</span> (*key) {</span>
+<span class="code-line">        hash_value += *key;        <span class="code-comment">// Character එකේ ASCII value එක add කරනවා</span></span>
+<span class="code-line">        key++;                      <span class="code-comment">// Next character එකට move වෙනවා</span></span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// Modulo operation එකෙන් table size එකට අනුව index එකක් ගන්නවා</span></span>
+<span class="code-line">    <span class="code-keyword">return</span> hash_value % TABLE_SIZE;</span>
+<span class="code-line">}</span>
+        </div>
+
+        <div class="explanation-box">
+            <h4>Hash Function එක ක්‍රියා කරන ආකාරය:</h4>
+            <p>උදාහරණයක් ලෙස "cat" යන key එක සඳහා:</p>
+            <ul>
+                <li>'c' = 99, 'a' = 97, 't' = 116</li>
+                <li>hash_value = 99 + 97 + 116 = 312</li>
+                <li>index = 312 % 10 = 2</li>
+                <li>එබැවින් "cat" key එක index 2 හි store වේ</li>
+            </ul>
+        </div>
+
+        <h3>3. Create Hash Table (හැෂ් වගුව නිර්මාණය කිරීම)</h3>
+        <div class="code-block">
+<span class="code-line"><span class="code-comment">// නව hash table එකක් create කරන function එක</span></span>
+<span class="code-line">HashTable* <span class="code-function">createHashTable</span>() {</span>
+<span class="code-line">    <span class="code-comment">// Hash table එක සඳහා memory allocate කරනවා</span></span>
+<span class="code-line">    HashTable* table = (HashTable*)<span class="code-function">malloc</span>(<span class="code-keyword">sizeof</span>(HashTable));</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// හැම bucket එකක්ම NULL ලෙස initialize කරනවා</span></span>
+<span class="code-line">    <span class="code-keyword">for</span> (<span class="code-keyword">int</span> i = <span class="code-number">0</span>; i &lt; TABLE_SIZE; i++) {</span>
+<span class="code-line">        table-&gt;buckets[i] = NULL;  <span class="code-comment">// මුලින් හැම bucket එකක්ම empty</span></span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-keyword">return</span> table;  <span class="code-comment">// Created table එක return කරනවා</span></span>
+<span class="code-line">}</span>
+        </div>
+
+        <h3>4. Insert Operation (ඇතුළත් කිරීමේ ක්‍රියාවලිය)</h3>
+        <div class="code-block">
+<span class="code-line"><span class="code-comment">// Hash table එකට key-value pair එකක් insert කරන function එක</span></span>
+<span class="code-line"><span class="code-keyword">void</span> <span class="code-function">insert</span>(HashTable* table, <span class="code-keyword">char</span>* key, <span class="code-keyword">int</span> value) {</span>
+<span class="code-line">    <span class="code-comment">// Key එකට අදාළ index එක calculate කරනවා</span></span>
+<span class="code-line">    <span class="code-keyword">unsigned int</span> index = <span class="code-function">hash</span>(key);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// නව entry එකක් සඳහා memory allocate කරනවා</span></span>
+<span class="code-line">    Entry* newEntry = (Entry*)<span class="code-function">malloc</span>(<span class="code-keyword">sizeof</span>(Entry));</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// Key එක copy කරන්න memory allocate කරනවා</span></span>
+<span class="code-line">    newEntry-&gt;key = (char*)<span class="code-function">malloc</span>(<span class="code-function">strlen</span>(key) + <span class="code-number">1</span>);</span>
+<span class="code-line">    <span class="code-function">strcpy</span>(newEntry-&gt;key, key);  <span class="code-comment">// Key එක copy කරනවා</span></span>
+<span class="code-line">    </span>
+<span class="code-line">    newEntry-&gt;value = value;        <span class="code-comment">// Value එක set කරනවා</span></span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// Chaining: නව entry එක list එකේ front එකට add කරනවා</span></span>
+<span class="code-line">    newEntry-&gt;next = table-&gt;buckets[index];</span>
+<span class="code-line">    table-&gt;buckets[index] = newEntry;</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"Inserted: %s = %d at index %u\n"</span>, key, value, index);</span>
+<span class="code-line">}</span>
+        </div>
+
+        <div class="explanation-box">
+            <h4>Insert Operation විස්තරය:</h4>
+            <ul>
+                <li>Hash function භාවිතයෙන් key එකට අදාළ index එක සොයා ගන්නවා</li>
+                <li>නව Entry එකක් create කර key සහ value store කරනවා</li>
+                <li>Collision වුණොත් chaining භාවිතයෙන් linked list එකක් ලෙස store කරනවා</li>
+                <li>නව entry එක list එකේ head එකට add කරන නිසා O(1) time complexity එකක් ලැබෙනවා</li>
+            </ul>
+        </div>
+
+        <h3>5. Search Operation (සෙවුම් ක්‍රියාවලිය)</h3>
+        <div class="code-block">
+<span class="code-line"><span class="code-comment">// Hash table එකෙන් key එකක් සඳහා value එක සොයන function එක</span></span>
+<span class="code-line"><span class="code-keyword">int</span> <span class="code-function">search</span>(HashTable* table, <span class="code-keyword">char</span>* key) {</span>
+<span class="code-line">    <span class="code-comment">// Key එකට අදාළ index එක calculate කරනවා</span></span>
+<span class="code-line">    <span class="code-keyword">unsigned int</span> index = <span class="code-function">hash</span>(key);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// ඒ index එකේ linked list එක traverse කරනවා</span></span>
+<span class="code-line">    Entry* current = table-&gt;buckets[index];</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-keyword">while</span> (current != NULL) {</span>
+<span class="code-line">        <span class="code-comment">// Key එක match වෙනවද කියලා check කරනවා</span></span>
+<span class="code-line">        <span class="code-keyword">if</span> (<span class="code-function">strcmp</span>(current-&gt;key, key) == <span class="code-number">0</span>) {</span>
+<span class="code-line">            <span class="code-keyword">return</span> current-&gt;value;  <span class="code-comment">// Match වුණොත් value එක return කරනවා</span></span>
+<span class="code-line">        }</span>
+<span class="code-line">        current = current-&gt;next;      <span class="code-comment">// Next entry එකට move වෙනවා</span></span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-keyword">return</span> -<span class="code-number">1</span>;  <span class="code-comment">// Key එක හමු නොවුණොත් -1 return කරනවා</span></span>
+<span class="code-line">}</span>
+        </div>
+
+        <h3>6. Delete Operation (මකා දැමීමේ ක්‍රියාවලිය)</h3>
+        <div class="code-block">
+<span class="code-line"><span class="code-comment">// Hash table එකෙන් key එකක් delete කරන function එක</span></span>
+<span class="code-line"><span class="code-keyword">void</span> <span class="code-function">deleteKey</span>(HashTable* table, <span class="code-keyword">char</span>* key) {</span>
+<span class="code-line">    <span class="code-comment">// Key එකට අදාළ index එක calculate කරනවා</span></span>
+<span class="code-line">    <span class="code-keyword">unsigned int</span> index = <span class="code-function">hash</span>(key);</span>
+<span class="code-line">    </span>
+<span class="code-line">    Entry* current = table-&gt;buckets[index];  <span class="code-comment">// Current node එක</span></span>
+<span class="code-line">    Entry* prev = NULL;                        <span class="code-comment">// Previous node එක track කරන්න</span></span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-keyword">while</span> (current != NULL) {</span>
+<span class="code-line">        <span class="code-comment">// Key එක match වෙනවද check කරනවා</span></span>
+<span class="code-line">        <span class="code-keyword">if</span> (<span class="code-function">strcmp</span>(current-&gt;key, key) == <span class="code-number">0</span>) {</span>
+<span class="code-line">            <span class="code-comment">// First node එක නම් bucket pointer එක update කරනවා</span></span>
+<span class="code-line">            <span class="code-keyword">if</span> (prev == NULL) {</span>
+<span class="code-line">                table-&gt;buckets[index] = current-&gt;next;</span>
+<span class="code-line">            } <span class="code-keyword">else</span> {</span>
+<span class="code-line">                <span class="code-comment">// Middle/end node එකක් නම් links update කරනවා</span></span>
+<span class="code-line">                prev-&gt;next = current-&gt;next;</span>
+<span class="code-line">            }</span>
+<span class="code-line">            </span>
+<span class="code-line">            <span class="code-comment">// Memory free කරනවා</span></span>
+<span class="code-line">            <span class="code-function">free</span>(current-&gt;key);  <span class="code-comment">// Key එකේ memory free කරනවා</span></span>
+<span class="code-line">            <span class="code-function">free</span>(current);        <span class="code-comment">// Entry එකේ memory free කරනවා</span></span>
+<span class="code-line">            </span>
+<span class="code-line">            <span class="code-function">printf</span>(<span class="code-string">"Deleted: %s\n"</span>, key);</span>
+<span class="code-line">            <span class="code-keyword">return</span>;</span>
+<span class="code-line">        }</span>
+<span class="code-line">        </span>
+<span class="code-line">        prev = current;            <span class="code-comment">// Previous එක update කරනවා</span></span>
+<span class="code-line">        current = current-&gt;next;   <span class="code-comment">// Next node එකට move වෙනවා</span></span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"Key not found: %s\n"</span>, key);</span>
+<span class="code-line">}</span>
+        </div>
+
+        <h3>7. Display Hash Table (හැෂ් වගුව පෙන්වීම)</h3>
+        <div class="code-block">
+<span class="code-line"><span class="code-comment">// Hash table එකේ සියලුම entries display කරන function එක</span></span>
+<span class="code-line"><span class="code-keyword">void</span> <span class="code-function">display</span>(HashTable* table) {</span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"\n=== Hash Table Contents ===\n"</span>);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// හැම bucket එකක්ම iterate කරනවා</span></span>
+<span class="code-line">    <span class="code-keyword">for</span> (<span class="code-keyword">int</span> i = <span class="code-number">0</span>; i &lt; TABLE_SIZE; i++) {</span>
+<span class="code-line">        <span class="code-function">printf</span>(<span class="code-string">"[%d]: "</span>, i);  <span class="code-comment">// Index එක print කරනවා</span></span>
+<span class="code-line">        </span>
+<span class="code-line">        Entry* current = table-&gt;buckets[i];</span>
+<span class="code-line">        </span>
+<span class="code-line">        <span class="code-comment">// Bucket එක empty නම්</span></span>
+<span class="code-line">        <span class="code-keyword">if</span> (current == NULL) {</span>
+<span class="code-line">            <span class="code-function">printf</span>(<span class="code-string">"NULL\n"</span>);</span>
+<span class="code-line">        } <span class="code-keyword">else</span> {</span>
+<span class="code-line">            <span class="code-comment">// Bucket එකේ හැම entry එකක්ම print කරනවා</span></span>
+<span class="code-line">            <span class="code-keyword">while</span> (current != NULL) {</span>
+<span class="code-line">                <span class="code-function">printf</span>(<span class="code-string">"(%s: %d) -> "</span>, current-&gt;key, current-&gt;value);</span>
+<span class="code-line">                current = current-&gt;next;</span>
+<span class="code-line">            }</span>
+<span class="code-line">            <span class="code-function">printf</span>(<span class="code-string">"NULL\n"</span>);</span>
+<span class="code-line">        }</span>
+<span class="code-line">    }</span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"===========================\n\n"</span>);</span>
+<span class="code-line">}</span>
+        </div>
+
+        <h3>8. Main Function (ප්‍රධාන ශ්‍රිතය)</h3>
+        <div class="code-block">
+<span class="code-line"><span class="code-comment">// Main function - program එක execute වෙන තැන</span></span>
+<span class="code-line"><span class="code-keyword">int</span> <span class="code-function">main</span>() {</span>
+<span class="code-line">    <span class="code-comment">// නව hash table එකක් create කරනවා</span></span>
+<span class="code-line">    HashTable* table = <span class="code-function">createHashTable</span>();</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// කීපයක් key-value pairs insert කරනවා</span></span>
+<span class="code-line">    <span class="code-function">insert</span>(table, <span class="code-string">"apple"</span>, <span class="code-number">10</span>);</span>
+<span class="code-line">    <span class="code-function">insert</span>(table, <span class="code-string">"banana"</span>, <span class="code-number">20</span>);</span>
+<span class="code-line">    <span class="code-function">insert</span>(table, <span class="code-string">"orange"</span>, <span class="code-number">30</span>);</span>
+<span class="code-line">    <span class="code-function">insert</span>(table, <span class="code-string">"grape"</span>, <span class="code-number">40</span>);</span>
+<span class="code-line">    <span class="code-function">insert</span>(table, <span class="code-string">"mango"</span>, <span class="code-number">50</span>);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// Hash table එක display කරනවා</span></span>
+<span class="code-line">    <span class="code-function">display</span>(table);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// කීපයක් keys search කරනවා</span></span>
+<span class="code-line">    <span class="code-keyword">int</span> value = <span class="code-function">search</span>(table, <span class="code-string">"banana"</span>);</span>
+<span class="code-line">    <span class="code-keyword">if</span> (value != -<span class="code-number">1</span>) {</span>
+<span class="code-line">        <span class="code-function">printf</span>(<span class="code-string">"Found: banana = %d\n"</span>, value);</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    value = <span class="code-function">search</span>(table, <span class="code-string">"watermelon"</span>);</span>
+<span class="code-line">    <span class="code-keyword">if</span> (value == -<span class="code-number">1</span>) {</span>
+<span class="code-line">        <span class="code-function">printf</span>(<span class="code-string">"Not found: watermelon\n"</span>);</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// Key එකක් delete කරනවා</span></span>
+<span class="code-line">    <span class="code-function">deleteKey</span>(table, <span class="code-string">"orange"</span>);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// Delete කළ පසු table එක display කරනවා</span></span>
+<span class="code-line">    <span class="code-function">display</span>(table);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-keyword">return</span> <span class="code-number">0</span>;</span>
+<span class="code-line">}</span>
+        </div>
+
+        <h2>⚡ Time Complexity (කාල සංකීර්ණතාව)</h2>
+        <div class="key-points">
+            <h4>සාමාන්‍ය අවස්ථාව (Average Case):</h4>
+            <ul>
+                <li><strong>Insert:</strong> O(1) - Hash function calculate කර list එකේ head එකට add කරනවා</li>
+                <li><strong>Search:</strong> O(1) - Index එක හොයාගෙන ඒ bucket එකේ පමණක් search කරනවා</li>
+                <li><strong>Delete:</strong> O(1) - Key එක හොයාගෙන remove කරනවා</li>
+            </ul>
+            
+            <h4>නරකම අවස්ථාව (Worst Case):</h4>
+            <ul>
+                <li><strong>සියලුම operations:</strong> O(n) - හැම key එකක්ම එකම index එකට hash වුණොත්</li>
+                <li>මෙය සිදු වන්නේ හොඳ hash function එකක් නොමැති විට හෝ table size එක කුඩා විට</li>
+            </ul>
+        </div>
+
+        <h2>🎯 Hash Tables හි වාසි සහ අවාසි</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="key-points" style="background: #d4edda;">
+                    <h4>✅ වාසි:</h4>
+                    <ul>
+                        <li>ඉතා වේගවත් data access - O(1) average case</li>
+                        <li>Key-value pairs store කිරීමට පහසු</li>
+                        <li>Dictionaries, caches, databases වල භාවිතා වේ</li>
+                        <li>Dynamic resizing හැකියාව</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="key-points" style="background: #f8d7da;">
+                    <h4>❌ අවාසි:</h4>
+                    <ul>
+                        <li>Extra memory අවශ්‍ය වේ</li>
+                        <li>Hash collisions handle කළ යුතුයි</li>
+                        <li>Ordering preserve නොවේ</li>
+                        <li>Hash function quality මත depend වේ</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <h2>🔧 Collision Handling Techniques</h2>
+        <div class="explanation-box">
+            <h4>1. Chaining (අපි භාවිතා කළ ක්‍රමය):</h4>
+            <p>එකම index එකේ multiple entries linked list එකකින් store කරනවා.</p>
+            
+            <h4>2. Open Addressing:</h4>
+            <ul>
+                <li><strong>Linear Probing:</strong> Collision වුණොත් next available slot එක හොයනවා</li>
+                <li><strong>Quadratic Probing:</strong> 1², 2², 3² ආදී gaps භාවිතා කරනවා</li>
+                <li><strong>Double Hashing:</strong> දෙවන hash function එකක් භාවිතා කරනවා</li>
+            </ul>
+        </div>
+
+        <h2>💡 Real-World Applications (භාවිත කරන තැන්)</h2>
+        <div class="key-points">
+            <ul>
+                <li><strong>Databases:</strong> Fast record lookup සඳහා indexing</li>
+                <li><strong>Caching:</strong> Web browsers හි page caching</li>
+                <li><strong>Symbol Tables:</strong> Compilers හි variable tracking</li>
+                <li><strong>Password Verification:</strong> Hashed passwords store කිරීම</li>
+                <li><strong>Routers:</strong> IP address routing tables</li>
+                <li><strong>Programming Languages:</strong> Python dictionaries, Java HashMap</li>
+            </ul>
+        </div>
+
+        <a href="../index.html" class="back-btn">← මුල් පිටුවට යන්න</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

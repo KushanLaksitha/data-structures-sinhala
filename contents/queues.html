@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Queues (පෝලිම්) | DSA සිංහලෙන්</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans Sinhala', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .navbar {
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+        
+        .content-section {
+            background: white;
+            margin: 80px auto 30px;
+            padding: 50px;
+            border-radius: 15px;
+            max-width: 1200px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #667eea;
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            color: #764ba2;
+            font-weight: 700;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+        
+        .code-block {
+            background: #1e1e1e;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        
+        .code-line {
+            display: block;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            color: #d4d4d4;
+        }
+        
+        .comment {
+            color: #6a9955;
+        }
+        
+        .keyword {
+            color: #569cd6;
+        }
+        
+        .function {
+            color: #dcdcaa;
+        }
+        
+        .string {
+            color: #ce9178;
+        }
+        
+        .number {
+            color: #b5cea8;
+        }
+        
+        .info-box {
+            background: #e8f4f8;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .example-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .btn-back {
+            background: #667eea;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        
+        .btn-back:hover {
+            background: #764ba2;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html" style="color: #667eea; font-weight: 700;">📘 DSA සිංහලෙන්</a>
+        </div>
+    </nav>
+
+    <div class="content-section">
+        <a href="../index.html" class="btn-back">← මුල් පිටුවට</a>
+        
+        <h1>🚶 Queues (පෝලිම්)</h1>
+        
+        <p><strong>Queue</strong> යනු FIFO (First In First Out) මූලධර්මය අනුව ක්‍රියා කරන රේඛීය දත්ත ව්‍යුහයකි. ප්‍රථමයෙන් එකතු කළ element එක ප්‍රථමයෙන්ම ඉවත් වේ. බස් පෝලිමක් මෙන් - පළමුවෙන් පෝලිමට එකතු වූ තැනැත්තා පළමුවෙන්ම සේවය ලබයි.</p>
+
+        <h2>🔑 ප්‍රධාන ලක්ෂණ</h2>
+        <ul>
+            <li><strong>FIFO Principle:</strong> First In, First Out - පළමුව ඇතුළත් කළ අගය පළමුව පිටතට</li>
+            <li><strong>Front සහ Rear Pointers:</strong> Queue එකේ ආරම්භය හා අවසානය track කරයි</li>
+            <li><strong>Two-ended Access:</strong> එක් පසින් insert, අනික් පසින් delete</li>
+            <li><strong>Sequential Processing:</strong> අනුපිළිවෙලින් process වේ</li>
+        </ul>
+
+        <div class="info-box">
+            <strong>💡 Queue Operations:</strong><br>
+            <strong>Enqueue:</strong> Queue එකේ rear එකේ element එකක් එකතු කිරීම<br>
+            <strong>Dequeue:</strong> Queue එකේ front එකෙන් element එක ඉවත් කිරීම<br>
+            <strong>Front/Peek:</strong> Front element එක බැලීම (ඉවත් නොකර)<br>
+            <strong>isEmpty:</strong> Queue එක හිස්ද යන්න පරීක්ෂා කිරීම
+        </div>
+
+        <h2>⏱️ Time Complexity</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Operation</th>
+                    <th>Time Complexity</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Enqueue (එකතු කිරීම)</td>
+                    <td>O(1)</td>
+                </tr>
+                <tr>
+                    <td>Dequeue (ඉවත් කිරීම)</td>
+                    <td>O(1)</td>
+                </tr>
+                <tr>
+                    <td>Front (බැලීම)</td>
+                    <td>O(1)</td>
+                </tr>
+                <tr>
+                    <td>Search</td>
+                    <td>O(n)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>💻 C Code Examples</h2>
+
+        <h3>1. Simple Queue Implementation using Array</h3>
+        <div class="code-block">
+<span class="code-line"><span class="comment">// Array භාවිතයෙන් සරල Queue implementation</span></span>
+<span class="code-line"><span class="keyword">#include</span> <span class="string">&lt;stdio.h&gt;</span></span>
+<span class="code-line"><span class="keyword">#include</span> <span class="string">&lt;stdlib.h&gt;</span></span>
+<span class="code-line"><span class="keyword">#include</span> <span class="string">&lt;stdbool.h&gt;</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="keyword">#define</span> MAX <span class="number">100</span>  <span class="comment">// Queue එකේ උපරිම ප්‍රමාණය</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="comment">// Queue structure</span></span>
+<span class="code-line"><span class="keyword">struct</span> Queue {</span>
+<span class="code-line">    <span class="keyword">int</span> items[MAX];  <span class="comment">// Elements ගබඩා කරන array එක</span></span>
+<span class="code-line">    <span class="keyword">int</span> front;  <span class="comment">// පළමු element එකේ index</span></span>
+<span class="code-line">    <span class="keyword">int</span> rear;  <span class="comment">// අවසාන element එකේ index</span></span>
+<span class="code-line">};</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="comment">// Queue එක initialize කිරීම</span></span>
+<span class="code-line"><span class="keyword">void</span> <span class="function">initialize</span>(<span class="keyword">struct</span> Queue* q) {</span>
+<span class="code-line">    q-&gt;front = <span class="number">-1</span>;  <span class="comment">// -1 යනු queue එක හිස් බව පෙන්වයි</span></span>
+<span class="code-line">    q-&gt;rear = <span class="number">-1</span>;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="comment">// Queue එක හිස්ද යන්න පරීක්ෂා කිරීම</span></span>
+<span class="code-line"><span class="keyword">bool</span> <span class="function">isEmpty</span>(<span class="keyword">struct</span> Queue* q) {</span>
+<span class="code-line">    <span class="keyword">return</span> (q-&gt;front == <span class="number">-1</span> || q-&gt;front &gt; q-&gt;rear);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="comment">// Queue එක පිරී ඇත්ද යන්න පරීක්ෂා කිරීම</span></span>
+<span class="code-line"><span class="keyword">bool</span> <span class="function">isFull</span>(<span class="keyword">struct</span> Queue* q) {</span>
+<span class="code-line">    <span class="keyword">return</span> q-&gt;rear == MAX - <span class="number">1</span>;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="comment">// Enqueue operation - queue එකට element එකක් එකතු කිරීම</span></span>
+<span class="code-line"><span class="keyword">void</span> <span class="function">enqueue</span>(<span class="keyword">struct</span> Queue* q, <span class="keyword">int</span> value) {</span>
+<span class="code-line">    <span class="keyword">if</span>(<span class="function">isFull</span>(q)) {  <span class="comment">// queue පිරී ඇත්නම්</span></span>
+<span class="code-line">        <span class="function">printf</span>(<span class="string">"Queue Overflow! එකතු කළ නොහැක.\n"</span>);</span>
+<span class="code-line">        <span class="keyword">return</span>;</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="keyword">if</span>(q-&gt;front == <span class="number">-1</span>) {  <span class="comment">// පළමු element එක නම්</span></span>
+<span class="code-line">        q-&gt;front = <span class="number">0</span>;  <span class="comment">// front එක 0 ට සකසන්න</span></span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    q-&gt;rear++;  <span class="comment">// rear එක වැඩි කරන්න</span></span>
+<span class="code-line">    q-&gt;items[q-&gt;rear] = value;  <span class="comment">// නව rear position එකේ value එක ගබඩා කරන්න</span></span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"%d queue එකට enqueue කරන ලදී.\n"</span>, value);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="comment">// Dequeue operation - queue එකෙන් front element එක ඉවත් කිරීම</span></span>
+<span class="code-line"><span class="keyword">int</span> <span class="function">dequeue</span>(<span class="keyword">struct</span> Queue* q) {</span>
+<span class="code-line">    <span class="keyword">if</span>(<span class="function">isEmpty</span>(q)) {  <span class="comment">// queue හිස් නම්</span></span>
+<span class="code-line">        <span class="function">printf</span>(<span class="string">"Queue Underflow! ඉවත් කළ නොහැක.\n"</span>);</span>
+<span class="code-line">        <span class="keyword">return</span> <span class="number">-1</span>;</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="keyword">int</span> value = q-&gt;items[q-&gt;front];  <span class="comment">// front element එක ගන්න</span></span>
+<span class="code-line">    q-&gt;front++;  <span class="comment">// front එක ඉදිරියට ගෙනයන්න</span></span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="keyword">if</span>(q-&gt;front &gt; q-&gt;rear) {  <span class="comment">// සියලු elements dequeue කළා නම්</span></span>
+<span class="code-line">        q-&gt;front = q-&gt;rear = <span class="number">-1</span>;  <span class="comment">// queue එක reset කරන්න</span></span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="keyword">return</span> value;  <span class="comment">// ඉවත් කළ value එක return කරන්න</span></span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="comment">// Front element එක බලන්න (ඉවත් නොකර)</span></span>
+<span class="code-line"><span class="keyword">int</span> <span class="function">front</span>(<span class="keyword">struct</span> Queue* q) {</span>
+<span class="code-line">    <span class="keyword">if</span>(<span class="function">isEmpty</span>(q)) {</span>
+<span class="code-line">        <span class="function">printf</span>(<span class="string">"Queue හිස්!\n"</span>);</span>
+<span class="code-line">        <span class="keyword">return</span> <span class="number">-1</span>;</span>
+<span class="code-line">    }</span>
+<span class="code-line">    <span class="keyword">return</span> q-&gt;items[q-&gt;front];  <span class="comment">// front element එක return කරන්න</span></span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="comment">// Queue එක display කිරීම</span></span>
+<span class="code-line"><span class="keyword">void</span> <span class="function">display</span>(<span class="keyword">struct</span> Queue* q) {</span>
+<span class="code-line">    <span class="keyword">if</span>(<span class="function">isEmpty</span>(q)) {</span>
+<span class="code-line">        <span class="function">printf</span>(<span class="string">"Queue හිස්!\n"</span>);</span>
+<span class="code-line">        <span class="keyword">return</span>;</span>
+<span class="code-line">    }</span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"Queue elements: "</span>);</span>
+<span class="code-line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = q-&gt;front; i &lt;= q-&gt;rear; i++) {  <span class="comment">// front සිට rear දක්වා</span></span>
+<span class="code-line">        <span class="function">printf</span>(<span class="string">"%d "</span>, q-&gt;items[i]);</span>
+<span class="code-line">    }</span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"\n"</span>);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="keyword">int</span> <span class="function">main</span>() {</span>
+<span class="code-line">    <span class="keyword">struct</span> Queue queue;</span>
+<span class="code-line">    <span class="function">initialize</span>(&amp;queue);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// Enqueue operations</span></span>
+<span class="code-line">    <span class="function">enqueue</span>(&amp;queue, <span class="number">10</span>);</span>
+<span class="code-line">    <span class="function">enqueue</span>(&amp;queue, <span class="number">20</span>);</span>
+<span class="code-line">    <span class="function">enqueue</span>(&amp;queue, <span class="number">30</span>);</span>
+<span class="code-line">    <span class="function">enqueue</span>(&amp;queue, <span class="number">40</span>);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// Queue එක display කරන්න</span></span>
+<span class="code-line">    <span class="function">display</span>(&amp;queue);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// Front element එක</span></span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"Front element: %d\n"</span>, <span class="function">front</span>(&amp;queue));</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// Dequeue operations</span></span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"Dequeue කළ element: %d\n"</span>, <span class="function">dequeue</span>(&amp;queue));</span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"Dequeue කළ element: %d\n"</span>, <span class="function">dequeue</span>(&amp;queue));</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// Display after dequeuing</span></span>
+<span class="code-line">    <span class="function">display</span>(&amp;queue);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="keyword">return</span> <span class="number">0</span>;</span>
+<span class="code-line">}</span>
+        </div>
+
+        <h3>2. Circular Queue Implementation</h3>
+        <div class="code-block">
+<span class="code-line"><span class="comment">// Circular Queue - array space කාර්යක්ෂමව භාවිතා කිරීම</span></span>
+<span class="code-line"><span class="keyword">#include</span> <span class="string">&lt;stdio.h&gt;</span></span>
+<span class="code-line"><span class="keyword">#include</span> <span class="string">&lt;stdbool.h&gt;</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="keyword">#define</span> MAX <span class="number">5</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="keyword">struct</span> CircularQueue {</span>
+<span class="code-line">    <span class="keyword">int</span> items[MAX];</span>
+<span class="code-line">    <span class="keyword">int</span> front;</span>
+<span class="code-line">    <span class="keyword">int</span> rear;</span>
+<span class="code-line">};</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="keyword">void</span> <span class="function">initialize</span>(<span class="keyword">struct</span> CircularQueue* q) {</span>
+<span class="code-line">    q-&gt;front = <span class="number">-1</span>;</span>
+<span class="code-line">    q-&gt;rear = <span class="number">-1</span>;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="keyword">bool</span> <span class="function">isEmpty</span>(<span class="keyword">struct</span> CircularQueue* q) {</span>
+<span class="code-line">    <span class="keyword">return</span> q-&gt;front == <span class="number">-1</span>;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="comment">// Circular queue එකේ පිරී ඇත්ද යන්න පරීක්ෂා කිරීම</span></span>
+<span class="code-line"><span class="keyword">bool</span> <span class="function">isFull</span>(<span class="keyword">struct</span> CircularQueue* q) {</span>
+<span class="code-line">    <span class="comment">// Rear එක front එකට පෙර position එකක නම් පිරී ඇත</span></span>
+<span class="code-line">    <span class="keyword">return</span> (q-&gt;rear + <span class="number">1</span>) % MAX == q-&gt;front;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="comment">// Circular enqueue operation</span></span>
+<span class="code-line"><span class="keyword">void</span> <span class="function">enqueue</span>(<span class="keyword">struct</span> CircularQueue* q, <span class="keyword">int</span> value) {</span>
+<span class="code-line">    <span class="keyword">if</span>(<span class="function">isFull</span>(q)) {</span>
+<span class="code-line">        <span class="function">printf</span>(<span class="string">"Queue පිරී ඇත!\n"</span>);</span>
+<span class="code-line">        <span class="keyword">return</span>;</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="keyword">if</span>(q-&gt;front == <span class="number">-1</span>) {  <span class="comment">// පළමු element එක නම්</span></span>
+<span class="code-line">        q-&gt;front = <span class="number">0</span>;</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// Rear එක circular ලෙස ඉදිරියට ගෙනයන්න</span></span>
+<span class="code-line">    q-&gt;rear = (q-&gt;rear + <span class="number">1</span>) % MAX;</span>
+<span class="code-line">    q-&gt;items[q-&gt;rear] = value;</span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"%d enqueue කරන ලදී.\n"</span>, value);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="comment">// Circular dequeue operation</span></span>
+<span class="code-line"><span class="keyword">int</span> <span class="function">dequeue</span>(<span class="keyword">struct</span> CircularQueue* q) {</span>
+<span class="code-line">    <span class="keyword">if</span>(<span class="function">isEmpty</span>(q)) {</span>
+<span class="code-line">        <span class="function">printf</span>(<span class="string">"Queue හිස්!\n"</span>);</span>
+<span class="code-line">        <span class="keyword">return</span> <span class="number">-1</span>;</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="keyword">int</span> value = q-&gt;items[q-&gt;front];</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="keyword">if</span>(q-&gt;front == q-&gt;rear) {  <span class="comment">// අවසාන element එක නම්</span></span>
+<span class="code-line">        q-&gt;front = q-&gt;rear = <span class="number">-1</span>;  <span class="comment">// Queue එක reset කරන්න</span></span>
+<span class="code-line">    } <span class="keyword">else</span> {</span>
+<span class="code-line">        <span class="comment">// Front එක circular ලෙස ඉදිරියට ගෙනයන්න</span></span>
+<span class="code-line">        q-&gt;front = (q-&gt;front + <span class="number">1</span>) % MAX;</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="keyword">return</span> value;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="keyword">void</span> <span class="function">display</span>(<span class="keyword">struct</span> CircularQueue* q) {</span>
+<span class="code-line">    <span class="keyword">if</span>(<span class="function">isEmpty</span>(q)) {</span>
+<span class="code-line">        <span class="function">printf</span>(<span class="string">"Queue හිස්!\n"</span>);</span>
+<span class="code-line">        <span class="keyword">return</span>;</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"Queue: "</span>);</span>
+<span class="code-line">    <span class="keyword">int</span> i = q-&gt;front;</span>
+<span class="code-line">    <span class="keyword">while</span>(<span class="keyword">true</span>) {</span>
+<span class="code-line">        <span class="function">printf</span>(<span class="string">"%d "</span>, q-&gt;items[i]);</span>
+<span class="code-line">        <span class="keyword">if</span>(i == q-&gt;rear) <span class="keyword">break</span>;  <span class="comment">// Rear එක දක්වා</span></span>
+<span class="code-line">        i = (i + <span class="number">1</span>) % MAX;  <span class="comment">// Circular increment</span></span>
+<span class="code-line">    }</span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"\n"</span>);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="keyword">int</span> <span class="function">main</span>() {</span>
+<span class="code-line">    <span class="keyword">struct</span> CircularQueue cq;</span>
+<span class="code-line">    <span class="function">initialize</span>(&amp;cq);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// Elements enqueue කරන්න</span></span>
+<span class="code-line">    <span class="function">enqueue</span>(&amp;cq, <span class="number">10</span>);</span>
+<span class="code-line">    <span class="function">enqueue</span>(&amp;cq, <span class="number">20</span>);</span>
+<span class="code-line">    <span class="function">enqueue</span>(&amp;cq, <span class="number">30</span>);</span>
+<span class="code-line">    <span class="function">enqueue</span>(&amp;cq, <span class="number">40</span>);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="function">display</span>(&amp;cq);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// Dequeue කර නැවත enqueue කිරීම (circular behavior)</span></span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"Dequeue: %d\n"</span>, <span class="function">dequeue</span>(&amp;cq));</span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"Dequeue: %d\n"</span>, <span class="function">dequeue</span>(&amp;cq));</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="function">enqueue</span>(&amp;cq, <span class="number">50</span>);</span>
+<span class="code-line">    <span class="function">enqueue</span>(&amp;cq, <span class="number">60</span>);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="function">display</span>(&amp;cq);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="keyword">return</span> <span class="number">0</span>;</span>
+<span class="code-line">}</span>
+        </div>
+
+        <h3>3. Queue using Linked List</h3>
+        <div class="code-block">
+<span class="code-line"><span class="comment">// Linked List භාවිතයෙන් Queue implementation</span></span>
+<span class="code-line"><span class="keyword">#include</span> <span class="string">&lt;stdio.h&gt;</span></span>
+<span class="code-line"><span class="keyword">#include</span> <span class="string">&lt;stdlib.h&gt;</span></span>
+<span class="code-line"><span class="keyword">#include</span> <span class="string">&lt;stdbool.h&gt;</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="comment">// Node structure</span></span>
+<span class="code-line"><span class="keyword">struct</span> Node {</span>
+<span class="code-line">    <span class="keyword">int</span> data;</span>
+<span class="code-line">    <span class="keyword">struct</span> Node* next;</span>
+<span class="code-line">};</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="comment">// Queue structure with front සහ rear pointers</span></span>
+<span class="code-line"><span class="keyword">struct</span> Queue {</span>
+<span class="code-line">    <span class="keyword">struct</span> Node* front;  <span class="comment">// පළමු node එක</span></span>
+<span class="code-line">    <span class="keyword">struct</span> Node* rear;   <span class="comment">// අවසාන node එක</span></span>
+<span class="code-line">};</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="comment">// Queue එක initialize කිරීම</span></span>
+<span class="code-line"><span class="keyword">void</span> <span class="function">initialize</span>(<span class="keyword">struct</span> Queue* q) {</span>
+<span class="code-line">    q-&gt;front = NULL;</span>
+<span class="code-line">    q-&gt;rear = NULL;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="keyword">bool</span> <span class="function">isEmpty</span>(<span class="keyword">struct</span> Queue* q) {</span>
+<span class="code-line">    <span class="keyword">return</span> q-&gt;front == NULL;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="comment">// Enqueue operation - rear එකට node එකක් එකතු කිරීම</span></span>
+<span class="code-line"><span class="keyword">void</span> <span class="function">enqueue</span>(<span class="keyword">struct</span> Queue* q, <span class="keyword">int</span> value) {</span>
+<span class="code-line">    <span class="comment">// අලුත් node එකක් සාදන්න</span></span>
+<span class="code-line">    <span class="keyword">struct</span> Node* newNode = (<span class="keyword">struct</span> Node*)<span class="function">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> Node));</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="keyword">if</span>(newNode == NULL) {  <span class="comment">// Memory allocation fail වුනා නම්</span></span>
+<span class="code-line">        <span class="function">printf</span>(<span class="string">"Memory අවසන්!\n"</span>);</span>
+<span class="code-line">        <span class="keyword">return</span>;</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// Node එකට data ඇතුළත් කරන්න</span></span>
+<span class="code-line">    newNode-&gt;data = value;</span>
+<span class="code-line">    newNode-&gt;next = NULL;</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="keyword">if</span>(<span class="function">isEmpty</span>(q)) {  <span class="comment">// Queue එක හිස් නම්</span></span>
+<span class="code-line">        q-&gt;front = newNode;  <span class="comment">// Front සහ rear යන දෙකම නව node එක වෙත</span></span>
+<span class="code-line">        q-&gt;rear = newNode;</span>
+<span class="code-line">    } <span class="keyword">else</span> {</span>
+<span class="code-line">        <span class="comment">// වත්මන් rear එකේ next නව node එක වෙත point කරවන්න</span></span>
+<span class="code-line">        q-&gt;rear-&gt;next = newNode;</span>
+<span class="code-line">        <span class="comment">// Rear එක නව node එක වෙත ගෙනයන්න</span></span>
+<span class="code-line">        q-&gt;rear = newNode;</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"%d enqueue කරන ලදී.\n"</span>, value);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="comment">// Dequeue operation - front එකෙන් node එක ඉවත් කිරීම</span></span>
+<span class="code-line"><span class="keyword">int</span> <span class="function">dequeue</span>(<span class="keyword">struct</span> Queue* q) {</span>
+<span class="code-line">    <span class="keyword">if</span>(<span class="function">isEmpty</span>(q)) {</span>
+<span class="code-line">        <span class="function">printf</span>(<span class="string">"Queue හිස්!\n"</span>);</span>
+<span class="code-line">        <span class="keyword">return</span> <span class="number">-1</span>;</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// Front node එකේ data ගන්න</span></span>
+<span class="code-line">    <span class="keyword">struct</span> Node* temp = q-&gt;front;</span>
+<span class="code-line">    <span class="keyword">int</span> value = temp-&gt;data;</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// Front එක ඊළඟ node එක වෙත ගෙනයන්න</span></span>
+<span class="code-line">    q-&gt;front = q-&gt;front-&gt;next;</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="keyword">if</span>(q-&gt;front == NULL) {  <span class="comment">// අවසාන node එක dequeue කළා නම්</span></span>
+<span class="code-line">        q-&gt;rear = NULL;  <span class="comment">// Rear එකත් NULL කරන්න</span></span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="comment">// පරණ front node එක මතකයෙන් මකන්න</span></span>
+<span class="code-line">    <span class="function">free</span>(temp);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="keyword">return</span> value;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="keyword">void</span> <span class="function">display</span>(<span class="keyword">struct</span> Queue* q) {</span>
+<span class="code-line">    <span class="keyword">if</span>(<span class="function">isEmpty</span>(q)) {</span>
+<span class="code-line">        <span class="function">printf</span>(<span class="string">"Queue හිස්!\n"</span>);</span>
+<span class="code-line">        <span class="keyword">return</span>;</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"Queue: "</span>);</span>
+<span class="code-line">    <span class="keyword">struct</span> Node* temp = q-&gt;front;</span>
+<span class="code-line">    <span class="keyword">while</span>(temp != NULL) {  <span class="comment">// අවසානය දක්වා</span></span>
+<span class="code-line">        <span class="function">printf</span>(<span class="string">"%d "</span>, temp-&gt;data);</span>
+<span class="code-line">        temp = temp-&gt;next;</span>
+<span class="code-line">    }</span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"\n"</span>);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="keyword">int</span> <span class="function">main</span>() {</span>
+<span class="code-line">    <span class="keyword">struct</span> Queue queue;</span>
+<span class="code-line">    <span class="function">initialize</span>(&amp;queue);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="function">enqueue</span>(&amp;queue, <span class="number">100</span>);</span>
+<span class="code-line">    <span class="function">enqueue</span>(&amp;queue, <span class="number">200</span>);</span>
+<span class="code-line">    <span class="function">enqueue</span>(&amp;queue, <span class="number">300</span>);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="function">display</span>(&amp;queue);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="function">printf</span>(<span class="string">"Dequeue: %d\n"</span>, <span class="function">dequeue</span>(&amp;queue));</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="function">display</span>(&amp;queue);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="keyword">return</span> <span class="number">0</span>;</span>
+<span class="code-line">}</span>
+        </div>
+
+        <h2>✅ වාසි (Advantages)</h2>
+        <ul>
+            <li>සරල හා කාර්යක්ෂම operations (O(1) time)</li>
+            <li>FIFO මූලධර්මය ස්වභාවිකවම implement වේ</li>
+            <li>Multiple processes handle කිරීමට සුදුසුය</li>
+            <li>Circular queue එකෙන් array space කාර්යක්ෂමව භාවිතා වේ</li>
+        </ul>
+
+        <h2>❌ අවාසි (Disadvantages)</h2>
+        <ul>
+            <li>Array implementation එකේ fixed size limitation</li>
+            <li>Simple queue එකේ wasted space (dequeue කළ පසු)</li>
+            <li>Random access නැත</li>
+            <li>Middle elements වෙත access කළ නොහැක</li>
+        </ul>
+
+        <h2>📝 Queue වර්ග</h2>
+        <div class="info-box">
+            <strong>1. Simple Queue:</strong> Basic FIFO queue<br>
+            <strong>2. Circular Queue:</strong> Array space කාර්යක්ෂමව භාවිතා කරන queue<br>
+            <strong>3. Priority Queue:</strong> Priority අනුව elements process වන queue<br>
+            <strong>4. Double-ended Queue (Deque):</strong> දෙපසින්ම enqueue/dequeue කළ හැකි queue
+        </div>
+
+        <div class="example-box">
+            <h3>🎯 Queues භාවිත කරන තැන්</h3>
+            <ul>
+                <li><strong>CPU Scheduling:</strong> Operating systems හි process scheduling</li>
+                <li><strong>Print Queue:</strong> Printer jobs manage කිරීම</li>
+                <li><strong>BFS Algorithm:</strong> Graph traversal</li>
+                <li><strong>Call Center Systems:</strong> Customer calls handle කිරීම</li>
+                <li><strong>Buffer Management:</strong> Data streaming applications</li>
+                <li><strong>Request Handling:</strong> Web servers හි request queue</li>
+            </ul>
+        </div>
+
+        <h2>🔄 Circular Queue හි වාසි</h2>
+        <div class="info-box">
+            Circular Queue එකේදී front සහ rear යන දෙකම circular ලෙස ගමන් කරන නිසා array space කාර්යක්ෂමව භාවිතා වේ. Simple queue එකේදී dequeue කළ පසු front position වල තිබෙන space අපතේ යන නමුත් circular queue එකේදී එම space නැවත භාවිතා වේ.
+        </div>
+
+        <a href="../index.html" class="btn-back">← මුල් පිටුවට</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

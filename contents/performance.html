@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>කාර්ය සාධන විශ්ලේෂණය | Performance Analysis</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;700&family=Fira+Code:wght@400;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans Sinhala', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .navbar {
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: #667eea !important;
+        }
+        
+        .nav-link {
+            color: #555 !important;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-link:hover {
+            color: #667eea !important;
+        }
+        
+        .content-section {
+            background: white;
+            margin: 80px auto 50px;
+            padding: 50px;
+            border-radius: 20px;
+            max-width: 1200px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .section-header {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #333;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .subsection-header {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #555;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        
+        .content-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        
+        .code-container {
+            background: #1e1e1e;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 25px 0;
+            overflow-x: auto;
+        }
+        
+        .code-title {
+            color: #4ec9b0;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .code-block {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #d4d4d4;
+        }
+        
+        .code-line {
+            display: block;
+            padding: 2px 0;
+        }
+        
+        .code-comment {
+            color: #6a9955;
+        }
+        
+        .code-keyword {
+            color: #569cd6;
+        }
+        
+        .code-function {
+            color: #dcdcaa;
+        }
+        
+        .code-string {
+            color: #ce9178;
+        }
+        
+        .code-number {
+            color: #b5cea8;
+        }
+        
+        .highlight-box {
+            background: #f0f7ff;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .warning-box {
+            background: #fff4e5;
+            border-left: 4px solid #ff9800;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .complexity-table {
+            width: 100%;
+            margin: 25px 0;
+            border-collapse: collapse;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .complexity-table th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .complexity-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .complexity-table tr:hover {
+            background: #f5f5f5;
+        }
+        
+        .example-output {
+            background: #f5f5f5;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Fira Code', monospace;
+        }
+        
+        .output-title {
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        footer {
+            background: #2d3748;
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            margin-top: 50px;
+        }
+        
+        @media (max-width: 768px) {
+            .content-section {
+                padding: 30px 20px;
+                margin: 70px 15px 30px;
+            }
+            
+            .page-title {
+                font-size: 1.8rem;
+            }
+            
+            .section-header {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">📘 DSA සිංහලෙන්</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">මුල් පිටුව</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../about.html">ව්‍යාපෘතිය ගැන</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../outcomes.html">ඉගෙනුම් ප්‍රතිඵල</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="content-section">
+        <h1 class="page-title">කාර්ය සාධන විශ්ලේෂණය (Performance Analysis)</h1>
+        
+        <div class="content-text">
+            අල්ගොරිතමයක කාර්යක්ෂමතාව මැනීමේදී අප විශේෂයෙන් අවධානය යොමු කරන්නේ එහි ධාවන කාලය (Time Complexity) සහ මතක ප්‍රමාණය (Space Complexity) පිළිබඳවයි. මෙය අප විස්තර කරන්නේ Big O notation භාවිතයෙනි.
+        </div>
+
+        <!-- Big O Notation -->
+        <h2 class="section-header">1. Big O Notation (බිග් ඕ සංකේතනය)</h2>
+        
+        <div class="content-text">
+            Big O notation යනු අල්ගොරිතමයක අවම කාර්යක්ෂමතාව විස්තර කරන ගණිතමය ප්‍රකාශනයකි. මෙය දත්ත ප්‍රමාණය වැඩි වන විට අල්ගොරිතමය ධාවනය වන වේලාව කෙසේ වෙනස් වේද යන්න දක්වයි.
+        </div>
+
+        <h3 class="subsection-header">පොදු Big O සංකීර්ණතා මට්ටම්:</h3>
+
+        <table class="complexity-table">
+            <thead>
+                <tr>
+                    <th>Notation</th>
+                    <th>නම</th>
+                    <th>විස්තරය</th>
+                    <th>උදාහරණය</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>O(1)</strong></td>
+                    <td>නියත කාලය</td>
+                    <td>දත්ත ප්‍රමාණයට නොසලකා සමාන වේලාව</td>
+                    <td>Array හි index එකකින් ප්‍රවේශය</td>
+                </tr>
+                <tr>
+                    <td><strong>O(log n)</strong></td>
+                    <td>ලඝුගණක කාලය</td>
+                    <td>දත්ත ප්‍රමාණය දෙගුණ වන විට කාලය ස්වල්පයක් වැඩි වේ</td>
+                    <td>Binary Search</td>
+                </tr>
+                <tr>
+                    <td><strong>O(n)</strong></td>
+                    <td>රේඛීය කාලය</td>
+                    <td>දත්ත ප්‍රමාණයට සමානුපාතිකව කාලය වැඩි වේ</td>
+                    <td>Linear Search</td>
+                </tr>
+                <tr>
+                    <td><strong>O(n log n)</strong></td>
+                    <td>රේඛීය-ලඝුගණක කාලය</td>
+                    <td>කාර්යක්ෂම sorting අල්ගොරිතම්</td>
+                    <td>Merge Sort, Quick Sort</td>
+                </tr>
+                <tr>
+                    <td><strong>O(n²)</strong></td>
+                    <td>චතුරස්‍ර කාලය</td>
+                    <td>දත්ත ප්‍රමාණයේ වර්ගයට සමානුපාතික</td>
+                    <td>Bubble Sort, Selection Sort</td>
+                </tr>
+                <tr>
+                    <td><strong>O(2ⁿ)</strong></td>
+                    <td>ඝාතීය කාලය</td>
+                    <td>ඉතා මන්දගාමී, විශාල දත්ත සඳහා භාවිතා කළ නොහැක</td>
+                    <td>Recursive Fibonacci</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="highlight-box">
+            <strong>සටහන:</strong> අප සැලකිල්ලට ගන්නේ මූලිකවම "worst-case" සංකීර්ණතාව පමණි. එනම් අල්ගොරිතමය වඩාත්ම මන්දගාමීව ක්‍රියා කරන අවස්ථාවයි.
+        </div>
+
+        <!-- O(1) Example -->
+        <h3 class="subsection-header">O(1) - නියත කාලය</h3>
+        <div class="content-text">
+            මෙහිදී ක්‍රියාත්මක වන කාලය දත්ත ප්‍රමාණයට වෙනස් නොවේ.
+        </div>
+
+        <div class="code-container">
+            <div class="code-title">// Array එකක පළමු අගය ලබා ගැනීම - O(1)</div>
+            <div class="code-block">
+<span class="code-line"><span class="code-keyword">#include</span> <span class="code-string">&lt;stdio.h&gt;</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">int</span> <span class="code-function">getFirstElement</span>(<span class="code-keyword">int</span> arr[], <span class="code-keyword">int</span> size) {</span>
+<span class="code-line">    <span class="code-comment">// Array size කොයි තරම් විශාල වුවත් මෙය එක් operation එකකි</span></span>
+<span class="code-line">    <span class="code-keyword">return</span> arr[<span class="code-number">0</span>];</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">int</span> <span class="code-function">main</span>() {</span>
+<span class="code-line">    <span class="code-keyword">int</span> numbers[] = {<span class="code-number">10</span>, <span class="code-number">20</span>, <span class="code-number">30</span>, <span class="code-number">40</span>, <span class="code-number">50</span>};</span>
+<span class="code-line">    <span class="code-keyword">int</span> size = <span class="code-number">5</span>;</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// මෙම function එක O(1) time complexity එකක් ඇත</span></span>
+<span class="code-line">    <span class="code-keyword">int</span> first = <span class="code-function">getFirstElement</span>(numbers, size);</span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"පළමු අගය: %d\n"</span>, first);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-keyword">return</span> <span class="code-number">0</span>;</span>
+<span class="code-line">}</span>
+            </div>
+        </div>
+
+        <div class="example-output">
+            <div class="output-title">ප්‍රතිදානය:</div>
+            පළමු අගය: 10
+        </div>
+
+        <!-- O(n) Example -->
+        <h3 class="subsection-header">O(n) - රේඛීය කාලය</h3>
+        <div class="content-text">
+            දත්ත ප්‍රමාණය n වුවහොත්, මෙම අල්ගොරිතමය n වාරයක් පමණ ක්‍රියාත්මක වේ.
+        </div>
+
+        <div class="code-container">
+            <div class="code-title">// Linear Search - O(n)</div>
+            <div class="code-block">
+<span class="code-line"><span class="code-keyword">#include</span> <span class="code-string">&lt;stdio.h&gt;</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">int</span> <span class="code-function">linearSearch</span>(<span class="code-keyword">int</span> arr[], <span class="code-keyword">int</span> size, <span class="code-keyword">int</span> target) {</span>
+<span class="code-line">    <span class="code-comment">// Array එකේ සෑම අගයක්ම පරීක්ෂා කිරීම</span></span>
+<span class="code-line">    <span class="code-keyword">for</span> (<span class="code-keyword">int</span> i = <span class="code-number">0</span>; i &lt; size; i++) {</span>
+<span class="code-line">        <span class="code-comment">// සෑම iteration එකකදීම එක් comparison එකක්</span></span>
+<span class="code-line">        <span class="code-keyword">if</span> (arr[i] == target) {</span>
+<span class="code-line">            <span class="code-keyword">return</span> i;  <span class="code-comment">// සොයාගත් index එක return කරන්න</span></span>
+<span class="code-line">        }</span>
+<span class="code-line">    }</span>
+<span class="code-line">    <span class="code-keyword">return</span> -<span class="code-number">1</span>;  <span class="code-comment">// සොයාගත නොහැකි නම් -1</span></span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">int</span> <span class="code-function">main</span>() {</span>
+<span class="code-line">    <span class="code-keyword">int</span> arr[] = {<span class="code-number">5</span>, <span class="code-number">12</span>, <span class="code-number">7</span>, <span class="code-number">23</span>, <span class="code-number">45</span>, <span class="code-number">67</span>, <span class="code-number">89</span>};</span>
+<span class="code-line">    <span class="code-keyword">int</span> size = <span class="code-number">7</span>;</span>
+<span class="code-line">    <span class="code-keyword">int</span> target = <span class="code-number">45</span>;</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// Worst case: අවසාන element එක හෝ නොමැති අගයක් සෙවීම</span></span>
+<span class="code-line">    <span class="code-comment">// n වාරයක් loop එක ධාවනය වේ - O(n)</span></span>
+<span class="code-line">    <span class="code-keyword">int</span> result = <span class="code-function">linearSearch</span>(arr, size, target);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-keyword">if</span> (result != -<span class="code-number">1</span>) {</span>
+<span class="code-line">        <span class="code-function">printf</span>(<span class="code-string">"අගය %d සොයාගත්තේ index %d හිදී\n"</span>, target, result);</span>
+<span class="code-line">    } <span class="code-keyword">else</span> {</span>
+<span class="code-line">        <span class="code-function">printf</span>(<span class="code-string">"අගය සොයාගත නොහැක\n"</span>);</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-keyword">return</span> <span class="code-number">0</span>;</span>
+<span class="code-line">}</span>
+            </div>
+        </div>
+
+        <div class="example-output">
+            <div class="output-title">ප්‍රතිදානය:</div>
+            අගය 45 සොයාගත්තේ index 4 හිදී
+        </div>
+
+        <!-- O(n²) Example -->
+        <h3 class="subsection-header">O(n²) - චතුරස්‍ර කාලය</h3>
+        <div class="content-text">
+            Nested loops භාවිතා කරන විට පොදුවේ O(n²) complexity එකක් ලැබේ.
+        </div>
+
+        <div class="code-container">
+            <div class="code-title">// Bubble Sort - O(n²)</div>
+            <div class="code-block">
+<span class="code-line"><span class="code-keyword">#include</span> <span class="code-string">&lt;stdio.h&gt;</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">void</span> <span class="code-function">bubbleSort</span>(<span class="code-keyword">int</span> arr[], <span class="code-keyword">int</span> n) {</span>
+<span class="code-line">    <span class="code-comment">// පිටත loop එක n වාරයක් ධාවනය වේ</span></span>
+<span class="code-line">    <span class="code-keyword">for</span> (<span class="code-keyword">int</span> i = <span class="code-number">0</span>; i &lt; n - <span class="code-number">1</span>; i++) {</span>
+<span class="code-line">        <span class="code-comment">// අභ්‍යන්තර loop එක ද n වාරයක් පමණ ධාවනය වේ</span></span>
+<span class="code-line">        <span class="code-keyword">for</span> (<span class="code-keyword">int</span> j = <span class="code-number">0</span>; j &lt; n - i - <span class="code-number">1</span>; j++) {</span>
+<span class="code-line">            <span class="code-comment">// සෑම iteration එකේදීම comparison සහ swap</span></span>
+<span class="code-line">            <span class="code-keyword">if</span> (arr[j] &gt; arr[j + <span class="code-number">1</span>]) {</span>
+<span class="code-line">                <span class="code-comment">// Swap කිරීම</span></span>
+<span class="code-line">                <span class="code-keyword">int</span> temp = arr[j];</span>
+<span class="code-line">                arr[j] = arr[j + <span class="code-number">1</span>];</span>
+<span class="code-line">                arr[j + <span class="code-number">1</span>] = temp;</span>
+<span class="code-line">            }</span>
+<span class="code-line">        }</span>
+<span class="code-line">    }</span>
+<span class="code-line">    <span class="code-comment">// මුළු operations: n × n ≈ n² - O(n²)</span></span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">int</span> <span class="code-function">main</span>() {</span>
+<span class="code-line">    <span class="code-keyword">int</span> arr[] = {<span class="code-number">64</span>, <span class="code-number">34</span>, <span class="code-number">25</span>, <span class="code-number">12</span>, <span class="code-number">22</span>, <span class="code-number">11</span>, <span class="code-number">90</span>};</span>
+<span class="code-line">    <span class="code-keyword">int</span> n = <span class="code-number">7</span>;</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"වර්ග කිරීමට පෙර: "</span>);</span>
+<span class="code-line">    <span class="code-keyword">for</span> (<span class="code-keyword">int</span> i = <span class="code-number">0</span>; i &lt; n; i++) {</span>
+<span class="code-line">        <span class="code-function">printf</span>(<span class="code-string">"%d "</span>, arr[i]);</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-function">bubbleSort</span>(arr, n);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"\nවර්ග කිරීමෙන් පසු: "</span>);</span>
+<span class="code-line">    <span class="code-keyword">for</span> (<span class="code-keyword">int</span> i = <span class="code-number">0</span>; i &lt; n; i++) {</span>
+<span class="code-line">        <span class="code-function">printf</span>(<span class="code-string">"%d "</span>, arr[i]);</span>
+<span class="code-line">    }</span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"\n"</span>);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-keyword">return</span> <span class="code-number">0</span>;</span>
+<span class="code-line">}</span>
+            </div>
+        </div>
+
+        <div class="example-output">
+            <div class="output-title">ප්‍රතිදානය:</div>
+            වර්ග කිරීමට පෙර: 64 34 25 12 22 11 90<br>
+            වර්ග කිරීමෙන් පසු: 11 12 22 25 34 64 90
+        </div>
+
+        <!-- Sequential vs Random Access -->
+        <h2 class="section-header">2. අනුක්‍රමික සහ අහඹු ප්‍රවේශය (Sequential vs Random Access)</h2>
+
+        <h3 class="subsection-header">අනුක්‍රමික ප්‍රවේශය (Sequential Access)</h3>
+        <div class="content-text">
+            දත්ත අනුපිළිවෙලින් එකින් එක ප්‍රවේශ විය යුතු විට අනුක්‍රමික ප්‍රවේශය භාවිතා වේ. උදාහරණයක් ලෙස Linked Lists.
+        </div>
+
+        <div class="code-container">
+            <div class="code-title">// Linked List - Sequential Access</div>
+            <div class="code-block">
+<span class="code-line"><span class="code-keyword">#include</span> <span class="code-string">&lt;stdio.h&gt;</span></span>
+<span class="code-line"><span class="code-keyword">#include</span> <span class="code-string">&lt;stdlib.h&gt;</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-comment">// Node structure එක අර්ථ දැක්වීම</span></span>
+<span class="code-line"><span class="code-keyword">struct</span> Node {</span>
+<span class="code-line">    <span class="code-keyword">int</span> data;                <span class="code-comment">// දත්තය ගබඩා කරනවා</span></span>
+<span class="code-line">    <span class="code-keyword">struct</span> Node* next;      <span class="code-comment">// ඊළඟ node එකට pointer එක</span></span>
+<span class="code-line">};</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-comment">// n වන position එකේ node එක ලබා ගැනීම - O(n)</span></span>
+<span class="code-line"><span class="code-keyword">int</span> <span class="code-function">getNthNode</span>(<span class="code-keyword">struct</span> Node* head, <span class="code-keyword">int</span> n) {</span>
+<span class="code-line">    <span class="code-keyword">struct</span> Node* current = head;</span>
+    <span class="code-line">    <span class="code-keyword">int</span> count = <span class="code-number">0</span>;</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// ආරම්භක node එකේ සිට n වන node එක දක්වා යා යුතුයි</span></span>
+<span class="code-line">    <span class="code-keyword">while</span> (current != NULL) {</span>
+<span class="code-line">        <span class="code-keyword">if</span> (count == n) {</span>
+<span class="code-line">            <span class="code-keyword">return</span> current-&gt;data;  <span class="code-comment">// n වන position එකේ data එක return</span></span>
+<span class="code-line">        }</span>
+<span class="code-line">        count++;</span>
+<span class="code-line">        current = current-&gt;next;  <span class="code-comment">// ඊළඟ node එකට යන්න</span></span>
+<span class="code-line">    }</span>
+<span class="code-line">    <span class="code-comment">// n වන node එක නොමැති නම් -1 return</span></span>
+<span class="code-line">    <span class="code-keyword">return</span> -<span class="code-number">1</span>;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">int</span> <span class="code-function">main</span>() {</span>
+<span class="code-line">    <span class="code-comment">// Linked list එකක් සාදන්න: 10 -&gt; 20 -&gt; 30 -&gt; 40</span></span>
+<span class="code-line">    <span class="code-keyword">struct</span> Node* head = (<span class="code-keyword">struct</span> Node*)<span class="code-function">malloc</span>(<span class="code-keyword">sizeof</span>(<span class="code-keyword">struct</span> Node));</span>
+<span class="code-line">    <span class="code-keyword">struct</span> Node* second = (<span class="code-keyword">struct</span> Node*)<span class="code-function">malloc</span>(<span class="code-keyword">sizeof</span>(<span class="code-keyword">struct</span> Node));</span>
+<span class="code-line">    <span class="code-keyword">struct</span> Node* third = (<span class="code-keyword">struct</span> Node*)<span class="code-function">malloc</span>(<span class="code-keyword">sizeof</span>(<span class="code-keyword">struct</span> Node));</span>
+<span class="code-line">    <span class="code-keyword">struct</span> Node* fourth = (<span class="code-keyword">struct</span> Node*)<span class="code-function">malloc</span>(<span class="code-keyword">sizeof</span>(<span class="code-keyword">struct</span> Node));</span>
+<span class="code-line">    </span>
+<span class="code-line">    head-&gt;data = <span class="code-number">10</span>;</span>
+<span class="code-line">    head-&gt;next = second;</span>
+<span class="code-line">    </span>
+<span class="code-line">    second-&gt;data = <span class="code-number">20</span>;</span>
+<span class="code-line">    second-&gt;next = third;</span>
+<span class="code-line">    </span>
+<span class="code-line">    third-&gt;data = <span class="code-number">30</span>;</span>
+<span class="code-line">    third-&gt;next = fourth;</span>
+<span class="code-line">    </span>
+<span class="code-line">    fourth-&gt;data = <span class="code-number">40</span>;</span>
+<span class="code-line">    fourth-&gt;next = NULL;</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// 2 වන index එකේ අගය ලබා ගන්න (0-indexed)</span></span>
+<span class="code-line">    <span class="code-keyword">int</span> result = <span class="code-function">getNthNode</span>(head, <span class="code-number">2</span>);</span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"Index 2 හි අගය: %d\n"</span>, result);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-keyword">return</span> <span class="code-number">0</span>;</span>
+<span class="code-line">}</span>
+            </div>
+        </div>
+
+        <div class="example-output">
+            <div class="output-title">ප්‍රතිදානය:</div>
+            Index 2 හි අගය: 30
+        </div>
+
+        <div class="warning-box">
+            <strong>වැදගත්:</strong> Linked List එකක n වන element එක ලබා ගැනීමට ඔබට ආරම්භක node එකේ සිට n වන node එක දක්වා යා යුතුයි. මෙය O(n) complexity එකක් ඇත.
+        </div>
+
+        <h3 class="subsection-header">අහඹු ප්‍රවේශය (Random Access)</h3>
+        <div class="content-text">
+            දත්ත කිසියම් ස්ථානයකට ඍජුව ප්‍රවේශ විය හැකි විට අහඹු ප්‍රවේශය භාවිතා වේ. Arrays මෙයට හොඳ උදාහරණයකි.
+        </div>
+
+        <div class="code-container">
+            <div class="code-title">// Array - Random Access - O(1)</div>
+            <div class="code-block">
+<span class="code-line"><span class="code-keyword">#include</span> <span class="code-string">&lt;stdio.h&gt;</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-comment">// Array එකක n වන element එක ලබා ගැනීම - O(1)</span></span>
+<span class="code-line"><span class="code-keyword">int</span> <span class="code-function">getNthElement</span>(<span class="code-keyword">int</span> arr[], <span class="code-keyword">int</span> n) {</span>
+<span class="code-line">    <span class="code-comment">// Index භාවිතයෙන් ඍජුවම ප්‍රවේශය - එක් operation එකක්</span></span>
+<span class="code-line">    <span class="code-keyword">return</span> arr[n];</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">int</span> <span class="code-function">main</span>() {</span>
+<span class="code-line">    <span class="code-comment">// Array එකක් සාදන්න</span></span>
+<span class="code-line">    <span class="code-keyword">int</span> arr[] = {<span class="code-number">10</span>, <span class="code-number">20</span>, <span class="code-number">30</span>, <span class="code-number">40</span>, <span class="code-number">50</span>};</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// කිසියම් index එකකට ඍජුව ප්‍රවේශ විය හැක</span></span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"Index 0 හි අගය: %d\n"</span>, <span class="code-function">getNthElement</span>(arr, <span class="code-number">0</span>));</span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"Index 2 හි අගය: %d\n"</span>, <span class="code-function">getNthElement</span>(arr, <span class="code-number">2</span>));</span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"Index 4 හි අගය: %d\n"</span>, <span class="code-function">getNthElement</span>(arr, <span class="code-number">4</span>));</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// මෙම සියලුම operations O(1) වේ</span></span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-keyword">return</span> <span class="code-number">0</span>;</span>
+<span class="code-line">}</span>
+            </div>
+        </div>
+
+        <div class="example-output">
+            <div class="output-title">ප්‍රතිදානය:</div>
+            Index 0 හි අගය: 10<br>
+            Index 2 හි අගය: 30<br>
+            Index 4 හි අගය: 50
+        </div>
+
+        <h3 class="subsection-header">සසඳීම (Comparison)</h3>
+
+        <table class="complexity-table">
+            <thead>
+                <tr>
+                    <th>දත්ත ව්‍යුහය</th>
+                    <th>ප්‍රවේශ ප්‍රභේදය</th>
+                    <th>Access Time</th>
+                    <th>වාසි</th>
+                    <th>අවාසි</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Array</strong></td>
+                    <td>අහඹු ප්‍රවේශය</td>
+                    <td>O(1)</td>
+                    <td>ඉතා වේගවත් access, Cache friendly</td>
+                    <td>Fixed size, Insert/Delete මන්දගාමී</td>
+                </tr>
+                <tr>
+                    <td><strong>Linked List</strong></td>
+                    <td>අනුක්‍රමික ප්‍රවේශය</td>
+                    <td>O(n)</td>
+                    <td>Dynamic size, Insert/Delete වේගවත්</td>
+                    <td>Access මන්දගාමී, වැඩි memory overhead</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Performance Comparison Example -->
+        <h2 class="section-header">3. කාර්ය සාධන සසඳීම - ප්‍රායෝගික උදාහරණය</h2>
+
+        <div class="content-text">
+            විවිධ අල්ගොරිතම් වල කාර්යක්ෂමතාව මැනීම සඳහා simple timer එකක් භාවිතයෙන් උදාහරණයක්:
+        </div>
+
+        <div class="code-container">
+            <div class="code-title">// කාර්ය සාධන සසඳීම - Linear vs Binary Search</div>
+            <div class="code-block">
+<span class="code-line"><span class="code-keyword">#include</span> <span class="code-string">&lt;stdio.h&gt;</span></span>
+<span class="code-line"><span class="code-keyword">#include</span> <span class="code-string">&lt;time.h&gt;</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-comment">// Linear Search - O(n)</span></span>
+<span class="code-line"><span class="code-keyword">int</span> <span class="code-function">linearSearch</span>(<span class="code-keyword">int</span> arr[], <span class="code-keyword">int</span> n, <span class="code-keyword">int</span> target) {</span>
+<span class="code-line">    <span class="code-keyword">for</span> (<span class="code-keyword">int</span> i = <span class="code-number">0</span>; i &lt; n; i++) {</span>
+<span class="code-line">        <span class="code-keyword">if</span> (arr[i] == target) {</span>
+<span class="code-line">            <span class="code-keyword">return</span> i;</span>
+<span class="code-line">        }</span>
+<span class="code-line">    }</span>
+<span class="code-line">    <span class="code-keyword">return</span> -<span class="code-number">1</span>;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-comment">// Binary Search - O(log n) - sorted array එකක් අවශ්‍යයි</span></span>
+<span class="code-line"><span class="code-keyword">int</span> <span class="code-function">binarySearch</span>(<span class="code-keyword">int</span> arr[], <span class="code-keyword">int</span> n, <span class="code-keyword">int</span> target) {</span>
+<span class="code-line">    <span class="code-keyword">int</span> left = <span class="code-number">0</span>, right = n - <span class="code-number">1</span>;</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// Array එක අඩකට බෙදා සෙවීම</span></span>
+<span class="code-line">    <span class="code-keyword">while</span> (left &lt;= right) {</span>
+<span class="code-line">        <span class="code-keyword">int</span> mid = left + (right - left) / <span class="code-number">2</span>;</span>
+<span class="code-line">        </span>
+<span class="code-line">        <span class="code-comment">// Target එක මැද element එක නම්</span></span>
+<span class="code-line">        <span class="code-keyword">if</span> (arr[mid] == target) {</span>
+<span class="code-line">            <span class="code-keyword">return</span> mid;</span>
+<span class="code-line">        }</span>
+<span class="code-line">        </span>
+<span class="code-line">        <span class="code-comment">// Target එක වම් පැත්තේ නම්</span></span>
+<span class="code-line">        <span class="code-keyword">if</span> (arr[mid] &gt; target) {</span>
+<span class="code-line">            right = mid - <span class="code-number">1</span>;</span>
+<span class="code-line">        }</span>
+<span class="code-line">        <span class="code-comment">// Target එක දකුණු පැත්තේ නම්</span></span>
+<span class="code-line">        <span class="code-keyword">else</span> {</span>
+<span class="code-line">            left = mid + <span class="code-number">1</span>;</span>
+<span class="code-line">        }</span>
+<span class="code-line">    }</span>
+<span class="code-line">    <span class="code-keyword">return</span> -<span class="code-number">1</span>;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">int</span> <span class="code-function">main</span>() {</span>
+<span class="code-line">    <span class="code-comment">// විශාල sorted array එකක් සාදන්න</span></span>
+<span class="code-line">    <span class="code-keyword">int</span> n = <span class="code-number">100000</span>;</span>
+<span class="code-line">    <span class="code-keyword">int</span> arr[n];</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// Array එක සම්පුර්ණ කරන්න</span></span>
+<span class="code-line">    <span class="code-keyword">for</span> (<span class="code-keyword">int</span> i = <span class="code-number">0</span>; i &lt; n; i++) {</span>
+<span class="code-line">        arr[i] = i;</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-keyword">int</span> target = <span class="code-number">99999</span>;  <span class="code-comment">// අවසාන element එක සෙවීම</span></span>
+<span class="code-line">    clock_t start, end;</span>
+<span class="code-line">    <span class="code-keyword">double</span> cpu_time_used;</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// Linear Search කාලය මැනීම</span></span>
+<span class="code-line">    start = <span class="code-function">clock</span>();</span>
+<span class="code-line">    <span class="code-keyword">int</span> result1 = <span class="code-function">linearSearch</span>(arr, n, target);</span>
+<span class="code-line">    end = <span class="code-function">clock</span>();</span>
+<span class="code-line">    cpu_time_used = ((<span class="code-keyword">double</span>)(end - start)) / CLOCKS_PER_SEC;</span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"Linear Search: %d සොයාගත්තේ index %d හිදී\n"</span>, target, result1);</span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"කාලය: %f තත්පර\n\n"</span>, cpu_time_used);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// Binary Search කාලය මැනීම</span></span>
+<span class="code-line">    start = <span class="code-function">clock</span>();</span>
+<span class="code-line">    <span class="code-keyword">int</span> result2 = <span class="code-function">binarySearch</span>(arr, n, target);</span>
+<span class="code-line">    end = <span class="code-function">clock</span>();</span>
+<span class="code-line">    cpu_time_used = ((<span class="code-keyword">double</span>)(end - start)) / CLOCKS_PER_SEC;</span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"Binary Search: %d සොයාගත්තේ index %d හිදී\n"</span>, target, result2);</span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"කාලය: %f තත්පර\n"</span>, cpu_time_used);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-keyword">return</span> <span class="code-number">0</span>;</span>
+<span class="code-line">}</span>
+            </div>
+        </div>
+
+        <div class="example-output">
+            <div class="output-title">ප්‍රතිදානය (ආසන්න වශයෙන්):</div>
+            Linear Search: 99999 සොයාගත්තේ index 99999 හිදී<br>
+            කාලය: 0.001200 තත්පර<br><br>
+            Binary Search: 99999 සොයාගත්තේ index 99999 හිදී<br>
+            කාලය: 0.000005 තත්පර
+        </div>
+
+        <div class="highlight-box">
+            <strong>නිරීක්ෂණය:</strong> 100,000 elements සහිත array එකක අවසාන element එක සෙවීමේදී Binary Search (O(log n)) Linear Search (O(n)) වලට වඩා සැලකිය යුතු ලෙස වේගවත් බව පෙනේ.
+        </div>
+
+        <!-- Space Complexity -->
+        <h2 class="section-header">4. මතක සංකීර්ණතාව (Space Complexity)</h2>
+
+        <div class="content-text">
+            Space Complexity යනු අල්ගොරිතමයක් ක්‍රියාත්මක කිරීම සඳහා අවශ්‍ය වන අතිරේක මතක ප්‍රමාණයයි.
+        </div>
+
+        <div class="code-container">
+            <div class="code-title">// Iterative vs Recursive - Space Complexity</div>
+            <div class="code-block">
+<span class="code-line"><span class="code-keyword">#include</span> <span class="code-string">&lt;stdio.h&gt;</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-comment">// Iterative Factorial - Space Complexity: O(1)</span></span>
+<span class="code-line"><span class="code-keyword">int</span> <span class="code-function">factorialIterative</span>(<span class="code-keyword">int</span> n) {</span>
+<span class="code-line">    <span class="code-keyword">int</span> result = <span class="code-number">1</span>;  <span class="code-comment">// එකම variable එකක් භාවිතා වේ</span></span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// Loop භාවිතයෙන් factorial එක ගණනය කරන්න</span></span>
+<span class="code-line">    <span class="code-keyword">for</span> (<span class="code-keyword">int</span> i = <span class="code-number">1</span>; i &lt;= n; i++) {</span>
+<span class="code-line">        result *= i;</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// අතිරේක stack space අවශ්‍ය නැත - O(1)</span></span>
+<span class="code-line">    <span class="code-keyword">return</span> result;</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-comment">// Recursive Factorial - Space Complexity: O(n)</span></span>
+<span class="code-line"><span class="code-keyword">int</span> <span class="code-function">factorialRecursive</span>(<span class="code-keyword">int</span> n) {</span>
+<span class="code-line">    <span class="code-comment">// Base case</span></span>
+<span class="code-line">    <span class="code-keyword">if</span> (n == <span class="code-number">0</span> || n == <span class="code-number">1</span>) {</span>
+<span class="code-line">        <span class="code-keyword">return</span> <span class="code-number">1</span>;</span>
+<span class="code-line">    }</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// සෑම recursive call එකක්ම stack මතකයේ ගබඩා වේ</span></span>
+<span class="code-line">    <span class="code-comment">// n වාරයක් function call වේ - O(n) space</span></span>
+<span class="code-line">    <span class="code-keyword">return</span> n * <span class="code-function">factorialRecursive</span>(n - <span class="code-number">1</span>);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">int</span> <span class="code-function">main</span>() {</span>
+<span class="code-line">    <span class="code-keyword">int</span> n = <span class="code-number">5</span>;</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"Iterative Factorial(%d) = %d\n"</span>, n, <span class="code-function">factorialIterative</span>(n));</span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"Recursive Factorial(%d) = %d\n"</span>, n, <span class="code-function">factorialRecursive</span>(n));</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"\nSpace Complexity:\n"</span>);</span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"Iterative: O(1) - නියත මතකය\n"</span>);</span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"Recursive: O(n) - n වාර stack calls\n"</span>);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-keyword">return</span> <span class="code-number">0</span>;</span>
+<span class="code-line">}</span>
+            </div>
+        </div>
+
+        <div class="example-output">
+            <div class="output-title">ප්‍රතිදානය:</div>
+            Iterative Factorial(5) = 120<br>
+            Recursive Factorial(5) = 120<br><br>
+            Space Complexity:<br>
+            Iterative: O(1) - නියත මතකය<br>
+            Recursive: O(n) - n වාර stack calls
+        </div>
+
+        <!-- Best Practices -->
+        <h2 class="section-header">5. හොඳ පුරුදු (Best Practices)</h2>
+
+        <div class="highlight-box">
+            <h4 style="margin-bottom: 15px;">අල්ගොරිතම තෝරා ගැනීමේදී සලකා බැලිය යුතු කරුණු:</h4>
+            <ul style="line-height: 2;">
+                <li><strong>දත්ත ප්‍රමාණය:</strong> විශාල දත්ත සමූහ සඳහා කාර්යක්ෂම අල්ගොරිතම භාවිතා කරන්න (O(n log n) හෝ ඊට වඩා හොඳ)</li>
+                <li><strong>මතක සීමාවන්:</strong> සීමිත මතකයක් තිබේ නම් space-efficient අල්ගොරිතම තෝරන්න</li>
+                <li><strong>ප්‍රවේශ රටාව:</strong> Random access අවශ්‍ය නම් Arrays, Dynamic size අවශ්‍ය නම් Linked Lists භාවිතා කරන්න</li>
+                <li><strong>යාවත්කාලීන කිරීම:</strong> නිරන්තර insert/delete තිබේ නම් Linked Lists හෝ Trees භාවිතා කරන්න</li>
+                <li><strong>සෙවීම:</strong> නිතර search කරන්නේ නම් Hash Tables හෝ Binary Search Trees භාවිතා කරන්න</li>
+            </ul>
+        </div>
+
+        <div class="warning-box">
+            <h4 style="margin-bottom: 15px;">මතක තබා ගන්න:</h4>
+            <ul style="line-height: 2;">
+                <li>Premature optimization යනු programming හි මූල නපුරු දෙයකි - පළමුව නිවැරදිව ක්‍රියා කරන code එකක් ලියන්න</li>
+                <li>සියලු අවස්ථා වල වේගවත්ම අල්ගොරිතමය හොඳම තේරීම නොවේ - readability සහ maintainability ද වැදගත්</li>
+                <li>Performance issues තිබේ නම් profile කරන්න සහ bottlenecks හඳුනා ගන්න</li>
+                <li>Big O සැලකිල්ලට ගන්නේ විශාල දත්ත සමූහ සඳහා පමණි - කුඩා දත්ත සඳහා ඕනෑම algorithm එකක් ප්‍රමාණවත් විය හැක</li>
+            </ul>
+        </div>
+
+        <!-- Summary Table -->
+        <h2 class="section-header">6. සාරාංශය</h2>
+
+        <table class="complexity-table">
+            <thead>
+                <tr>
+                    <th>දත්ත ව්‍යුහය</th>
+                    <th>Access</th>
+                    <th>Search</th>
+                    <th>Insert</th>
+                    <th>Delete</th>
+                    <th>Space</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Array</strong></td>
+                    <td>O(1)</td>
+                    <td>O(n)</td>
+                    <td>O(n)</td>
+                    <td>O(n)</td>
+                    <td>O(n)</td>
+                </tr>
+                <tr>
+                    <td><strong>Linked List</strong></td>
+                    <td>O(n)</td>
+                    <td>O(n)</td>
+                    <td>O(1)</td>
+                    <td>O(1)</td>
+                    <td>O(n)</td>
+                </tr>
+                <tr>
+                    <td><strong>Stack</strong></td>
+                    <td>O(n)</td>
+                    <td>O(n)</td>
+                    <td>O(1)</td>
+                    <td>O(1)</td>
+                    <td>O(n)</td>
+                </tr>
+                <tr>
+                    <td><strong>Queue</strong></td>
+                    <td>O(n)</td>
+                    <td>O(n)</td>
+                    <td>O(1)</td>
+                    <td>O(1)</td>
+                    <td>O(n)</td>
+                </tr>
+                <tr>
+                    <td><strong>Hash Table</strong></td>
+                    <td>O(1)*</td>
+                    <td>O(1)*</td>
+                    <td>O(1)*</td>
+                    <td>O(1)*</td>
+                    <td>O(n)</td>
+                </tr>
+                <tr>
+                    <td><strong>Binary Search Tree</strong></td>
+                    <td>O(log n)*</td>
+                    <td>O(log n)*</td>
+                    <td>O(log n)*</td>
+                    <td>O(log n)*</td>
+                    <td>O(n)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p style="margin-top: 15px; font-style: italic; color: #666;">
+            * Average case complexity - Worst case වෙනස් විය හැක
+        </p>
+
+        <!-- Practical Example: Choosing Right Data Structure -->
+        <h2 class="section-header">7. ප්‍රායෝගික උදාහරණය - සුදුසු දත්ත ව්‍යුහය තෝරා ගැනීම</h2>
+
+        <div class="content-text">
+            Phone Book යෙදුමක් සැලසුම් කිරීමේදී විවිධ operations සඳහා විවිධ දත්ත ව්‍යුහ භාවිතා කළ හැකියි:
+        </div>
+
+        <div class="code-container">
+            <div class="code-title">// Phone Book - විවිධ implementations</div>
+            <div class="code-block">
+<span class="code-line"><span class="code-keyword">#include</span> <span class="code-string">&lt;stdio.h&gt;</span></span>
+<span class="code-line"><span class="code-keyword">#include</span> <span class="code-string">&lt;string.h&gt;</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-comment">// Contact structure එක අර්ථ දැක්වීම</span></span>
+<span class="code-line"><span class="code-keyword">typedef</span> <span class="code-keyword">struct</span> {</span>
+<span class="code-line">    <span class="code-keyword">char</span> name[<span class="code-number">50</span>];</span>
+<span class="code-line">    <span class="code-keyword">char</span> phone[<span class="code-number">15</span>];</span>
+<span class="code-line">} Contact;</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-comment">// Array භාවිතයෙන් Phone Book - Simple but O(n) search</span></span>
+<span class="code-line"><span class="code-keyword">#define</span> MAX_CONTACTS <span class="code-number">100</span></span>
+<span class="code-line">Contact phoneBook[MAX_CONTACTS];</span>
+<span class="code-line"><span class="code-keyword">int</span> contactCount = <span class="code-number">0</span>;</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-comment">// Contact එකක් එකතු කිරීම - O(1)</span></span>
+<span class="code-line"><span class="code-keyword">void</span> <span class="code-function">addContact</span>(<span class="code-keyword">char</span>* name, <span class="code-keyword">char</span>* phone) {</span>
+<span class="code-line">    <span class="code-comment">// Array එකේ ඉඩ තිබේදැයි පරීක්ෂා කරන්න</span></span>
+<span class="code-line">    <span class="code-keyword">if</span> (contactCount &lt; MAX_CONTACTS) {</span>
+<span class="code-line">        <span class="code-comment">// නව contact එක අවසානයට එකතු කරන්න</span></span>
+<span class="code-line">        <span class="code-function">strcpy</span>(phoneBook[contactCount].name, name);</span>
+<span class="code-line">        <span class="code-function">strcpy</span>(phoneBook[contactCount].phone, phone);</span>
+<span class="code-line">        contactCount++;</span>
+<span class="code-line">        <span class="code-function">printf</span>(<span class="code-string">"Contact එකතු කරන ලදී: %s\n"</span>, name);</span>
+<span class="code-line">    } <span class="code-keyword">else</span> {</span>
+<span class="code-line">        <span class="code-function">printf</span>(<span class="code-string">"Phone book පිරී ඇත!\n"</span>);</span>
+<span class="code-line">    }</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-comment">// නමකින් contact එකක් සෙවීම - O(n)</span></span>
+<span class="code-line"><span class="code-keyword">void</span> <span class="code-function">searchContact</span>(<span class="code-keyword">char</span>* name) {</span>
+<span class="code-line">    <span class="code-comment">// සියලු contacts පරීක්ෂා කරන්න</span></span>
+<span class="code-line">    <span class="code-keyword">for</span> (<span class="code-keyword">int</span> i = <span class="code-number">0</span>; i &lt; contactCount; i++) {</span>
+<span class="code-line">        <span class="code-comment">// නම සසඳන්න</span></span>
+<span class="code-line">        <span class="code-keyword">if</span> (<span class="code-function">strcmp</span>(phoneBook[i].name, name) == <span class="code-number">0</span>) {</span>
+<span class="code-line">            <span class="code-function">printf</span>(<span class="code-string">"සොයාගත්තේ: %s - %s\n"</span>, </span>
+<span class="code-line">                   phoneBook[i].name, phoneBook[i].phone);</span>
+<span class="code-line">            <span class="code-keyword">return</span>;</span>
+<span class="code-line">        }</span>
+<span class="code-line">    }</span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"%s නමින් contact එකක් සොයාගත නොහැක\n"</span>, name);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-comment">// සියලු contacts පෙන්වන්න - O(n)</span></span>
+<span class="code-line"><span class="code-keyword">void</span> <span class="code-function">displayAllContacts</span>() {</span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"\n=== Phone Book ===\n"</span>);</span>
+<span class="code-line">    <span class="code-comment">// සියලු contacts loop එකෙන් පෙන්වන්න</span></span>
+<span class="code-line">    <span class="code-keyword">for</span> (<span class="code-keyword">int</span> i = <span class="code-number">0</span>; i &lt; contactCount; i++) {</span>
+<span class="code-line">        <span class="code-function">printf</span>(<span class="code-string">"%d. %s - %s\n"</span>, </span>
+<span class="code-line">               i + <span class="code-number">1</span>, phoneBook[i].name, phoneBook[i].phone);</span>
+<span class="code-line">    }</span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"==================\n\n"</span>);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">int</span> <span class="code-function">main</span>() {</span>
+<span class="code-line">    <span class="code-comment">// Contacts එකතු කරන්න</span></span>
+<span class="code-line">    <span class="code-function">addContact</span>(<span class="code-string">"Nimal Perera"</span>, <span class="code-string">"0771234567"</span>);</span>
+<span class="code-line">    <span class="code-function">addContact</span>(<span class="code-string">"Sunil Silva"</span>, <span class="code-string">"0772345678"</span>);</span>
+<span class="code-line">    <span class="code-function">addContact</span>(<span class="code-string">"Kamala Fernando"</span>, <span class="code-string">"0773456789"</span>);</span>
+<span class="code-line">    <span class="code-function">addContact</span>(<span class="code-string">"Dharma Ratne"</span>, <span class="code-string">"0774567890"</span>);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// සියලු contacts පෙන්වන්න</span></span>
+<span class="code-line">    <span class="code-function">displayAllContacts</span>();</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// Contact එකක් සෙවීම</span></span>
+<span class="code-line">    <span class="code-function">searchContact</span>(<span class="code-string">"Sunil Silva"</span>);</span>
+<span class="code-line">    <span class="code-function">searchContact</span>(<span class="code-string">"Amal Kumar"</span>);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-comment">// Complexity Analysis:</span></span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"\n=== කාර්ය සාධන විශ්ලේෂණය ===\n"</span>);</span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"Add Contact: O(1)\n"</span>);</span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"Search Contact: O(n)\n"</span>);</span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"Display All: O(n)\n"</span>);</span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"Space: O(n)\n\n"</span>);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-function">printf</span>(<span class="code-string">"සටහන: Hash Table භාවිතයෙන් search O(1) දක්වා වැඩිදියුණු කළ හැක!\n"</span>);</span>
+<span class="code-line">    </span>
+<span class="code-line">    <span class="code-keyword">return</span> <span class="code-number">0</span>;</span>
+<span class="code-line">}</span>
+            </div>
+        </div>
+
+        <div class="example-output">
+            <div class="output-title">ප්‍රතිදානය:</div>
+            Contact එකතු කරන ලදී: Nimal Perera<br>
+            Contact එකතු කරන ලදී: Sunil Silva<br>
+            Contact එකතු කරන ලදී: Kamala Fernando<br>
+            Contact එකතු කරන ලදී: Dharma Ratne<br><br>
+            === Phone Book ===<br>
+            1. Nimal Perera - 0771234567<br>
+            2. Sunil Silva - 0772345678<br>
+            3. Kamala Fernando - 0773456789<br>
+            4. Dharma Ratne - 0774567890<br>
+            ==================<br><br>
+            සොයාගත්තේ: Sunil Silva - 0772345678<br>
+            Amal Kumar නමින් contact එකක් සොයාගත නොහැක<br><br>
+            === කාර්ය සාධන විශ්ලේෂණය ===<br>
+            Add Contact: O(1)<br>
+            Search Contact: O(n)<br>
+            Display All: O(n)<br>
+            Space: O(n)<br><br>
+            සටහන: Hash Table භාවිතයෙන් search O(1) දක්වා වැඩිදියුණු කළ හැක!
+        </div>
+
+        <!-- Key Takeaways -->
+        <div class="highlight-box" style="margin-top: 40px;">
+            <h3 style="margin-bottom: 20px; color: #667eea;">📌 ප්‍රධාන කරුණු:</h3>
+            <ol style="line-height: 2.2; font-size: 1.05rem;">
+                <li><strong>Big O Notation</strong> අල්ගොරිතමයක කාර්යක්ෂමතාව විස්තර කරන්නේ දත්ත ප්‍රමාණය වර්ධනය වන විට එහි හැසිරීම අනුව</li>
+                <li><strong>Time Complexity:</strong> O(1) &lt; O(log n) &lt; O(n) &lt; O(n log n) &lt; O(n²) &lt; O(2ⁿ)</li>
+                <li><strong>Arrays</strong> වල Random Access O(1) නමුත් Insert/Delete O(n)</li>
+                <li><strong>Linked Lists</strong> වල Sequential Access O(n) නමුත් Insert/Delete O(1)</li>
+                <li><strong>Space Complexity</strong> ද වැදගත් - විශේෂයෙන් Recursive algorithms වලදී</li>
+                <li>සුදුසු දත්ත ව්‍යුහය තෝරන්න ඔබේ යෙදුමේ <strong>requirements</strong> මත පදනම්ව</li>
+                <li><strong>Profile කර optimize කරන්න</strong> - සියලුම code optimize කිරීම අවශ්‍ය නැත</li>
+            </ol>
+        </div>
+
+        <!-- Navigation -->
+        <div style="margin-top: 50px; padding-top: 30px; border-top: 2px solid #e0e0e0;">
+            <div class="row">
+                <div class="col-md-6">
+                    <a href="../index.html" class="btn btn-outline-primary btn-lg" style="width: 100%;">
+                        ← මුල් පිටුවට යන්න
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <a href="searching.html" class="btn btn-primary btn-lg" style="width: 100%;">
+                        සෙවීම් අල්ගොරිතම් →
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Data Structures and Algorithms in Sinhala | සියලු හිමිකම් ඇවිරිණි</p>
+            <p>GitHub Pages මගින් නොමිලේ සත්කාරකත්වය සපයා ඇත</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
