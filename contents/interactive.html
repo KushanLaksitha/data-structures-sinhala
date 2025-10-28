@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stack & Queue Interactive Demo | DSA සිංහලෙන්</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans Sinhala', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #667eea;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            color: #764ba2;
+            font-weight: 700;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .demo-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 20px 0;
+        }
+        
+        .visualization-container {
+            position: relative;
+            margin: 20px 0;
+        }
+        
+        .visualization-area {
+            background: white;
+            border: 3px dashed #667eea;
+            border-radius: 10px;
+            padding: 30px;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            position: relative;
+        }
+        
+        .queue-visualization {
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+        }
+        
+        .element {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 5px;
+            cursor: move;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        
+        .element:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+        
+        .element.dragging {
+            opacity: 0.5;
+        }
+        
+        .controls {
+            margin: 20px 0;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .btn-custom {
+            padding: 12px 25px;
+            font-weight: 600;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-push {
+            background: #28a745;
+            color: white;
+        }
+        
+        .btn-pop {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .btn-enqueue {
+            background: #17a2b8;
+            color: white;
+        }
+        
+        .btn-dequeue {
+            background: #ffc107;
+            color: #333;
+        }
+        
+        .btn-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .input-group {
+            max-width: 200px;
+        }
+        
+        .log-area {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            font-family: 'Fira Code', monospace;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .log-entry {
+            margin: 5px 0;
+            padding: 5px;
+            border-left: 3px solid #667eea;
+            padding-left: 10px;
+        }
+        
+        .log-success {
+            border-left-color: #28a745;
+            color: #4ade80;
+        }
+        
+        .log-error {
+            border-left-color: #dc3545;
+            color: #f87171;
+        }
+        
+        .log-info {
+            border-left-color: #17a2b8;
+            color: #60a5fa;
+        }
+        
+        .stack-pointer {
+            position: absolute;
+            left: -50px;
+            font-size: 1.5rem;
+            color: #667eea;
+            font-weight: 700;
+        }
+        
+        .queue-pointers {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+        
+        .calculation-box {
+            background: #e8f4f8;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-family: 'Fira Code', monospace;
+        }
+        
+        .step {
+            margin: 5px 0;
+            padding: 5px 0;
+        }
+        
+        .example-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎮 Interactive Stack & Queue Demo</h1>
+        <p class="text-center">සජීවී අන්තර්ක්‍රියාකාරී Stack සහ Queue Operations</p>
+        
+        <!-- Stack Section -->
+        <div class="demo-section">
+            <h2>📚 Stack Operations (LIFO - Last In First Out)</h2>
+            
+            <div class="controls">
+                <div class="input-group">
+                    <input type="number" id="stackInput" class="form-control" placeholder="අගය" value="10">
+                </div>
+                <button class="btn-custom btn-push" onclick="push()">⬆️ Push</button>
+                <button class="btn-custom btn-pop" onclick="pop()">⬇️ Pop</button>
+                <button class="btn-custom" style="background: #6c757d; color: white;" onclick="clearStack()">🗑️ Clear</button>
+            </div>
+            
+            <div class="visualization-container">
+                <div class="visualization-area" id="stackViz">
+                    <!-- Elements will be added here -->
+                </div>
+            </div>
+            
+            <div class="log-area" id="stackLog">
+                <div class="log-entry log-info">Stack හිස්. Operations ආරම්භ කරන්න...</div>
+            </div>
+        </div>
+        
+        <!-- Queue Section -->
+        <div class="demo-section">
+            <h2>🚶 Queue Operations (FIFO - First In First Out)</h2>
+            
+            <div class="controls">
+                <div class="input-group">
+                    <input type="number" id="queueInput" class="form-control" placeholder="අගය" value="10">
+                </div>
+                <button class="btn-custom btn-enqueue" onclick="enqueue()">➡️ Enqueue</button>
+                <button class="btn-custom btn-dequeue" onclick="dequeue()">⬅️ Dequeue</button>
+                <button class="btn-custom" style="background: #6c757d; color: white;" onclick="clearQueue()">🗑️ Clear</button>
+            </div>
+            
+            <div class="visualization-container">
+                <div id="queuePointers" class="queue-pointers" style="display: none;">
+                    <span>👇 FRONT</span>
+                    <span>👇 REAR</span>
+                </div>
+                <div class="visualization-area queue-visualization" id="queueViz">
+                    <!-- Elements will be added here -->
+                </div>
+            </div>
+            
+            <div class="log-area" id="queueLog">
+                <div class="log-entry log-info">Queue හිස්. Operations ආරම්භ කරන්න...</div>
+            </div>
+        </div>
+        
+        <!-- Calculation Examples Section -->
+        <div class="demo-section">
+            <h2>📊 Calculation Examples (ගණනය කිරීමේ උදාහරණ)</h2>
+            
+            <div class="example-card">
+                <h4>Example 1: Expression Evaluation using Stack</h4>
+                <p><strong>Problem:</strong> 5 + ((1 + 2) * 4) - 3 = ?</p>
+                
+                <div class="calculation-box">
+                    <div class="step"><strong>Step 1:</strong> Parse expression left to right</div>
+                    <div class="step"><strong>Step 2:</strong> Inner brackets: (1 + 2) = 3</div>
+                    <div class="step">Stack: [5] → Push 5</div>
+                    <div class="step"><strong>Step 3:</strong> Calculate: 3 * 4 = 12</div>
+                    <div class="step">Stack: [5, 12]</div>
+                    <div class="step"><strong>Step 4:</strong> 5 + 12 = 17</div>
+                    <div class="step">Stack: [17]</div>
+                    <div class="step"><strong>Step 5:</strong> 17 - 3 = 14</div>
+                    <div class="step"><strong>Result:</strong> 14</div>
+                </div>
+                
+                <button class="btn btn-primary btn-sm" onclick="animateExpression()">🎬 Animate</button>
+            </div>
+            
+            <div class="example-card">
+                <h4>Example 2: Undo/Redo using Stack</h4>
+                <p><strong>Scenario:</strong> Text Editor Operations</p>
+                
+                <div class="calculation-box">
+                    <div class="step"><strong>Action 1:</strong> Type "Hello" → Push("Hello")</div>
+                    <div class="step">Undo Stack: ["Hello"]</div>
+                    <div class="step"><strong>Action 2:</strong> Type " World" → Push(" World")</div>
+                    <div class="step">Undo Stack: ["Hello", " World"]</div>
+                    <div class="step"><strong>Undo:</strong> Pop() → Remove " World"</div>
+                    <div class="step">Undo Stack: ["Hello"]</div>
+                    <div class="step"><strong>Redo:</strong> Push(" World") back</div>
+                    <div class="step">Final: "Hello World"</div>
+                </div>
+            </div>
+            
+            <div class="example-card">
+                <h4>Example 3: CPU Task Scheduling using Queue</h4>
+                <p><strong>Scenario:</strong> 4 Tasks waiting for CPU</p>
+                
+                <div class="calculation-box">
+                    <div class="step"><strong>Initial:</strong> Tasks = [Task1, Task2, Task3, Task4]</div>
+                    <div class="step">Queue: [T1] ← [T2] ← [T3] ← [T4]</div>
+                    <div class="step"><strong>CPU executes:</strong> Dequeue() → T1 (2ms)</div>
+                    <div class="step">Queue: [T2] ← [T3] ← [T4]</div>
+                    <div class="step"><strong>CPU executes:</strong> Dequeue() → T2 (3ms)</div>
+                    <div class="step">Queue: [T3] ← [T4]</div>
+                    <div class="step"><strong>New task arrives:</strong> Enqueue(T5)</div>
+                    <div class="step">Queue: [T3] ← [T4] ← [T5]</div>
+                    <div class="step"><strong>Total time:</strong> 2ms + 3ms = 5ms (T1 + T2)</div>
+                </div>
+                
+                <button class="btn btn-success btn-sm" onclick="animateScheduling()">🎬 Animate</button>
+            </div>
+            
+            <div class="example-card">
+                <h4>Example 4: Reverse String using Stack</h4>
+                <p><strong>Problem:</strong> Reverse "HELLO"</p>
+                
+                <div class="calculation-box">
+                    <div class="step"><strong>Original:</strong> H E L L O</div>
+                    <div class="step"><strong>Push each character:</strong></div>
+                    <div class="step">Push('H') → Stack: [H]</div>
+                    <div class="step">Push('E') → Stack: [H, E]</div>
+                    <div class="step">Push('L') → Stack: [H, E, L]</div>
+                    <div class="step">Push('L') → Stack: [H, E, L, L]</div>
+                    <div class="step">Push('O') → Stack: [H, E, L, L, O]</div>
+                    <div class="step"><strong>Pop each character:</strong></div>
+                    <div class="step">Pop() → 'O', Pop() → 'L', Pop() → 'L', Pop() → 'E', Pop() → 'H'</div>
+                    <div class="step"><strong>Result:</strong> OLLEH</div>
+                </div>
+            </div>
+            
+            <div class="example-card">
+                <h4>Example 5: Printer Queue Calculation</h4>
+                <p><strong>Scenario:</strong> 5 Documents in print queue</p>
+                
+                <div class="calculation-box">
+                    <div class="step"><strong>Documents:</strong> Doc1(2 pages), Doc2(5 pages), Doc3(1 page), Doc4(3 pages), Doc5(4 pages)</div>
+                    <div class="step"><strong>Print speed:</strong> 1 page/second</div>
+                    <div class="step"><strong>Enqueue all:</strong> [Doc1] ← [Doc2] ← [Doc3] ← [Doc4] ← [Doc5]</div>
+                    <div class="step"><strong>Dequeue Doc1:</strong> Time = 2s, Queue: [Doc2, Doc3, Doc4, Doc5]</div>
+                    <div class="step"><strong>Dequeue Doc2:</strong> Time = 5s, Queue: [Doc3, Doc4, Doc5]</div>
+                    <div class="step"><strong>Dequeue Doc3:</strong> Time = 1s, Queue: [Doc4, Doc5]</div>
+                    <div class="step"><strong>Total time so far:</strong> 2 + 5 + 1 = 8 seconds</div>
+                    <div class="step"><strong>Remaining documents:</strong> Doc4(3s) + Doc5(4s) = 7s</div>
+                    <div class="step"><strong>Total time:</strong> 8 + 7 = 15 seconds</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Stack Implementation
+        let stack = [];
+        const MAX_STACK_SIZE = 10;
+        
+        function push() {
+            const input = document.getElementById('stackInput');
+            const value = parseInt(input.value);
+            
+            if(isNaN(value)) {
+                addLog('stackLog', 'වලංගු අංකයක් ඇතුළත් කරන්න', 'error');
+                return;
+            }
+            
+            if(stack.length >= MAX_STACK_SIZE) {
+                addLog('stackLog', 'Stack Overflow! උපරිම ප්‍රමාණය ළඟා කර ඇත', 'error');
+                return;
+            }
+            
+            stack.push(value);
+            addLog('stackLog', `Push(${value}) - Stack size: ${stack.length}`, 'success');
+            updateStackVisualization();
+            input.value = parseInt(value) + 10;
+        }
+        
+        function pop() {
+            if(stack.length === 0) {
+                addLog('stackLog', 'Stack Underflow! Stack හිස්', 'error');
+                return;
+            }
+            
+            const value = stack.pop();
+            addLog('stackLog', `Pop() → ${value} - Stack size: ${stack.length}`, 'success');
+            updateStackVisualization();
+        }
+        
+        function clearStack() {
+            stack = [];
+            addLog('stackLog', 'Stack cleared', 'info');
+            updateStackVisualization();
+        }
+        
+        function updateStackVisualization() {
+            const viz = document.getElementById('stackViz');
+            viz.innerHTML = '';
+            
+            if(stack.length > 0) {
+                // Add TOP pointer
+                const pointer = document.createElement('div');
+                pointer.className = 'stack-pointer';
+                pointer.textContent = '👉 TOP';
+                viz.appendChild(pointer);
+            }
+            
+            // Add elements from top to bottom
+            for(let i = stack.length - 1; i >= 0; i--) {
+                const elem = document.createElement('div');
+                elem.className = 'element';
+                elem.textContent = stack[i];
+                elem.draggable = true;
+                viz.appendChild(elem);
+            }
+        }
+        
+        // Queue Implementation
+        let queue = [];
+        const MAX_QUEUE_SIZE = 10;
+        
+        function enqueue() {
+            const input = document.getElementById('queueInput');
+            const value = parseInt(input.value);
+            
+            if(isNaN(value)) {
+                addLog('queueLog', 'වලංගු අංකයක් ඇතුළත් කරන්න', 'error');
+                return;
+            }
+            
+            if(queue.length >= MAX_QUEUE_SIZE) {
+                addLog('queueLog', 'Queue Overflow! උපරිම ප්‍රමාණය ළඟා කර ඇත', 'error');
+                return;
+            }
+            
+            queue.push(value);
+            addLog('queueLog', `Enqueue(${value}) - Queue size: ${queue.length}`, 'success');
+            updateQueueVisualization();
+            input.value = parseInt(value) + 10;
+        }
+        
+        function dequeue() {
+            if(queue.length === 0) {
+                addLog('queueLog', 'Queue Underflow! Queue හිස්', 'error');
+                return;
+            }
+            
+            const value = queue.shift();
+            addLog('queueLog', `Dequeue() → ${value} - Queue size: ${queue.length}`, 'success');
+            updateQueueVisualization();
+        }
+        
+        function clearQueue() {
+            queue = [];
+            addLog('queueLog', 'Queue cleared', 'info');
+            updateQueueVisualization();
+        }
+        
+        function updateQueueVisualization() {
+            const viz = document.getElementById('queueViz');
+            const pointers = document.getElementById('queuePointers');
+            viz.innerHTML = '';
+            
+            if(queue.length > 0) {
+                pointers.style.display = 'flex';
+            } else {
+                pointers.style.display = 'none';
+            }
+            
+            queue.forEach((value) => {
+                const elem = document.createElement('div');
+                elem.className = 'element';
+                elem.textContent = value;
+                elem.draggable = true;
+                viz.appendChild(elem);
+            });
+        }
+        
+        function addLog(logId, message, type = 'info') {
+            const log = document.getElementById(logId);
+            const entry = document.createElement('div');
+            entry.className = `log-entry log-${type}`;
+            const timestamp = new Date().toLocaleTimeString('si-LK');
+            entry.textContent = `[${timestamp}] ${message}`;
+            log.appendChild(entry);
+            log.scrollTop = log.scrollHeight;
+        }
+        
+        // Animation functions
+        function animateExpression() {
+            clearStack();
+            addLog('stackLog', '🎬 Animation starting...', 'info');
+            
+            const steps = [
+                () => { document.getElementById('stackInput').value = 5; push(); },
+                () => { document.getElementById('stackInput').value = 12; push(); },
+                () => { addLog('stackLog', 'Calculation: 5 + 12 = 17', 'info'); },
+                () => { 
+                    pop(); 
+                    pop(); 
+                    setTimeout(() => {
+                        document.getElementById('stackInput').value = 17; 
+                        push();
+                    }, 500);
+                },
+                () => { addLog('stackLog', 'Final: 17 - 3 = 14 ✅', 'success'); }
+            ];
+            
+            let i = 0;
+            const interval = setInterval(() => {
+                if(i < steps.length) {
+                    steps[i]();
+                    i++;
+                } else {
+                    clearInterval(interval);
+                    addLog('stackLog', '🎬 Animation complete!', 'success');
+                }
+            }, 1500);
+        }
+        
+        function animateScheduling() {
+            clearQueue();
+            addLog('queueLog', '🎬 CPU Scheduling Animation starting...', 'info');
+            
+            const tasks = [1, 2, 3, 4];
+            let i = 0;
+            let isEnqueuing = true;
+            
+            const interval = setInterval(() => {
+                if(isEnqueuing && i < tasks.length) {
+                    document.getElementById('queueInput').value = 'T' + tasks[i];
+                    addLog('queueLog', `Task T${tasks[i]} arrived`, 'info');
+                    enqueue();
+                    i++;
+                } else if(queue.length > 0) {
+                    isEnqueuing = false;
+                    addLog('queueLog', `CPU executing task...`, 'info');
+                    dequeue();
+                } else {
+                    clearInterval(interval);
+                    addLog('queueLog', '🎬 All tasks completed!', 'success');
+                }
+            }, 1200);
+        }
+    </script>
+</body>
+</html>
