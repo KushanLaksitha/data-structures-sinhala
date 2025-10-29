@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DSA Algorithms | සිංහලෙන්</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans Sinhala', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 20px auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 1400px;
+        }
+        
+        h1 {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+        
+        .nav-tabs {
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        
+        .nav-tabs .nav-link {
+            color: #667eea;
+            font-weight: 600;
+            border: none;
+            padding: 15px 25px;
+            transition: all 0.3s;
+        }
+        
+        .nav-tabs .nav-link:hover {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .nav-tabs .nav-link.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+        }
+        
+        .algo-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        
+        .algo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .algo-card h3 {
+            color: #667eea;
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .complexity-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .time-complexity {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+        
+        .space-complexity {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+        
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            font-family: 'Fira Code', monospace;
+            overflow-x: auto;
+            position: relative;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            white-space: pre;
+            line-height: 1.6;
+        }
+        
+        .keyword { color: #569cd6; }
+        .function { color: #dcdcaa; }
+        .string { color: #ce9178; }
+        .comment { color: #6a9955; }
+        .number { color: #b5cea8; }
+        
+        .visualization-area {
+            background: white;
+            border: 3px dashed #667eea;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .array-element {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            font-weight: 700;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .array-element.highlight {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            transform: scale(1.2);
+        }
+        
+        .array-element.sorted {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+        }
+        
+        .array-element.comparing {
+            background: linear-gradient(135deg, #fa709a, #fee140);
+            animation: pulse 0.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+            align-items: center;
+        }
+        
+        .btn-algo {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: white;
+        }
+        
+        .btn-run {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+        }
+        
+        .btn-stop {
+            background: linear-gradient(135deg, #eb3349, #f45c43);
+        }
+        
+        .btn-reset {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+        
+        .btn-algo:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .btn-algo:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .speed-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .speed-slider {
+            width: 150px;
+        }
+        
+        .log-area {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            font-family: 'Fira Code', monospace;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .log-entry {
+            margin: 5px 0;
+            padding: 5px;
+            border-left: 3px solid #667eea;
+            padding-left: 10px;
+        }
+        
+        .log-step { color: #60a5fa; }
+        .log-compare { color: #fbbf24; }
+        .log-swap { color: #f87171; }
+        .log-success { color: #4ade80; }
+        
+        .explanation-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .explanation-box h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        
+        .step-indicator {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .step {
+            padding: 10px 20px;
+            background: #e3f2fd;
+            border-radius: 20px;
+            font-weight: 600;
+            color: #1976d2;
+        }
+        
+        .step.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+        
+        .comparison-table th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+        
+        .comparison-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .comparison-table tr:hover {
+            background: #f5f5f5;
+        }
+        
+        .input-group-custom {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .input-group-custom input {
+            padding: 10px 15px;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+        
+        .input-group-custom label {
+            font-weight: 600;
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Algorithms Interactive Playground</h1>
+        <p class="subtitle">Algorithm සජීවීව ඉගෙන ගන්න - දකින්න, තේරුම් ගන්න, ප්‍රගුණ කරන්න!</p>
+        
+        <ul class="nav nav-tabs" id="algoTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="sorting-tab" data-bs-toggle="tab" data-bs-target="#sorting" type="button">
+                    🔢 Sorting
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="searching-tab" data-bs-toggle="tab" data-bs-target="#searching" type="button">
+                    🔍 Searching
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="recursion-tab" data-bs-toggle="tab" data-bs-target="#recursion" type="button">
+                    🔄 Recursion
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="greedy-tab" data-bs-toggle="tab" data-bs-target="#greedy" type="button">
+                    💰 Greedy
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="comparison-tab" data-bs-toggle="tab" data-bs-target="#comparison" type="button">
+                    📊 Comparison
+                </button>
+            </li>
+        </ul>
+        
+        <div class="tab-content" id="algoTabContent">
+            <!-- SORTING TAB -->
+            <div class="tab-pane fade show active" id="sorting" role="tabpanel">
+                <div class="algo-card">
+                    <h3>🔢 Bubble Sort (බබල් සෝර්ට්)</h3>
+                    <p>Compare adjacent elements and swap if they are in wrong order. Repeat until sorted.</p>
+                    
+                    <span class="complexity-badge time-complexity">Time: O(n²)</span>
+                    <span class="complexity-badge space-complexity">Space: O(1)</span>
+                    
+                    <div class="explanation-box">
+                        <h4>How it works:</h4>
+                        <p>1. Compare adjacent pairs<br>
+                        2. Swap if left > right<br>
+                        3. Repeat until no swaps needed<br>
+                        4. Largest element "bubbles" to the end each pass</p>
+                    </div>
+                    
+                    <div class="controls">
+                        <div class="input-group-custom">
+                            <label>Array:</label>
+                            <input type="text" id="bubbleInput" value="64, 34, 25, 12, 22, 11, 90" placeholder="Enter numbers">
+                        </div>
+                        <button class="btn-algo btn-run" onclick="runBubbleSort()">▶️ Run</button>
+                        <button class="btn-algo btn-stop" onclick="stopSort()" id="stopBtn" disabled>⏹️ Stop</button>
+                        <button class="btn-algo btn-reset" onclick="resetVisualization()">🔄 Reset</button>
+                        <div class="speed-control">
+                            <label>Speed:</label>
+                            <input type="range" class="speed-slider" id="speedSlider" min="100" max="2000" value="1000" step="100">
+                            <span id="speedLabel">1000ms</span>
+                        </div>
+                    </div>
+                    
+                    <div class="visualization-area" id="bubbleViz">
+                        <!-- Array elements will be added here -->
+                    </div>
+                    
+                    <div class="code-block">
+<pre><span class="keyword">function</span> <span class="function">bubbleSort</span>(arr) {
+    <span class="keyword">let</span> n = arr.length;
+    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; n; i++) {
+        <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; n - i - <span class="number">1</span>; j++) {
+            <span class="keyword">if</span> (arr[j] &gt; arr[j + <span class="number">1</span>]) {
+                <span class="comment">// Swap elements</span>
+                [arr[j], arr[j + <span class="number">1</span>]] = [arr[j + <span class="number">1</span>], arr[j]];
+            }
+        }
+    }
+    <span class="keyword">return</span> arr;
+}</pre>
+                    </div>
+                    
+                    <div class="log-area" id="bubbleLog">
+                        <div class="log-entry log-step">Ready to sort...</div>
+                    </div>
+                </div>
+                
+                <div class="algo-card">
+                    <h3>⚡ Quick Sort (ක්විික් සෝර්ට්)</h3>
+                    <p>Divide and conquer algorithm using a pivot element.</p>
+                    
+                    <span class="complexity-badge time-complexity">Time: O(n log n) avg</span>
+                    <span class="complexity-badge space-complexity">Space: O(log n)</span>
+                    
+                    <div class="explanation-box">
+                        <h4>How it works:</h4>
+                        <p>1. Pick a pivot element<br>
+                        2. Partition: elements smaller than pivot go left, larger go right<br>
+                        3. Recursively sort left and right subarrays<br>
+                        4. Most efficient for large datasets</p>
+                    </div>
+                    
+                    <div class="code-block">
+<pre><span class="keyword">function</span> <span class="function">quickSort</span>(arr, low, high) {
+    <span class="keyword">if</span> (low &lt; high) {
+        <span class="keyword">let</span> pi = <span class="function">partition</span>(arr, low, high);
+        <span class="function">quickSort</span>(arr, low, pi - <span class="number">1</span>);
+        <span class="function">quickSort</span>(arr, pi + <span class="number">1</span>, high);
+    }
+}
+
+<span class="keyword">function</span> <span class="function">partition</span>(arr, low, high) {
+    <span class="keyword">let</span> pivot = arr[high];
+    <span class="keyword">let</span> i = low - <span class="number">1</span>;
+    
+    <span class="keyword">for</span> (<span class="keyword">let</span> j = low; j &lt; high; j++) {
+        <span class="keyword">if</span> (arr[j] &lt; pivot) {
+            i++;
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+    }
+    [arr[i + <span class="number">1</span>], arr[high]] = [arr[high], arr[i + <span class="number">1</span>]];
+    <span class="keyword">return</span> i + <span class="number">1</span>;
+}</pre>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- SEARCHING TAB -->
+            <div class="tab-pane fade" id="searching" role="tabpanel">
+                <div class="algo-card">
+                    <h3>🔍 Binary Search (බයිනරි සර්ච්)</h3>
+                    <p>Efficient search algorithm for sorted arrays using divide and conquer.</p>
+                    
+                    <span class="complexity-badge time-complexity">Time: O(log n)</span>
+                    <span class="complexity-badge space-complexity">Space: O(1)</span>
+                    
+                    <div class="explanation-box">
+                        <h4>How it works:</h4>
+                        <p>1. Start with middle element<br>
+                        2. If target = middle, found!<br>
+                        3. If target < middle, search left half<br>
+                        4. If target > middle, search right half<br>
+                        5. Repeat until found or array exhausted</p>
+                    </div>
+                    
+                    <div class="controls">
+                        <div class="input-group-custom">
+                            <label>Sorted Array:</label>
+                            <input type="text" id="binaryArray" value="2, 5, 8, 12, 16, 23, 38, 45, 56, 67, 78" placeholder="Sorted numbers">
+                        </div>
+                        <div class="input-group-custom">
+                            <label>Find:</label>
+                            <input type="number" id="searchTarget" value="23" placeholder="Target">
+                        </div>
+                        <button class="btn-algo btn-run" onclick="runBinarySearch()">🔍 Search</button>
+                        <button class="btn-algo btn-reset" onclick="resetSearch()">🔄 Reset</button>
+                    </div>
+                    
+                    <div class="visualization-area" id="binaryViz">
+                        <!-- Search visualization -->
+                    </div>
+                    
+                    <div class="code-block">
+<pre><span class="keyword">function</span> <span class="function">binarySearch</span>(arr, target) {
+    <span class="keyword">let</span> left = <span class="number">0</span>, right = arr.length - <span class="number">1</span>;
+    
+    <span class="keyword">while</span> (left &lt;= right) {
+        <span class="keyword">let</span> mid = Math.<span class="function">floor</span>((left + right) / <span class="number">2</span>);
+        
+        <span class="keyword">if</span> (arr[mid] === target) {
+            <span class="keyword">return</span> mid; <span class="comment">// Found!</span>
+        }
+        <span class="keyword">else if</span> (arr[mid] &lt; target) {
+            left = mid + <span class="number">1</span>; <span class="comment">// Search right</span>
+        }
+        <span class="keyword">else</span> {
+            right = mid - <span class="number">1</span>; <span class="comment">// Search left</span>
+        }
+    }
+    <span class="keyword">return</span> -<span class="number">1</span>; <span class="comment">// Not found</span>
+}</pre>
+                    </div>
+                    
+                    <div class="log-area" id="binaryLog">
+                        <div class="log-entry log-step">Ready to search...</div>
+                    </div>
+                </div>
+                
+                <div class="algo-card">
+                    <h3>📝 Linear Search (රේඛීය සෝධනය)</h3>
+                    <p>Simple search that checks each element sequentially.</p>
+                    
+                    <span class="complexity-badge time-complexity">Time: O(n)</span>
+                    <span class="complexity-badge space-complexity">Space: O(1)</span>
+                    
+                    <div class="code-block">
+<pre><span class="keyword">function</span> <span class="function">linearSearch</span>(arr, target) {
+    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; arr.length; i++) {
+        <span class="keyword">if</span> (arr[i] === target) {
+            <span class="keyword">return</span> i; <span class="comment">// Found at index i</span>
+        }
+    }
+    <span class="keyword">return</span> -<span class="number">1</span>; <span class="comment">// Not found</span>
+}</pre>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- RECURSION TAB -->
+            <div class="tab-pane fade" id="recursion" role="tabpanel">
+                <div class="algo-card">
+                    <h3>🔄 Factorial (ෆැක්ටෝරියල්)</h3>
+                    <p>Classic recursion example: n! = n × (n-1)!</p>
+                    
+                    <span class="complexity-badge time-complexity">Time: O(n)</span>
+                    <span class="complexity-badge space-complexity">Space: O(n)</span>
+                    
+                    <div class="controls">
+                        <div class="input-group-custom">
+                            <label>Calculate:</label>
+                            <input type="number" id="factorialInput" value="5" min="0" max="10">
+                            <span>!</span>
+                        </div>
+                        <button class="btn-algo btn-run" onclick="calculateFactorial()">▶️ Calculate</button>
+                    </div>
+                    
+                    <div class="visualization-area" id="factorialViz">
+                        <p>Enter a number and click Calculate</p>
+                    </div>
+                    
+                    <div class="code-block">
+<pre><span class="keyword">function</span> <span class="function">factorial</span>(n) {
+    <span class="comment">// Base case</span>
+    <span class="keyword">if</span> (n === <span class="number">0</span> || n === <span class="number">1</span>) {
+        <span class="keyword">return</span> <span class="number">1</span>;
+    }
+    <span class="comment">// Recursive case</span>
+    <span class="keyword">return</span> n * <span class="function">factorial</span>(n - <span class="number">1</span>);
+}
+
+<span class="comment">// Example: factorial(5)</span>
+<span class="comment">// = 5 × factorial(4)</span>
+<span class="comment">// = 5 × 4 × factorial(3)</span>
+<span class="comment">// = 5 × 4 × 3 × factorial(2)</span>
+<span class="comment">// = 5 × 4 × 3 × 2 × factorial(1)</span>
+<span class="comment">// = 5 × 4 × 3 × 2 × 1 = 120</span></pre>
+                    </div>
+                    
+                    <div class="log-area" id="factorialLog">
+                        <div class="log-entry log-step">Ready to calculate...</div>
+                    </div>
+                </div>
+                
+                <div class="algo-card">
+                    <h3>🌀 Fibonacci Sequence</h3>
+                    <p>Each number is sum of previous two: 0, 1, 1, 2, 3, 5, 8, 13...</p>
+                    
+                    <span class="complexity-badge time-complexity">Time: O(2ⁿ) naive, O(n) optimized</span>
+                    <span class="complexity-badge space-complexity">Space: O(n)</span>
+                    
+                    <div class="code-block">
+<pre><span class="comment">// Naive recursive approach</span>
+<span class="keyword">function</span> <span class="function">fibonacci</span>(n) {
+    <span class="keyword">if</span> (n &lt;= <span class="number">1</span>) <span class="keyword">return</span> n;
+    <span class="keyword">return</span> <span class="function">fibonacci</span>(n - <span class="number">1</span>) + <span class="function">fibonacci</span>(n - <span class="number">2</span>);
+}
+
+<span class="comment">// Optimized with memoization</span>
+<span class="keyword">function</span> <span class="function">fibMemo</span>(n, memo = {}) {
+    <span class="keyword">if</span> (n <span class="keyword">in</span> memo) <span class="keyword">return</span> memo[n];
+    <span class="keyword">if</span> (n &lt;= <span class="number">1</span>) <span class="keyword">return</span> n;
+    
+    memo[n] = <span class="function">fibMemo</span>(n - <span class="number">1</span>, memo) + <span class="function">fibMemo</span>(n - <span class="number">2</span>, memo);
+    <span class="keyword">return</span> memo[n];
+}</pre>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- GREEDY TAB -->
+            <div class="tab-pane fade" id="greedy" role="tabpanel">
+                <div class="algo-card">
+                    <h3>💰 Coin Change Problem (කාසි හුවමාරු ගැටලුව)</h3>
+                    <p>Find minimum number of coins to make a given amount.</p>
+                    
+                    <span class="complexity-badge time-complexity">Time: O(n)</span>
+                    <span class="complexity-badge space-complexity">Space: O(1)</span>
+                    
+                    <div class="explanation-box">
+                        <h4>Greedy Approach:</h4>
+                        <p>1. Start with largest coin denomination<br>
+                        2. Use as many as possible<br>
+                        3. Move to next smaller denomination<br>
+                        4. Repeat until amount is reached</p>
+                    </div>
+                    
+                    <div class="controls">
+                        <div class="input-group-custom">
+                            <label>Amount:</label>
+                            <input type="number" id="coinAmount" value="67" min="1">
+                        </div>
+                        <div class="input-group-custom">
+                            <label>Coins:</label>
+                            <input type="text" id="coinDenominations" value="25, 10, 5, 1" placeholder="Denominations">
+                        </div>
+                        <button class="btn-algo btn-run" onclick="solveCoinChange()">💰 Solve</button>
+                    </div>
+                    
+                    <div class="visualization-area" id="coinViz">
+                        <p>Enter amount and click Solve</p>
+                    </div>
+                    
+                    <div class="code-block">
+<pre><span class="keyword">function</span> <span class="function">coinChange</span>(amount, coins) {
+    coins.<span class="function">sort</span>((a, b) => b - a); <span class="comment">// Sort descending</span>
+    <span class="keyword">let</span> result = [];
+    
+    <span class="keyword">for</span> (<span class="keyword">let</span> coin <span class="keyword">of</span> coins) {
+        <span class="keyword">while</span> (amount >= coin) {
+            result.<span class="function">push</span>(coin);
+            amount -= coin;
+        }
+    }
+    
+    <span class="keyword">return</span> amount === <span class="number">0</span> ? result : <span class="keyword">null</span>;
+}</pre>
+                    </div>
+                    
+                    <div class="log-area" id="coinLog">
+                        <div class="log-entry log-step">Ready to solve...</div>
+                    </div>
+                </div>
+                
+                <div class="algo-card">
+                    <h3>🎒 Fractional Knapsack Problem</h3>
+                    <p>Maximize value in knapsack by taking fractions of items.</p>
+                    
+                    <span class="complexity-badge time-complexity">Time: O(n log n)</span>
+                    <span class="complexity-badge space-complexity">Space: O(1)</span>
+                    
+                    <div class="explanation-box">
+                        <h4>Strategy:</h4>
+                        <p>1. Calculate value/weight ratio for each item<br>
+                        2. Sort items by ratio (descending)<br>
+                        3. Take items with highest ratio first<br>
+                        4. Take fraction of last item if needed</p>
+                    </div>
+                    
+                    <div class="code-block">
+<pre><span class="keyword">function</span> <span class="function">fractionalKnapsack</span>(capacity, items) {
+    <span class="comment">// Sort by value/weight ratio</span>
+    items.<span class="function">sort</span>((a, b) => 
+        (b.value / b.weight) - (a.value / a.weight)
+    );
+    
+    <span class="keyword">let</span> totalValue = <span class="number">0</span>;
+    
+    <span class="keyword">for</span> (<span class="keyword">let</span> item <span class="keyword">of</span> items) {
+        <span class="keyword">if</span> (capacity >= item.weight) {
+            capacity -= item.weight;
+            totalValue += item.value;
+        } <span class="keyword">else</span> {
+            <span class="comment">// Take fraction</span>
+            totalValue += item.value * (capacity / item.weight);
+            <span class="keyword">break</span>;
+        }
+    }
+    
+    <span class="keyword">return</span> totalValue;
+}</pre>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- COMPARISON TAB -->
+            <div class="tab-pane fade" id="comparison" role="tabpanel">
+                <div class="algo-card">
+                    <h3>📊 Algorithm Comparison Table</h3>
+                    
+                    <h4 style="margin-top: 30px;">Sorting Algorithms</h4>
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Algorithm</th>
+                                <th>Best Case</th>
+                                <th>Average Case</th>
+                                <th>Worst Case</th>
+                                <th>Space</th>
+                                <th>Stable?</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Bubble Sort</strong></td>
+                                <td>O(n)</td>
+                                <td>O(n²)</td>
+                                <td>O(n²)</td>
+                                <td>O(1)</td>
+                                <td>Yes ✓</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Selection Sort</strong></td>
+                                <td>O(n²)</td>
+                                <td>O(n²)</td>
+                                <td>O(n²)</td>
+                                <td>O(1)</td>
+                                <td>No ✗</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Insertion Sort</strong></td>
+                                <td>O(n)</td>
+                                <td>O(n²)</td>
+                                <td>O(n²)</td>
+                                <td>O(1)</td>
+                                <td>Yes ✓</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Merge Sort</strong></td>
+                                <td>O(n log n)</td>
+                                <td>O(n log n)</td>
+                                <td>O(n log n)</td>
+                                <td>O(n)</td>
+                                <td>Yes ✓</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Quick Sort</strong></td>
+                                <td>O(n log n)</td>
+                                <td>O(n log n)</td>
+                                <td>O(n²)</td>
+                                <td>O(log n)</td>
+                                <td>No ✗</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Heap Sort</strong></td>
+                                <td>O(n log n)</td>
+                                <td>O(n log n)</td>
+                                <td>O(n log n)</td>
+                                <td>O(1)</td>
+                                <td>No ✗</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <h4 style="margin-top: 30px;">Searching Algorithms</h4>
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Algorithm</th>
+                                <th>Time Complexity</th>
+                                <th>Space Complexity</th>
+                                <th>Requires Sorted?</th>
+                                <th>Best For</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Linear Search</strong></td>
+                                <td>O(n)</td>
+                                <td>O(1)</td>
+                                <td>No</td>
+                                <td>Small/unsorted data</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Binary Search</strong></td>
+                                <td>O(log n)</td>
+                                <td>O(1)</td>
+                                <td>Yes</td>
+                                <td>Large sorted data</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Jump Search</strong></td>
+                                <td>O(√n)</td>
+                                <td>O(1)</td>
+                                <td>Yes</td>
+                                <td>Large sorted arrays</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Interpolation Search</strong></td>
+                                <td>O(log log n)</td>
+                                <td>O(1)</td>
+                                <td>Yes (uniform)</td>
+                                <td>Uniformly distributed</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <h4 style="margin-top: 30px;">When to Use Which Algorithm?</h4>
+                    <div class="explanation-box">
+                        <p><strong>Use Bubble Sort:</strong> Small datasets, educational purposes, nearly sorted data<br><br>
+                        <strong>Use Quick Sort:</strong> Large datasets, average case performance important, in-place sorting needed<br><br>
+                        <strong>Use Merge Sort:</strong> Stable sort required, linked lists, external sorting<br><br>
+                        <strong>Use Binary Search:</strong> Sorted array, need O(log n) search<br><br>
+                        <strong>Use Greedy:</strong> Optimization problems with optimal substructure<br><br>
+                        <strong>Use Recursion:</strong> Tree/graph traversal, divide & conquer, backtracking</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let sortingInterval = null;
+        let isSorting = false;
+
+        // Speed control
+        document.getElementById('speedSlider').addEventListener('input', function() {
+            document.getElementById('speedLabel').textContent = this.value + 'ms';
+        });
+
+        // Bubble Sort Implementation
+        async function runBubbleSort() {
+            if (isSorting) return;
+            
+            const input = document.getElementById('bubbleInput').value;
+            const arr = input.split(',').map(n => parseInt(n.trim())).filter(n => !isNaN(n));
+            
+            if (arr.length === 0) {
+                addLog('bubbleLog', 'Please enter valid numbers', 'swap');
+                return;
+            }
+            
+            isSorting = true;
+            document.getElementById('stopBtn').disabled = false;
+            addLog('bubbleLog', `Starting Bubble Sort with array: [${arr.join(', ')}]`, 'step');
+            
+            await visualizeBubbleSort(arr);
+            
+            isSorting = false;
+            document.getElementById('stopBtn').disabled = true;
+        }
+
+        async function visualizeBubbleSort(arr) {
+            const viz = document.getElementById('bubbleViz');
+            const n = arr.length;
+            let comparisons = 0;
+            let swaps = 0;
+            
+            for (let i = 0; i < n && isSorting; i++) {
+                addLog('bubbleLog', `Pass ${i + 1}`, 'step');
+                
+                for (let j = 0; j < n - i - 1 && isSorting; j++) {
+                    comparisons++;
+                    
+                    // Visualize comparison
+                    updateVisualization(viz, arr, [j, j + 1], []);
+                    addLog('bubbleLog', `Comparing ${arr[j]} and ${arr[j + 1]}`, 'compare');
+                    
+                    await sleep(getSpeed());
+                    
+                    if (arr[j] > arr[j + 1]) {
+                        // Swap
+                        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+                        swaps++;
+                        addLog('bubbleLog', `Swapped! Array: [${arr.join(', ')}]`, 'swap');
+                        updateVisualization(viz, arr, [], [j, j + 1]);
+                        await sleep(getSpeed());
+                    }
+                }
+                
+                // Mark as sorted
+                updateVisualization(viz, arr, [], Array.from({length: i + 1}, (_, k) => n - 1 - k));
+            }
+            
+            if (isSorting) {
+                updateVisualization(viz, arr, [], arr.map((_, i) => i));
+                addLog('bubbleLog', `✅ Sorted! Comparisons: ${comparisons}, Swaps: ${swaps}`, 'success');
+            }
+        }
+
+        function updateVisualization(container, arr, comparing, sorted) {
+            container.innerHTML = '';
+            arr.forEach((val, idx) => {
+                const elem = document.createElement('div');
+                elem.className = 'array-element';
+                elem.textContent = val;
+                
+                if (comparing.includes(idx)) {
+                    elem.classList.add('comparing');
+                } else if (sorted.includes(idx)) {
+                    elem.classList.add('sorted');
+                }
+                
+                container.appendChild(elem);
+            });
+        }
+
+        function stopSort() {
+            isSorting = false;
+            addLog('bubbleLog', 'Stopped by user', 'swap');
+            document.getElementById('stopBtn').disabled = true;
+        }
+
+        function resetVisualization() {
+            isSorting = false;
+            document.getElementById('bubbleViz').innerHTML = '';
+            document.getElementById('bubbleLog').innerHTML = '<div class="log-entry log-step">Ready to sort...</div>';
+            document.getElementById('stopBtn').disabled = true;
+        }
+
+        // Binary Search Implementation
+        async function runBinarySearch() {
+            const input = document.getElementById('binaryArray').value;
+            const arr = input.split(',').map(n => parseInt(n.trim())).filter(n => !isNaN(n));
+            const target = parseInt(document.getElementById('searchTarget').value);
+            
+            if (arr.length === 0 || isNaN(target)) {
+                addLog('binaryLog', 'Please enter valid numbers', 'swap');
+                return;
+            }
+            
+            // Check if sorted
+            const isSorted = arr.every((val, i, arr) => !i || arr[i - 1] <= val);
+            if (!isSorted) {
+                addLog('binaryLog', '⚠️ Array must be sorted for Binary Search!', 'swap');
+                return;
+            }
+            
+            addLog('binaryLog', `Searching for ${target} in [${arr.join(', ')}]`, 'step');
+            await visualizeBinarySearch(arr, target);
+        }
+
+        async function visualizeBinarySearch(arr, target) {
+            const viz = document.getElementById('binaryViz');
+            let left = 0;
+            let right = arr.length - 1;
+            let steps = 0;
+            
+            while (left <= right) {
+                steps++;
+                const mid = Math.floor((left + right) / 2);
+                
+                // Visualize current search space
+                updateSearchVisualization(viz, arr, left, right, mid);
+                addLog('binaryLog', `Step ${steps}: Checking middle index ${mid} (value: ${arr[mid]})`, 'step');
+                await sleep(1000);
+                
+                if (arr[mid] === target) {
+                    updateSearchVisualization(viz, arr, mid, mid, mid, true);
+                    addLog('binaryLog', `✅ Found ${target} at index ${mid}! Total steps: ${steps}`, 'success');
+                    return;
+                } else if (arr[mid] < target) {
+                    addLog('binaryLog', `${arr[mid]} < ${target}, search right half`, 'compare');
+                    left = mid + 1;
+                } else {
+                    addLog('binaryLog', `${arr[mid]} > ${target}, search left half`, 'compare');
+                    right = mid - 1;
+                }
+                
+                await sleep(500);
+            }
+            
+            addLog('binaryLog', `❌ ${target} not found in array`, 'swap');
+        }
+
+        function updateSearchVisualization(container, arr, left, right, mid, found = false) {
+            container.innerHTML = '';
+            arr.forEach((val, idx) => {
+                const elem = document.createElement('div');
+                elem.className = 'array-element';
+                elem.textContent = val;
+                
+                if (idx === mid) {
+                    elem.classList.add(found ? 'sorted' : 'highlight');
+                } else if (idx >= left && idx <= right && !found) {
+                    elem.classList.add('comparing');
+                }
+                
+                container.appendChild(elem);
+            });
+        }
+
+        function resetSearch() {
+            document.getElementById('binaryViz').innerHTML = '';
+            document.getElementById('binaryLog').innerHTML = '<div class="log-entry log-step">Ready to search...</div>';
+        }
+
+        // Factorial Calculation
+        function calculateFactorial() {
+            const n = parseInt(document.getElementById('factorialInput').value);
+            
+            if (isNaN(n) || n < 0) {
+                addLog('factorialLog', 'Please enter a valid non-negative number', 'swap');
+                return;
+            }
+            
+            if (n > 10) {
+                addLog('factorialLog', 'Please enter a number ≤ 10', 'swap');
+                return;
+            }
+            
+            const viz = document.getElementById('factorialViz');
+            const log = document.getElementById('factorialLog');
+            
+            log.innerHTML = '';
+            viz.innerHTML = '';
+            
+            addLog('factorialLog', `Calculating ${n}!`, 'step');
+            
+            let result = 1;
+            let steps = [];
+            
+            for (let i = n; i >= 1; i--) {
+                steps.push(i);
+                result *= i;
+                addLog('factorialLog', `${i}! = ${i} × ${i-1}! ${i === 1 ? '= 1' : ''}`, 'compare');
+            }
+            
+            viz.innerHTML = `
+                <div style="text-align: center; width: 100%;">
+                    <h3 style="color: #667eea;">${n}! Calculation</h3>
+                    <p style="font-size: 1.2rem; margin: 20px 0;">
+                        ${steps.join(' × ')} = <strong style="color: #11998e; font-size: 1.5rem;">${result}</strong>
+                    </p>
+                    <div style="background: #e3f2fd; padding: 20px; border-radius: 10px; margin-top: 20px;">
+                        <p><strong>Recursive calls:</strong> ${n}</p>
+                        <p><strong>Stack depth:</strong> ${n}</p>
+                        <p><strong>Time complexity:</strong> O(n)</p>
+                        <p><strong>Space complexity:</strong> O(n)</p>
+                    </div>
+                </div>
+            `;
+            
+            addLog('factorialLog', `✅ Result: ${n}! = ${result}`, 'success');
+        }
+
+        // Coin Change Problem
+        function solveCoinChange() {
+            const amount = parseInt(document.getElementById('coinAmount').value);
+            const coinsInput = document.getElementById('coinDenominations').value;
+            const coins = coinsInput.split(',').map(n => parseInt(n.trim())).filter(n => !isNaN(n));
+            
+            if (isNaN(amount) || amount <= 0) {
+                addLog('coinLog', 'Please enter a valid amount', 'swap');
+                return;
+            }
+            
+            if (coins.length === 0) {
+                addLog('coinLog', 'Please enter valid coin denominations', 'swap');
+                return;
+            }
+            
+            coins.sort((a, b) => b - a);
+            
+            const viz = document.getElementById('coinViz');
+            const log = document.getElementById('coinLog');
+            
+            log.innerHTML = '';
+            viz.innerHTML = '';
+            
+            addLog('coinLog', `Making ${amount} using coins: [${coins.join(', ')}]`, 'step');
+            
+            let remaining = amount;
+            let result = [];
+            let resultHTML = '<div style="text-align: center; width: 100%;">';
+            resultHTML += `<h4 style="color: #667eea;">Coin Change Solution</h4>`;
+            resultHTML += `<p><strong>Amount:</strong> ${amount}</p>`;
+            resultHTML += `<div style="margin: 20px 0;">`;
+            
+            for (let coin of coins) {
+                let count = 0;
+                while (remaining >= coin) {
+                    result.push(coin);
+                    remaining -= coin;
+                    count++;
+                }
+                
+                if (count > 0) {
+                    addLog('coinLog', `Used ${count} coin(s) of ${coin}. Remaining: ${remaining}`, 'compare');
+                    resultHTML += `<div style="background: #e3f2fd; padding: 10px; margin: 5px; border-radius: 5px;">
+                        ${count} × ${coin} = ${count * coin}
+                    </div>`;
+                }
+            }
+            
+            resultHTML += `</div>`;
+            
+            if (remaining === 0) {
+                resultHTML += `<div class="result-highlight" style="margin: 20px;">
+                    ✅ Total coins used: <strong>${result.length}</strong><br>
+                    Coins: [${result.join(', ')}]
+                </div>`;
+                addLog('coinLog', `✅ Success! Used ${result.length} coins`, 'success');
+            } else {
+                resultHTML += `<p style="color: red;">❌ Cannot make exact amount with given coins</p>`;
+                addLog('coinLog', `❌ Cannot make exact amount`, 'swap');
+            }
+            
+            resultHTML += '</div>';
+            viz.innerHTML = resultHTML;
+        }
+
+        // Utility functions
+        function addLog(logId, message, type = 'step') {
+            const log = document.getElementById(logId);
+            const entry = document.createElement('div');
+            entry.className = `log-entry log-${type}`;
+            entry.textContent = message;
+            log.appendChild(entry);
+            log.scrollTop = log.scrollHeight;
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        function getSpeed() {
+            return parseInt(document.getElementById('speedSlider').value);
+        }
+
+        // Initialize first visualization
+        window.addEventListener('load', function() {
+            const arr = [64, 34, 25, 12, 22, 11, 90];
+            updateVisualization(document.getElementById('bubbleViz'), arr, [], []);
+            
+            const searchArr = [2, 5, 8, 12, 16, 23, 38, 45, 56, 67, 78];
+            updateVisualization(document.getElementById('binaryViz'), searchArr, [], []);
+        });
+    </script>
+</body>
+</html>
